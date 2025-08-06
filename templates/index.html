@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kambag'allikni qisqartirish - Davlat dasturi</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="logo">
+        <a href="/"><img src="/static/images/logo.svg" alt="Logo"></a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="bosh-sahifa.html" data-page="bosh-sahifa" class="active">Bosh sahifa</a>
+        <div class="dropdown" id="dropdown-jangarma">
+            <span>Jang'arma</span>
+            <i class="arrow-down"></i>
+            <div class="dropdown-menu">
+                <a href="#">Biz haqimizda</a>
+                <a href="#">Rahbariyat</a>
+                <a href="#">Suddan</a>
+                <a href="#">Subsidiya</a>
+                <a href="#">Grantlar</a>
+            </div>
+        </div>
+        <a href="#ariza" data-page="ariza">Ariza qoldirish</a>
+        <a href="#news" data-page="yangiliklar">Yangiliklar</a>
+        <a href="hududlar.html" data-page="hududlar">Hududlar</a>
+        <a href="mahalla.html" data-page="mahalla">online.mahalla</a>
+    </nav>
+
+    <!-- Header Right Section -->
+    <div class="header-right">
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="language-selector" id="language-selector">
+            <img src="/static/images/global-icon.svg" alt="World Icon">
+            <span id="current-language">O'zb</span>
+            <i class="arrow-down"></i>
+            <div class="language-menu">
+                <a href="#" data-lang="O'zb" class="active" onclick="changeLanguage(this)">O'zbek</a>
+                <a href="#" data-lang="Рус" onclick="changeLanguage(this)">Русский</a>
+                <a href="#" data-lang="Eng" onclick="changeLanguage(this)">English</a>
+            </div>
+        </div>
+        <div class="search">
+            <button>
+                <img src="/static/images/search-icon.svg" alt="Search Icon" class="search-icon">
+                <span>Qidiruv</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" id="mobile-menu">
+        <a href="bosh-sahifa.html" data-page="bosh-sahifa" class="active">Bosh sahifa</a>
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-header" id="mobile-dropdown-header">
+                <span>Jang'arma</span>
+                <i class="arrow-down"></i>
+            </div>
+            <div class="mobile-dropdown-content" id="mobile-dropdown-content">
+                <a href="#">Biz haqimizda</a>
+                <a href="#">Rahbariyat</a>
+                <a href="#">Sertifikatlar</a>
+                <a href="#">Suddan</a>
+                <a href="#">Subsidiya</a>
+                <a href="#">Grantlar</a>
+            </div>
+        </div>
+        <a href="ariza.html" data-page="ariza">Ariza qoldirish</a>
+        <a href="yangiliklar.html" data-page="yangiliklar">Yangiliklar</a>
+        <a href="hududlar.html" data-page="hududlar">Hududlar</a>
+        <a href="mahalla.html" data-page="mahalla">online.mahalla</a>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main class="main-content">
+    <div class="hero-section">
+        <img src="/static/images/image content.png" alt="Hero Image">
+        <div class="overlay"></div>
+        <div class="hero-text">
+            <h1>Yashash sharoitlarini yaxshilash – barchamiz uchun!</h1>
+            <p>Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash yo'lida davlatimiz barqaror
+                chora-tadbirlarni amalga oshirmoqda. Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash
+                yo'lida davlatimiz barqaror chora-tadbirlarni amalga oshirmoqda.</p>
+            <div class="buttons">
+                <button class="btn btn-primary">Videoni ko'rish</button>
+                <button class="btn btn-secondary">Dasturlar bilan tanishing <i class="arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Application Section -->
+    <div class="headers" id="ariza">Ariza qoldirish</div>
+    <div class="fade-line"></div>
+    <div class="hero-section"></div>
+    <!-- News Section -->
+    <div class="headers" id="news">Yangiliklar</div>
+    <div class="fade-line"></div>
+    <div class="news-container">
+        <div class="news-card">
+            <img src="/static/images/image content.png" alt="News Image 1">
+            <div class="news-content">
+                <h2>Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq tayinlandi</h2>
+                <p>Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari tayinlandi.</p>
+                <span class="news-date">
+                        <span class="news-category">Tayinlov</span>:
+                        <span class="news-time">21 iyul, 12:21</span>
+                    </span>
+            </div>
+        </div>
+        <div class="news-card">
+            <img src="/static/images/image 6.png" alt="News Image 2">
+            <div class="news-content">
+                <h2>Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi</h2>
+                <p>Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan.</p>
+                <span class="news-date">
+                        <span class="news-category">Loyihalar</span>:
+                        <span class="news-time">10 avgust, 09:45</span>
+                    </span>
+            </div>
+        </div>
+        <div class="news-card">
+            <img src="/static/images/image 6.png" alt="News Image 3">
+            <div class="news-content">
+                <h2>Buxoro shahrida yangi sport kompleksi ochildi</h2>
+                <p>Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan.</p>
+                <span class="news-date">
+                        <span class="news-category">Ochilish tadbiri </span>:
+                        <span class="news-time">5 sentabr, 15:30</span>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <button class="see-more-btn">Yana ko'rish</button>
+    <! --- Hududlar Section --->
+    <div class="headers" id="hududlar">Hududlar</div>
+    <div class="fade-line"></div>
+    <div class="hero-section">
+    <div class="content">
+            <div class="sidebar">
+                <button class="region">Toshkent shahar</button>
+                <button class="region">Toshkent viloyati</button>
+                <button class="region">Andijon viloyati</button>
+                <button class="region">Buxoro viloyati</button>
+                <button class="region">Farg‘ona viloyati</button>
+                <button class="region">Jizzax viloyati</button>
+                <button class="region">Namangan viloyati</button>
+                <button class="region">Navoiy viloyati</button>
+            </div>
+            <div class="map-section">
+                <iframe src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16" ></iframe>
+                <div class="contact-card">
+                    <img src="https://via.placeholder.com/50x50" alt="Profile" class="profile-pic">
+                    <div class="contact-info">
+                        <h3>Alisher Alisherovich</h3>
+                        <p><a href="mailto:aalisherovich@mail.ru">aalisherovich@mail.ru</a></p>
+                        <p><a href="tel:+998900000000">+998 90 000 00 00</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <!-- Partners Section -->
+    <div class="headers" id="partners">Hamkorlarimiz</div>
+    <div class="fade-line"></div>
+    <section class="partners-section">
+        <div class="partners-grid">
+            <div class="partner-card">
+                <div class="partner-image">
+                    <img src="/static/images/logogerb.svg" alt="O'zbekiston Respublikasi Prezidenti">
+                </div>
+                <p>O'zbekiston Respublikasi<br>Prezidenti</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-image">
+                    <img src="/static/images/logomygov.svg" alt="Yagona interaktiv davlat xizmatlari portali">
+                </div>
+                <p>Yagona interaktiv davlat<br>xizmatlari portali</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-image">
+                    <img src="/static/images/logomygov.svg" alt="Online mahalla">
+                </div>
+                <p>Online mahalla</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-image">
+                    <img src="/static/images/logomygov.svg" alt="O'zbekiston Respublikasi Adliya vazirligi">
+                </div>
+                <p>O'zbekiston Respublikasi<br>Adliya vazirligi</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-image">
+                    <img src="/static/images/logomygov.svg" alt="Ijtimoiy himoya agentligi">
+                </div>
+                <p>Ijtimoiy himoya<br>agentligi</p>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <img src="/static/images/logo.svg" alt="Kambag'allikni qisqartirish Davlat jang'armasi logo">
+        <div class="footer-left">
+
+            <ul class="footer-links">
+                <li><a href="#">Asosiy</a></li>
+                <li><a href="#">Jang'arma haqida</a></li>
+                <li><a href="#">Arizalar qoldirish</a></li>
+                <li><a href="#">Hududlar</a></li>
+                <li><a href="#">online.mahalla</a></li>
+            </ul>
+        </div>
+        <div class="footer-map">
+            <div class="map-box">
+                <iframe src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16"
+                        width="560" height="400" frameborder="1" allowfullscreen="true"
+                        style="position:relative;"></iframe>
+                <div class="map-overlay">
+                    <p>O‘zbekiston Respublikasi, Toshkent shahar, Amir Temur ko‘chasi, 12a, uy. 100012</p>
+                </div>
+            </div>
+            <div class="contact-infos">
+
+                <span class="info">+998 71 123 45 67</span>
+                <span class="info">info@kqdimj.uz</span>
+            </div>
+            <div class="social-icons">
+                <a href="#"><img src="/static/images/logotg.svg"></a>
+                <a href="#"><img src="/static/images/logoinst.svg"></a>
+                <a href="#"><img src="/static/images/logoyt.svg"></a>
+                <a href="#"><img src="/static/images/logoface.svg"></a>
+
+            </div>
+        </div>
+    </footer>
+</main>
+
+<script>
+    // Language change function
+    function changeLanguage(element) {
+        document.querySelectorAll('.language-menu a').forEach(a => a.classList.remove('active'));
+        element.classList.add('active');
+        document.getElementById('current-language').textContent = element.getAttribute('data-lang');
+        return false;
+    }
+
+    // Initialize elements
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const languageSelector = document.getElementById('language-selector');
+    const dropdown = document.getElementById('dropdown-jangarma');
+    const mobileDropdownHeader = document.getElementById('mobile-dropdown-header');
+    const mobileDropdownContent = document.getElementById('mobile-dropdown-content');
+
+    // Toggle hamburger menu
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        // Close other dropdowns
+        languageSelector.classList.remove('open');
+        dropdown.classList.remove('open');
+    });
+
+    // Mobile navigation dropdown toggle
+    mobileDropdownHeader.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mobileDropdownContent.classList.toggle('active');
+        this.querySelector('.arrow-down').style.transform =
+            mobileDropdownContent.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+
+    // Language selector toggle
+    languageSelector.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (window.innerWidth <= 768) {
+            this.classList.toggle('open');
+            const arrow = this.querySelector('.arrow-down');
+            arrow.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+            // Close other dropdowns
+            dropdown.classList.remove('open');
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+    });
+
+    // Navigation dropdown toggle for mobile
+    dropdown.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            e.stopPropagation();
+            this.classList.toggle('open');
+            const arrow = this.querySelector('.arrow-down');
+            arrow.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+            // Close other dropdowns
+            languageSelector.classList.remove('open');
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+    });
+
+    // Prevent dropdown links from closing their parent dropdown
+    document.querySelectorAll('.language-menu a, .dropdown-menu a, .mobile-dropdown-content a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
+
+    // Close all dropdowns and menus when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+        if (!languageSelector.contains(e.target)) {
+            languageSelector.classList.remove('open');
+            const arrow = languageSelector.querySelector('.arrow-down');
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+        }
+        if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('open');
+            const arrow = dropdown.querySelector('.arrow-down');
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', function() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        });
+    });
+
+    // Determine current page
+    const currentPage = window.location.pathname.split('/').pop().split('.')[0] || 'bosh-sahifa';
+    const links = document.querySelectorAll('.navbar a, .mobile-menu a');
+    links.forEach(link => {
+        const page = link.getAttribute('data-page');
+        if (page === currentPage) {
+            link.classList.add('active');
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            languageSelector.classList.remove('open');
+            dropdown.classList.remove('open');
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileDropdownContent.classList.remove('active');
+            document.querySelectorAll('.arrow-down').forEach(arrow => {
+                arrow.style.transform = 'rotate(0deg)';
+            });
+        }
+    });
+</script>
+</body>
+</html>

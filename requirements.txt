@@ -1,0 +1,49 @@
+# Django
+Django
+
+# Database
+psycopg2
+
+# Images and Media
+Pillow
+
+# Caching (для переводов и производительности)
+django-redis
+redis
+
+# Translation APIs
+requests
+
+# Search
+django-haystack
+whoosh
+
+# SEO
+django-meta
+django
+
+# Background tasks (для переводов)
+celery
+django-celery-beat
+django-celery-results
+
+# Development
+django-debug-toolbar
+
+# Production
+gunicorn
+whitenoise
+
+# Security
+django-cors-headers
+django
+
+# Forms
+django-widget-tweaks
+
+# Utils
+python-slugify
+django-extensions
+
+# Language detection
+langdetect

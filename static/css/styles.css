@@ -1,4 +1,6 @@
-/* Reset */
+/* ========================================
+   1. Сброс стилей
+======================================== */
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +8,9 @@
     font-family: Arial, sans-serif;
 }
 
-/* Global Layout */
+/* ========================================
+   2. Глобальные стили
+======================================== */
 html, body {
     width: 100%;
     height: 100%;
@@ -27,7 +31,9 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-/* Header */
+/* ========================================
+   3. Шапка и логотип
+======================================== */
 .header {
     display: flex;
     justify-content: space-between;
@@ -52,7 +58,9 @@ body::-webkit-scrollbar {
     line-height: 1.2;
 }
 
-/* Navbar */
+/* ========================================
+   4. Основное меню (десктоп)
+======================================== */
 .navbar {
     display: flex;
     gap: 5px;
@@ -66,7 +74,8 @@ body::-webkit-scrollbar {
     min-height: 48px;
 }
 
-.navbar a, .dropdown {
+.navbar a,
+.dropdown {
     flex: 1;
     text-align: center;
     color: white;
@@ -78,11 +87,15 @@ body::-webkit-scrollbar {
     transition: background-color 0.3s ease;
 }
 
-.navbar a:hover, .dropdown:hover, .navbar a.active {
+.navbar a:hover,
+.dropdown:hover,
+.navbar a.active {
     background-color: #327632;
 }
 
-/* Dropdown */
+/* ========================================
+   5. Выпадающее меню (десктоп)
+======================================== */
 .dropdown {
     position: relative;
     display: flex;
@@ -96,7 +109,8 @@ body::-webkit-scrollbar {
     font-size: 14px;
 }
 
-.dropdown .arrow-down, .language-selector .arrow-down {
+.dropdown .arrow-down,
+.language-selector .arrow-down {
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
@@ -105,12 +119,16 @@ body::-webkit-scrollbar {
     transition: transform 0.3s ease;
 }
 
-.dropdown:hover .arrow-down, .dropdown.open .arrow-down,
-.language-selector:hover .arrow-down, .language-selector.open .arrow-down {
+.dropdown:hover .arrow-down,
+.dropdown.open .arrow-down,
+.language-selector:hover .arrow-down,
+.language-selector.open .arrow-down {
     transform: rotate(180deg);
 }
 
-.dropdown-menu, .language-menu {
+
+.dropdown-menu,
+.language-menu {
     position: absolute;
     top: 100%;
     background-color: white;
@@ -124,17 +142,29 @@ body::-webkit-scrollbar {
     margin-top: 5px;
 }
 
-.dropdown-menu { left: 0; right: 0; }
-.language-menu { right: 0; min-width: 120px; z-index: 1200; overflow: hidden; }
+.dropdown-menu {
+    left: 0;
+    right: 0;
+}
 
-.dropdown:hover .dropdown-menu, .dropdown.open .dropdown-menu,
-.language-selector:hover .language-menu, .language-selector.open .language-menu {
+.language-menu {
+    right: 0;
+    min-width: 120px;
+    z-index: 1200;
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown.open .dropdown-menu,
+.language-selector:hover .language-menu,
+.language-selector.open .language-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.dropdown-menu a, .language-menu a {
+.dropdown-menu a,
+.language-menu a {
     display: block;
     padding: 12px 16px;
     color: #193B19;
@@ -144,18 +174,21 @@ body::-webkit-scrollbar {
     transition: background-color 0.3s ease;
 }
 
-.dropdown-menu a:first-child, .language-menu a:first-child {
+.dropdown-menu a:first-child,
+.language-menu a:first-child {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
-.dropdown-menu a:last-child, .language-menu a:last-child {
+.dropdown-menu a:last-child,
+.language-menu a:last-child {
     border-bottom: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
-.dropdown-menu a:hover, .language-menu a:hover {
+.dropdown-menu a:hover,
+.language-menu a:hover {
     background-color: #f8f9fa;
 }
 
@@ -168,7 +201,9 @@ body::-webkit-scrollbar {
     background-color: #2a642a;
 }
 
-/* Header Right */
+/* ========================================
+   6. Правая часть шапки (язык, поиск)
+======================================== */
 .header-right {
     display: flex;
     align-items: center;
@@ -176,7 +211,7 @@ body::-webkit-scrollbar {
     flex-direction: row-reverse;
 }
 
-/* Hamburger */
+/* Гамбургер-меню */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -206,7 +241,7 @@ body::-webkit-scrollbar {
     transform: rotate(45deg) translate(-5px, -8px);
 }
 
-/* Search */
+/* Поиск */
 .search button {
     display: flex;
     align-items: center;
@@ -236,7 +271,7 @@ body::-webkit-scrollbar {
     filter: brightness(100%);
 }
 
-/* Language Selector */
+/* Язык */
 .language-selector {
     position: relative;
     display: flex;
@@ -258,7 +293,9 @@ body::-webkit-scrollbar {
     background-color: #304F30;
 }
 
-/* Mobile Menu */
+/* ========================================
+   7. Мобильное меню
+======================================== */
 .mobile-menu {
     display: none;
     position: absolute;
@@ -286,7 +323,8 @@ body::-webkit-scrollbar {
     font-size: 16px;
 }
 
-.mobile-menu a:hover, .mobile-menu a.active {
+.mobile-menu a:hover,
+.mobile-menu a.active {
     background-color: #327632;
 }
 
@@ -294,6 +332,7 @@ body::-webkit-scrollbar {
     border-bottom: none;
 }
 
+/* Мобильный дропдаун: Jang'arma */
 .mobile-dropdown-header {
     display: flex;
     justify-content: space-between;
@@ -303,6 +342,21 @@ body::-webkit-scrollbar {
     border-bottom: 1px solid #304F30;
     transition: background-color 0.3s ease;
     font-size: 16px;
+    color: white;
+}
+.mobile-dropdown-header .arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white;
+    transition: transform 0.3s ease;
+    margin-left: auto;
+    display: inline-block;
+}
+
+.mobile-dropdown-header.open .arrow-down {
+    transform: rotate(180deg);
 }
 
 .mobile-dropdown-header:hover {
@@ -312,15 +366,24 @@ body::-webkit-scrollbar {
 .mobile-dropdown-content {
     display: none;
     background-color: #2a5a2a;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: 0;
+    opacity: 0;
 }
 
 .mobile-dropdown-content.active {
     display: block;
+    max-height: 300px;
+    opacity: 1;
+    padding: 0;
 }
 
 .mobile-dropdown-content a {
-    padding-left: 40px;
-    background-color: #2a5a2a;
+    padding: 12px 40px;
+    display: block;
+    color: white;
+    text-decoration: none;
     font-size: 14px;
     transition: background-color 0.3s ease;
 }
@@ -329,7 +392,9 @@ body::-webkit-scrollbar {
     background-color: #327632;
 }
 
-/* Main Content */
+/* ========================================
+   8. Основной контент
+======================================== */
 main {
     flex: 1;
     padding: 20px;
@@ -351,7 +416,7 @@ main {
     font-weight: bold;
 }
 
-/* Hero Section */
+/* Герой-секция */
 .hero-section {
     position: relative;
     overflow: visible;
@@ -446,7 +511,7 @@ main {
     margin-left: 8px;
 }
 
-/* Application Section */
+/* Секция заявок */
 .application-section {
     width: 100%;
     max-width: 1200px;
@@ -479,7 +544,9 @@ main {
     margin: 20px 0;
 }
 
-/* News Section */
+/* ========================================
+   9. Новости
+======================================== */
 .page-title {
     color: white;
     margin-bottom: 20px;
@@ -561,7 +628,9 @@ main {
     background-color: #1E3D1E;
 }
 
-/* Hududlar Section */
+/* ========================================
+   10. Худудлар (карта и регионы)
+======================================== */
 .content {
     display: flex;
     flex: 1;
@@ -673,7 +742,9 @@ main {
     text-decoration: underline;
 }
 
-/* Partners Section */
+/* ========================================
+   11. Партнёры
+======================================== */
 .partners-section {
     background-color: #327632;
     width: 100%;
@@ -737,7 +808,9 @@ main {
     margin: 0;
 }
 
-/* Footer */
+/* ========================================
+   12. Подвал
+======================================== */
 .footer {
     background-color: #327632;
     width: 100%;
@@ -870,7 +943,9 @@ main {
     line-height: 1.4;
 }
 
-/* Mobile Region Dropdown */
+/* ========================================
+   13. Мобильный выбор региона
+======================================== */
 .mobile-region-dropdown {
     display: none;
     width: 100%;
@@ -899,329 +974,82 @@ main {
     outline: none;
 }
 
-/* Media Queries */
+/* ========================================
+   14. Адаптивность (медиа-запросы)
+======================================== */
 @media (min-width: 1200px) {
-    .header {
-        padding: 20px 40px;
-    }
-    .navbar {
-        min-width: 800px;
-    }
-    .hero-section {
-        border-width: 50px;
-    }
-    .application-section {
-        padding: 50px 20px;
-    }
+    .header { padding: 20px 40px; }
+    .navbar { min-width: 800px; }
+    .hero-section { border-width: 50px; }
+    .application-section { padding: 50px 20px; }
 }
 
 @media (max-width: 1024px) {
-    .header {
-        padding: 12px 20px;
-    }
-    .logo img {
-        width: 220px;
-        height: 44px;
-    }
-    .navbar {
-        min-width: 500px;
-    }
-    .header-right {
-        gap: 8px;
-    }
-    .hero-text h1 {
-        font-size: clamp(20px, 4vw, 28px);
-    }
-    .hero-text p {
-        font-size: clamp(12px, 2.5vw, 16px);
-    }
-    .hero-section {
-        border-width: 30px;
-        aspect-ratio: 16 / 7;
-    }
-    .application-section {
-        padding: 30px 20px;
-    }
+    .header { padding: 12px 20px; }
+    .logo img { width: 220px; height: 44px; }
+    .navbar { min-width: 500px; }
+    .header-right { gap: 8px; }
+    .hero-text h1 { font-size: clamp(20px, 4vw, 28px); }
+    .hero-text p { font-size: clamp(12px, 2.5vw, 16px); }
+    .hero-section { border-width: 30px; aspect-ratio: 16 / 7; }
+    .application-section { padding: 30px 20px; }
 }
 
 @media (max-width: 768px) {
-
-    .header {
-        padding: 10px 15px;
-    }
-    .logo img {
-        width: 180px;
-        height: 36px;
-    }
-    .navbar {
-        display: none;
-    }
-    .hamburger {
-        display: flex;
-        padding: 6px;
-    }
-    .header-right {
-        gap: 6px;
-    }
-    .search button {
-        padding: 10px;
-        min-height: 40px;
-        min-width: 40px;
-        font-size: 12px;
-    }
-    .search button span {
-        display: none;
-    }
-    .language-selector {
-        padding: 8px 6px;
-        min-width: 80px;
-        min-height: 40px;
-        font-size: 12px;
-    }
-    main {
-        padding: 15px;
-    }
-    .hero-section {
-        border-width: 20px;
-        aspect-ratio: 16 / 10;
-    }
-    .hero-text {
-        bottom: 20px;
-        left: 20px;
-        max-width: 80%;
-    }
-    .hero-text h1 {
-        font-size: clamp(18px, 4vw, 20px);
-    }
-    .hero-text p {
-        font-size: clamp(12px, 3vw, 14px);
-        margin-bottom: 15px;
-    }
-    .buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .btn {
-        padding: 10px 20px;
-        font-size: clamp(12px, 2.5vw, 14px);
-    }
-    .dropdown:hover .dropdown-menu, .language-selector:hover .language-menu {
-        opacity: 0;
-        visibility: hidden;
-    }
-    .dropdown.open .dropdown-menu, .language-selector.open .language-menu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-    .dropdown.open .arrow-down, .language-selector.open .arrow-down {
-        transform: rotate(180deg);
-    }
-    .application-section {
-        padding: 20px 15px;
-    }
-    .news-category, .news-time {
-        font-size: 0.75rem;
-    }
-    .footer {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 30px 15px;
-    }
-    .footer-left, .footer-map {
-        align-items: center;
-    }
-    .footer-left img {
-        margin-bottom: 15px;
-    }
-    .contact-info input {
-        max-width: 300px;
-    }
-    .social-icons {
-        justify-content: center;
-    }
-    .content {
-        flex-direction: column;
-        align-items: center;
-    }
-    .sidebar {
-        display: none;
-    }
-    .mobile-region-dropdown {
-        display: block;
-    }
-    .map-section {
-        width: 100%;
-        max-width: 761px;
-        height: 100%;
-        max-height: 804px;
-    }
-
+    .header { padding: 10px 15px; }
+    .logo img { width: 180px; height: 36px; }
+    .navbar { display: none; }
+    .hamburger { display: flex; }
+    .header-right { gap: 6px; }
+    .search button { padding: 10px; min-height: 40px; min-width: 40px; font-size: 12px; }
+    .search button span { display: none; }
+    .language-selector { padding: 8px 6px; min-width: 80px; min-height: 40px; font-size: 12px; }
+    main { padding: 15px; }
+    .hero-section { border-width: 20px; aspect-ratio: 16 / 10; }
+    .hero-text { bottom: 20px; left: 20px; max-width: 80%; }
+    .hero-text h1 { font-size: clamp(18px, 4vw, 20px); }
+    .hero-text p { font-size: clamp(12px, 3vw, 14px); margin-bottom: 15px; }
+    .buttons { flex-direction: column; gap: 10px; }
+    .btn { padding: 10px 20px; font-size: clamp(12px, 2.5vw, 14px); }
+    .dropdown:hover .dropdown-menu, .language-selector:hover .language-menu { opacity: 0; visibility: hidden; }
+    .dropdown.open .dropdown-menu, .language-selector.open .language-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .dropdown.open .arrow-down, .language-selector.open .arrow-down { transform: rotate(180deg); }
+    .application-section { padding: 20px 15px; }
+    .news-category, .news-time { font-size: 0.75rem; }
+    .footer { flex-direction: column; align-items: center; text-align: center; padding: 30px 15px; }
+    .footer-left, .footer-map { align-items: center; }
+    .footer-left img { margin-bottom: 15px; }
+    .contact-info input { max-width: 300px; }
+    .social-icons { justify-content: center; }
+    .content { flex-direction: column; align-items: center; }
+    .sidebar { display: none; }
+    .mobile-region-dropdown { display: block; }
+    .map-section { width: 100%; max-width: 761px; height: 100%; max-height: 804px; }
 }
 
 @media (max-width: 480px) {
-    .header {
-        padding: 8px 10px;
-    }
-    .logo img {
-        width: 140px;
-        height: 30px;
-    }
-    .hamburger {
-        padding: 5px;
-    }
-    .search button {
-        padding: 8px;
-        min-height: 35px;
-        min-width: 35px;
-    }
-    .language-selector {
-        padding: 6px 5px;
-        min-width: 70px;
-        min-height: 35px;
-        font-size: 11px;
-    }
-    .hero-section {
-        border-width: 10px;
-        aspect-ratio: 4 / 3;
-    }
-    .hero-text {
-        bottom: 15px;
-        left: 15px;
-        max-width: 85%;
-    }
-    .hero-text h1 {
-        font-size: clamp(16px, 4vw, 18px);
-    }
-    .hero-text p {
-        font-size: clamp(11px, 3vw, 13px);
-    }
-    .btn {
-        padding: 8px 16px;
-        font-size: clamp(11px, 2.5vw, 13px);
-    }
-    .application-section {
-        padding: 15px 10px;
-    }
+    .header { padding: 8px 10px; }
+    .logo img { width: 140px; height: 30px; }
+    .hamburger { padding: 5px; }
+    .search button { padding: 8px; min-height: 35px; min-width: 35px; }
+    .language-selector { padding: 6px 5px; min-width: 70px; min-height: 35px; font-size: 11px; }
+    .hero-section { border-width: 10px; aspect-ratio: 4 / 3; }
+    .hero-text { bottom: 15px; left: 15px; max-width: 85%; }
+    .hero-text h1 { font-size: clamp(16px, 4vw, 18px); }
+    .hero-text p { font-size: clamp(11px, 3vw, 13px); }
+    .btn { padding: 8px 16px; font-size: clamp(11px, 2.5vw, 13px); }
+    .application-section { padding: 15px 10px; }
 }
 
 @media (max-width: 360px) {
-    .header {
-        padding: 6px 8px;
-    }
-    .logo img {
-        width: 120px;
-        height: 26px;
-    }
-    .hamburger {
-        padding: 4px;
-    }
-    .hamburger span {
-        width: 20px;
-        height: 2px;
-        margin: 2px 0;
-    }
-    .search button {
-        padding: 6px;
-        min-height: 30px;
-        min-width: 30px;
-    }
-    .language-selector {
-        padding: 5px 4px;
-        min-width: 60px;
-        min-height: 30px;
-        font-size: 10px;
-    }
-    .language-menu {
-        min-width: 100px;
-    }
-    .hero-section {
-        border-width: 8px;
-    }
-    .hero-text {
-        bottom: 10px;
-        left: 10px;
-        max-width: 90%;
-    }
-    .application-section {
-        padding: 10px 8px;
-    }
-}
-
-.mobile-dropdown-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-    opacity: 0;
-}
-
-.mobile-dropdown-content.active {
-    max-height: 300px;
-    opacity: 1;
-}
-
-/* Мобильный дропдаун - улучшенный стиль */
-.mobile-dropdown {
-    border-bottom: 1px solid #304F30;
-}
-
-.mobile-dropdown-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    color: white;
-    transition: background-color 0.3s ease;
-}
-
-.mobile-dropdown-header:hover {
-    background-color: #327632;
-}
-
-/* Стрелка вниз */
-.mobile-dropdown-header .arrow-down {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid white;
-    transition: transform 0.3s ease;
-}
-
-/* При открытии — стрелка вверх */
-.mobile-dropdown-header.open .arrow-down,
-.mobile-dropdown-content.active + .mobile-dropdown-header .arrow-down {
-    transform: rotate(180deg);
-}
-
-.mobile-dropdown-content {
-    display: none;
-    background-color: #2a5a2a;
-    overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-    max-height: 0;
-    opacity: 0;
-}
-
-.mobile-dropdown-content.active {
-    display: block;
-    max-height: 300px;
-    opacity: 1;
-    padding: 0;
-}
-
-.mobile-dropdown-content a {
-    padding: 12px 40px;
-    display: block;
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-.mobile-dropdown-content a:hover {
-    background-color: #327632;
+    .header { padding: 6px 8px; }
+    .logo img { width: 120px; height: 26px; }
+    .hamburger { padding: 4px; }
+    .hamburger span { width: 20px; height: 2px; margin: 2px 0; }
+    .search button { padding: 6px; min-height: 30px; min-width: 30px; }
+    .language-selector { padding: 5px 4px; min-width: 60px; min-height: 30px; font-size: 10px; }
+    .language-menu { min-width: 100px; }
+    .hero-section { border-width: 8px; }
+    .hero-text { bottom: 10px; left: 10px; max-width: 90%; }
+    .application-section { padding: 10px 8px; }
 }

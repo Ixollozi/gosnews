@@ -18,6 +18,14 @@ body {
     display: flex;
     flex-direction: column;
     color: white;
+    /* Скрываем скроллбар глобально */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE и Edge */
+    overflow-y: auto; /* но оставляем возможность прокрутки */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
 }
 
 /* Header */
@@ -458,27 +466,48 @@ main {
     flex: 1;
     overflow: hidden;
     height: 100%;
-    max-height: 1200px;
+    max-height: 100vh; /* Ограничиваем по высоте окна */
 }
 .sidebar {
-    width: 250px;
-    background-color: #2f4f2f;
+    width: 100%;
+    max-width: 500px;
     padding: 10px;
     display: flex;
     flex-direction: column;
+    margin-right: 30px;
     gap: 10px;
+    /* Добавляем прокрутку */
+    height: 100%;
+    max-height: 741px; /* Ограничиваем высоту */
+    overflow-y: auto;   /* Включаем вертикальный скролл при переполнении */
+    /* Скрываем скроллбар */
+    scrollbar-width: none; /* Для Firefox */
+    -ms-overflow-style: none;  /* Для IE и старого Edge */
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none; /* Для Chrome, Safari, Edge */
 }
 
 .region {
-    background-color: #6b8e6b;
-    border: none;
+    background-color: #327632;
+    border: #63C563 solid 1px;
+    height: 100%;           /* Фиксированная высота */
+    min-height: 53px;
+    max-height: 76px;
     padding: 10px;
     color: white;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
-    text-align: left;
+    display: flex;
+    align-items: center;    /* Центрируем текст по вертикали */
+    justify-content: center;
+    text-align: center;
     font-size: 1em;
     transition: background-color 0.3s;
+    overflow: hidden;       /* На случай, если текст вылезет */
+    white-space: nowrap;    /* Опционально: чтобы текст не переносился */
+    text-overflow: ellipsis; /* Опционально: "..." если текст длинный */
 }
 
 .region:hover {
@@ -489,6 +518,7 @@ main {
     flex: 1;
     position: relative;
     overflow: hidden;
+    border-radius: 15px;
 }
 .map-section iframe {
     width: 100%;
@@ -508,8 +538,8 @@ main {
 .contact-card {
     position: absolute;
     bottom: 20px;
-    right: 20px;
-    background-color: rgba(107, 142, 107, 0.9);
+    left: 20px;
+    background-color: #193B19;
     padding: 10px;
     border-radius: 5px;
     display: flex;

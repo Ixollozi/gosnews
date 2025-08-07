@@ -203,7 +203,7 @@ body::-webkit-scrollbar {
     border-radius: 15px;
     font-size: 12px;
     cursor: pointer;
-    min-height: 40px;
+    min-height: 54px;
     min-width: 40px;
     font-weight: bold;
     transition: background-color 0.3s ease;

@@ -99,11 +99,11 @@
         </div>
     </div>
 
-
     <!-- Application Section -->
     <div class="headers" id="ariza">Ariza qoldirish</div>
     <div class="fade-line"></div>
     <div class="hero-section"></div>
+
     <!-- News Section -->
     <div class="headers" id="news">Yangiliklar</div>
     <div class="fade-line"></div>
@@ -114,9 +114,9 @@
                 <h2>Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq tayinlandi</h2>
                 <p>Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari tayinlandi.</p>
                 <span class="news-date">
-                        <span class="news-category">Tayinlov</span>:
-                        <span class="news-time">21 iyul, 12:21</span>
-                    </span>
+                    <span class="news-category">Tayinlov</span>:
+                    <span class="news-time">21 iyul, 12:21</span>
+                </span>
             </div>
         </div>
         <div class="news-card">
@@ -125,9 +125,9 @@
                 <h2>Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi</h2>
                 <p>Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan.</p>
                 <span class="news-date">
-                        <span class="news-category">Loyihalar</span>:
-                        <span class="news-time">10 avgust, 09:45</span>
-                    </span>
+                    <span class="news-category">Loyihalar</span>:
+                    <span class="news-time">10 avgust, 09:45</span>
+                </span>
             </div>
         </div>
         <div class="news-card">
@@ -136,47 +136,48 @@
                 <h2>Buxoro shahrida yangi sport kompleksi ochildi</h2>
                 <p>Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan.</p>
                 <span class="news-date">
-                        <span class="news-category">Ochilish tadbiri </span>:
-                        <span class="news-time">5 sentabr, 15:30</span>
-                    </span>
+                    <span class="news-category">Ochilish tadbiri</span>:
+                    <span class="news-time">5 sentabr, 15:30</span>
+                </span>
             </div>
         </div>
     </div>
     <button class="see-more-btn">Yana ko'rish</button>
-    <! --- Hududlar Section --->
+
+    <!-- Hududlar Section -->
     <div class="headers" id="hududlar">Hududlar</div>
     <div class="fade-line"></div>
     <div class="hero-section">
-    <div class="content">
+        <div class="content">
             <div class="sidebar">
-                <button class="region">Toshkent shahar</button>
-                <button class="region">Toshkent viloyati</button>
-                <button class="region">Andijon viloyati</button>
-                <button class="region">Buxoro viloyati</button>
-                <button class="region">Farg‘ona viloyati</button>
-                <button class="region">Jizzax viloyati</button>
-                <button class="region">Namangan viloyati</button>
-                <button class="region">Navoiy viloyati</button>
-                <button class="region">Navoiy viloyati</button>
-                <button class="region">Navoiy viloyati</button>
-                <button class="region">Navoiy viloyati</button>
-                <button class="region">Navoiy viloyati</button>
-                <button class="region">Navoiy viloyati</button>
-                <button class="region">Navoiy viloyati</button>
+                <button class="region" data-region="toshkent-shahar">Toshkent shahar</button>
+                <button class="region" data-region="toshkent-viloyat">Toshkent viloyati</button>
+                <button class="region" data-region="andijon">Andijon viloyati</button>
+                <button class="region" data-region="buxoro">Buxoro viloyati</button>
+                <button class="region" data-region="fargona">Farg'ona viloyati</button>
+                <button class="region" data-region="jizzax">Jizzax viloyati</button>
+                <button class="region" data-region="namangan">Namangan viloyati</button>
+                <button class="region" data-region="navoiy">Navoiy viloyati</button>
+                <button class="region" data-region="qashqadaryo">Qashqadaryo viloyati</button>
+                <button class="region" data-region="samarkand">Samarkand viloyati</button>
+                <button class="region" data-region="sirdaryo">Sirdaryo viloyati</button>
+                <button class="region" data-region="surxondaryo">Surxondaryo viloyati</button>
+                <button class="region" data-region="xorazm">Xorazm viloyati</button>
+                <button class="region" data-region="qoraqalpogiston">Qoraqalpog'iston</button>
             </div>
             <div class="map-section">
-                <iframe src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16" ></iframe>
+                <iframe id="region-map" src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16"></iframe>
                 <div class="contact-card">
                     <img src="https://via.placeholder.com/50x50" alt="Profile" class="profile-pic">
                     <div class="contact-info">
-                        <h3>Alisher Alisherovich</h3>
-                        <p><a href="mailto:aalisherovich@mail.ru">aalisherovich@mail.ru</a></p>
-                        <p><a href="tel:+998900000000">+998 90 000 00 00</a></p>
+                        <h3 id="contact-name">Alisher Alisherovich</h3>
+                        <p><a href="mailto:aalisherovich@mail.ru" id="contact-email">aalisherovich@mail.ru</a></p>
+                        <p><a href="tel:+998900000000" id="contact-phone">+998 90 000 00 00</a></p>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
     <!-- Partners Section -->
     <div class="headers" id="partners">Hamkorlarimiz</div>
@@ -215,11 +216,11 @@
             </div>
         </div>
     </section>
+
     <!-- Footer -->
     <footer class="footer">
         <img src="/static/images/logo.svg" alt="Kambag'allikni qisqartirish Davlat jang'armasi logo">
         <div class="footer-left">
-
             <ul class="footer-links">
                 <li><a href="#">Asosiy</a></li>
                 <li><a href="#">Jang'arma haqida</a></li>
@@ -234,11 +235,10 @@
                         width="560" height="400" frameborder="1" allowfullscreen="true"
                         style="position:relative;"></iframe>
                 <div class="map-overlay">
-                    <p>O‘zbekiston Respublikasi, Toshkent shahar, Amir Temur ko‘chasi, 12a, uy. 100012</p>
+                    <p>O'zbekiston Respublikasi, Toshkent shahar, Amir Temur ko'chasi, 12a, uy. 100012</p>
                 </div>
             </div>
             <div class="contact-infos">
-
                 <span class="info">+998 71 123 45 67</span>
                 <span class="info">info@kqdimj.uz</span>
             </div>
@@ -247,19 +247,126 @@
                 <a href="#"><img src="/static/images/logoinst.svg"></a>
                 <a href="#"><img src="/static/images/logoyt.svg"></a>
                 <a href="#"><img src="/static/images/logoface.svg"></a>
-
             </div>
         </div>
     </footer>
 </main>
 
 <script>
+    // Region data with map coordinates and contact info
+    const regions = {
+        'toshkent-shahar': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=69.237650%2C41.311950&z=12',
+            name: 'Alisher Alisherovich',
+            email: 'toshkent@kqdimj.uz',
+            phone: '+998 71 123 45 67'
+        },
+        'toshkent-viloyat': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=69.347650%2C41.411950&z=10',
+            name: 'Bobur Boburov',
+            email: 'toshkent.vil@kqdimj.uz',
+            phone: '+998 69 456 78 90'
+        },
+        'andijon': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=72.344800%2C40.782200&z=10',
+            name: 'Sardor Sardorov',
+            email: 'andijon@kqdimj.uz',
+            phone: '+998 74 123 45 67'
+        },
+        'buxoro': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=64.428100%2C39.767500&z=10',
+            name: 'Ulugbek Ulugbekov',
+            email: 'buxoro@kqdimj.uz',
+            phone: '+998 65 789 01 23'
+        },
+        'fargona': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=71.785700%2C40.384400&z=10',
+            name: 'Dilshod Dilshodov',
+            email: 'fargona@kqdimj.uz',
+            phone: '+998 73 234 56 78'
+        },
+        'jizzax': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=67.842800%2C40.116000&z=10',
+            name: 'Jasur Jasurov',
+            email: 'jizzax@kqdimj.uz',
+            phone: '+998 72 345 67 89'
+        },
+        'namangan': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=71.672700%2C40.998500&z=10',
+            name: 'Nosir Nosirov',
+            email: 'namangan@kqdimj.uz',
+            phone: '+998 69 456 78 90'
+        },
+        'navoiy': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=65.379300%2C40.084200&z=10',
+            name: 'Navfal Navfalov',
+            email: 'navoiy@kqdimj.uz',
+            phone: '+998 79 567 89 01'
+        },
+        'qashqadaryo': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=65.784400%2C38.842200&z=10',
+            name: 'Qosim Qosimov',
+            email: 'qashqadaryo@kqdimj.uz',
+            phone: '+998 75 678 90 12'
+        },
+        'samarkand': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=66.975800%2C39.627000&z=10',
+            name: 'Sobir Sobirov',
+            email: 'samarkand@kqdimj.uz',
+            phone: '+998 66 789 01 23'
+        },
+        'sirdaryo': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=68.713300%2C40.837800&z=10',
+            name: 'Sirojiddin Sirojiddinov',
+            email: 'sirdaryo@kqdimj.uz',
+            phone: '+998 67 890 12 34'
+        },
+        'surxondaryo': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=67.548600%2C37.934400&z=10',
+            name: 'Suhrob Suhrobov',
+            email: 'surxondaryo@kqdimj.uz',
+            phone: '+998 76 901 23 45'
+        },
+        'xorazm': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=60.625000%2C41.377800&z=10',
+            name: 'Xurshid Xurshidov',
+            email: 'xorazm@kqdimj.uz',
+            phone: '+998 62 012 34 56'
+        },
+        'qoraqalpogiston': {
+            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=59.611100%2C43.804400&z=8',
+            name: 'Qoraqalpaq Qoraqalpaqqizi',
+            email: 'qoraqalpogiston@kqdimj.uz',
+            phone: '+998 61 123 45 67'
+        }
+    };
+
     // Language change function
     function changeLanguage(element) {
         document.querySelectorAll('.language-menu a').forEach(a => a.classList.remove('active'));
         element.classList.add('active');
         document.getElementById('current-language').textContent = element.getAttribute('data-lang');
         return false;
+    }
+
+    // Region selection function
+    function selectRegion(regionKey) {
+        const regionData = regions[regionKey];
+        if (!regionData) return;
+
+        // Update active region button
+        document.querySelectorAll('.region').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`[data-region="${regionKey}"]`).classList.add('active');
+
+        // Update map
+        document.getElementById('region-map').src = regionData.mapUrl;
+
+        // Update contact info
+        document.getElementById('contact-name').textContent = regionData.name;
+        document.getElementById('contact-email').textContent = regionData.email;
+        document.getElementById('contact-email').href = `mailto:${regionData.email}`;
+        document.getElementById('contact-phone').textContent = regionData.phone;
+        document.getElementById('contact-phone').href = `tel:${regionData.phone}`;
     }
 
     // Initialize elements
@@ -270,17 +377,25 @@
     const mobileDropdownHeader = document.getElementById('mobile-dropdown-header');
     const mobileDropdownContent = document.getElementById('mobile-dropdown-content');
 
-    // Toggle hamburger menu
+    // Add event listeners to region buttons
+    document.querySelectorAll('.region').forEach(button => {
+        button.addEventListener('click', () => {
+            selectRegion(button.dataset.region);
+        });
+    });
+
+    // Set default region
+    selectRegion('toshkent-shahar');
+
+    // Original menu functions
     hamburger.addEventListener('click', function(e) {
         e.stopPropagation();
         hamburger.classList.toggle('active');
         mobileMenu.classList.toggle('active');
-        // Close other dropdowns
         languageSelector.classList.remove('open');
         dropdown.classList.remove('open');
     });
 
-    // Mobile navigation dropdown toggle
     mobileDropdownHeader.addEventListener('click', function(e) {
         e.stopPropagation();
         mobileDropdownContent.classList.toggle('active');
@@ -288,42 +403,36 @@
             mobileDropdownContent.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
     });
 
-    // Language selector toggle
     languageSelector.addEventListener('click', function(e) {
         e.stopPropagation();
         if (window.innerWidth <= 768) {
             this.classList.toggle('open');
             const arrow = this.querySelector('.arrow-down');
             arrow.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
-            // Close other dropdowns
             dropdown.classList.remove('open');
             hamburger.classList.remove('active');
             mobileMenu.classList.remove('active');
         }
     });
 
-    // Navigation dropdown toggle for mobile
     dropdown.addEventListener('click', function(e) {
         if (window.innerWidth <= 768) {
             e.stopPropagation();
             this.classList.toggle('open');
             const arrow = this.querySelector('.arrow-down');
             arrow.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
-            // Close other dropdowns
             languageSelector.classList.remove('open');
             hamburger.classList.remove('active');
             mobileMenu.classList.remove('active');
         }
     });
 
-    // Prevent dropdown links from closing their parent dropdown
     document.querySelectorAll('.language-menu a, .dropdown-menu a, .mobile-dropdown-content a').forEach(link => {
         link.addEventListener('click', function(e) {
             e.stopPropagation();
         });
     });
 
-    // Close all dropdowns and menus when clicking outside
     document.addEventListener('click', function(e) {
         if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
             hamburger.classList.remove('active');
@@ -341,7 +450,6 @@
         }
     });
 
-    // Close mobile menu when clicking a link
     document.querySelectorAll('.mobile-menu a').forEach(link => {
         link.addEventListener('click', function() {
             hamburger.classList.remove('active');
@@ -349,7 +457,6 @@
         });
     });
 
-    // Determine current page
     const currentPage = window.location.pathname.split('/').pop().split('.')[0] || 'bosh-sahifa';
     const links = document.querySelectorAll('.navbar a, .mobile-menu a');
     links.forEach(link => {
@@ -359,7 +466,6 @@
         }
     });
 
-    // Handle window resize
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
             languageSelector.classList.remove('open');

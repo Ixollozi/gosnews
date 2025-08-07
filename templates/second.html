@@ -7,100 +7,122 @@
     <link rel="stylesheet" href="/static/css/second.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">
-            <a href="/"><img src="/static/images/logo.svg" alt="Logo"></a>
-        </div>
-
-        <!-- Desktop Navigation -->
-        <nav class="navbar">
-            <a href="#" data-page="bosh-sahifa">Bosh sahifa</a>
-            <div class="dropdown active">
-                <span>Jang'arma</span>
-                <i class="arrow-down"></i>
-                <div class="dropdown-menu">
-                    <a href="#">Biz haqimizda</a>
-                    <a href="#">Rahbariyat</a>
-                    <a href="#" class="active">Suddan</a>
-                    <a href="#">Subsidiya</a>
-                    <a href="#">Grantlar</a>
-                </div>
-            </div>
-            <a href="#" data-page="ariza">Ariza qoldirish</a>
-            <a href="#" data-page="yangiliklar">Yangiliklar</a>
-            <a href="#" data-page="hududlar">Hududlar</a>
-            <a href="#" data-page="mahalla">online.mahalla</a>
-        </nav>
-
-        <div class="header-right">
-            <div class="search">
-                <button>
-                    <img src="/static/images/search-icon.svg" alt="Search Icon" class="search-icon">
-                    <span>Qidiruv</span>
-                </button>
-            </div>
-            <div class="language-selector">
-                <img src="/static/images/global-icon.svg" alt="World Icon">
-                <span id="current-language">O'zb</span>
-                <i class="arrow-down"></i>
-                <div class="language-menu">
-                    <a href="#" data-lang="O'zb" class="active">O'zbek</a>
-                    <a href="#" data-lang="Рус">Русский</a>
-                    <a href="#" data-lang="Eng">English</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <a href="#">Bosh sahifa</a>
-        <span>></span>
-        <span>Suddan</span>
+<!-- Header -->
+<header class="header">
+    <div class="logo">
+        <a href="/"><img src="/static/images/logo.svg" alt="Logo"></a>
     </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <h1 class="page-title">Suddan</h1>
-        <div class="fade-line"></div>
-
-        <div class="content-section">
-            <div class="text-content">
-                <h2>Suddan - Bu kambag'allik xavfi ostida yashayotgan fuqarolarga ko'rsatiladigan bir martalik yoki davriy moddiy yordam shaklidir.</h2>
-
-                <p>Suddan mablag' olish uchun fuqarolar mahalla yoki hududiy ijtimoiy himoya bo'limlariga murojaat qilishlari mumkin. Arizalar ijtimoiy mezonlar asosida baholanadi va maqsadli yordam taqdim etiladi.</p>
-
-                <button class="video-btn">Videoni ko'rish</button>
+    <!-- Desktop Navigation -->
+    <nav class="navbar">
+        <a href="#" data-page="bosh-sahifa">Bosh sahifa</a>
+        <div class="dropdown active">
+            <span>Jang'arma</span>
+            <i class="arrow-down"></i>
+            <div class="dropdown-menu">
+                <a href="#">Biz haqimizda</a>
+                <a href="#">Rahbariyat</a>
+                <a href="#" class="active">Suddan</a>
+                <a href="#">Subsidiya</a>
+                <a href="#">Grantlar</a>
             </div>
+        </div>
+        <a href="#" data-page="ariza">Ariza qoldirish</a>
+        <a href="#" data-page="yangiliklar">Yangiliklar</a>
+        <a href="#" data-page="hududlar">Hududlar</a>
+        <a href="#" data-page="mahalla">online.mahalla</a>
+    </nav>
 
-            <div class="video-container">
-                <div class="video-thumbnail">
-                    <div class="play-button"><img src="/static/images/youtube - icon.svg" alt=""></div>
+    <div class="header-right">
+        <div class="search">
+            <button>
+                <img src="/static/images/search-icon.svg" alt="Search Icon" class="search-icon">
+                <span>Qidiruv</span>
+            </button>
+        </div>
+        <div class="language-selector">
+            <img src="/static/images/global-icon.svg" alt="World Icon">
+            <span id="current-language">O'zb</span>
+            <i class="arrow-down"></i>
+            <div class="language-menu">
+                <a href="#" data-lang="O'zb" class="active">O'zbek</a>
+                <a href="#" data-lang="Рус">Русский</a>
+                <a href="#" data-lang="Eng">English</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <a href="#">Bosh sahifa</a>
+    <span>></span>
+    <span>Suddan</span>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+    <h1 class="page-title">Suddan</h1>
+    <div class="fade-line"></div>
+
+    <div class="content-section">
+        <div class="text-content">
+            <h2>Suddan - Bu kambag'allik xavfi ostida yashayotgan fuqarolarga ko'rsatiladigan bir martalik yoki davriy
+                moddiy yordam shaklidir.</h2>
+
+            <p>Suddan mablag' olish uchun fuqarolar mahalla yoki hududiy ijtimoiy himoya bo'limlariga murojaat
+                qilishlari mumkin. Arizalar ijtimoiy mezonlar asosida baholanadi va maqsadli yordam taqdim etiladi.</p>
+
+            <button class="video-btn">Videoni ko'rish</button>
+        </div>
+
+        <div class="video-container" id="video-container">
+            <div class="video-thumbnail" id="video-thumbnail" style="position: relative; cursor: pointer;">
+                <img src="https://img.youtube.com/vi/H2vTrHc-OGk/maxresdefault.jpg" alt="YouTube Thumbnail"
+                     style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="play-button"
+                     style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <img src="/static/images/youtube - icon.svg" alt="Play Button">
                 </div>
             </div>
         </div>
-    </main>
 
-    <script>
-        // Language selector functionality
-        document.querySelectorAll('.language-menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelectorAll('.language-menu a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById('current-language').textContent = this.getAttribute('data-lang');
-            });
-        });
+    </div>
+</main>
 
-        // Video play button functionality
-        document.querySelector('.play-button').addEventListener('click', function() {
-            alert('Video o\'ynatish funksiyasi');
+<script>
+    // Language selector functionality
+    document.querySelectorAll('.language-menu a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.language-menu a').forEach(a => a.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById('current-language').textContent = this.getAttribute('data-lang');
         });
+    });
 
-        document.querySelector('.video-btn').addEventListener('click', function() {
-            alert('Video o\'ynatish funksiyasi');
-        });
-    </script>
+    // Video play button functionality
+    document.querySelector('.play-button').addEventListener('click', function() {
+        alert('Video o\'ynatish funksiyasi');
+    });
+
+    document.querySelector('.video-btn').addEventListener('click', function() {
+        alert('Video o\'ynatish funksiyasi');
+    });
+
+    document.getElementById('video-thumbnail').addEventListener('click', function () {
+    const container = document.getElementById('video-container');
+    container.innerHTML = `
+        <iframe
+            width="100%"
+            height="500"
+            src="https://www.youtube.com/embed/H2vTrHc-OGk?autoplay=1&rel=0"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen>
+        </iframe>`;
+});
+</script>
+
 </body>
 </html>

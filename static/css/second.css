@@ -337,17 +337,21 @@ body {
 .text-content {
     flex: 1;
     color: white;
+    max-width: 600px;
+    max-height: 400px;
+    width: 100%;
+    height: 100%;
 }
 
 .text-content h2 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     margin-bottom: 30px;
     line-height: 1.3;
 }
 
 .text-content p {
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.6;
     margin-bottom: 30px;
 }
@@ -370,31 +374,36 @@ body {
 
 .video-container {
     flex: 1;
-    max-width: 500px;
+    max-width: 670px;
+    height: 400px; /* Фиксированная высота */
     position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #000; /* Чтобы избежать пустого пространства */
+}
+.video-container iframe {
+    width: 100%;
+    height: 100%; /* Занимает всю высоту контейнера */
+    border: none;
 }
 
 .video-thumbnail {
     width: 100%;
-    height: 300px;
-    background-image: url('/static/images/video-thumbnail.jpg');
+    height: 100%; /* Занимает всю высоту контейнера */
     background-size: cover;
     background-position: center;
     border-radius: 15px;
     position: relative;
     cursor: pointer;
-    overflow: hidden;
 }
-
 .video-thumbnail:before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3); /* Полупрозрачный оверлей */
 }
+
+
 
 .play-button {
     position: absolute;

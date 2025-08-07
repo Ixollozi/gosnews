@@ -628,6 +628,54 @@ main {
     background-color: #1E3D1E;
 }
 
+
+/* ========================================
+   9.5 Dasturlar
+======================================== */
+
+.lern-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.lern-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.lern-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.lern-card a {
+    text-decoration: none;
+}
+.lern-content {
+    padding: 15px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+.lern-content h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.lern-content p {
+    font-size: 0.9rem;
+    color: #d1e7dd;
+    margin-bottom: 10px;
+}
+
 /* ========================================
    10. Худудлар (карта и регионы)
 ======================================== */

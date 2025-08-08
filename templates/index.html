@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 {% load i18n %}
-<html lang="uz">
+{% load static %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% blocktrans %}Kambag'allikni qisqartirish{% endblocktrans %}</title>
-    {% load static %}
+    <title>{% trans "Kambag'allikni qisqartirish" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
 </head>
 <body>
+{% csrf_token %}
 <!-- Header -->
 <header class="header">
     <div class="logo">
-        <a href="/"><img src="/static/images/logo.svg" alt="Logo"></a>
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="logo"></a>
     </div>
 
     <!-- Desktop Navigation -->
     <nav class="navbar" id="navbar">
-        <a href="bosh-sahifa.html" data-page="bosh-sahifa" class="active">Bosh sahifa</a>
+        <a href="{% url 'home' %}" data-page="bosh-sahifa" class="active">{% trans "Bosh sahifa" %}</a>
         <div class="dropdown" id="dropdown-jangarma">
-            <span>Jang'arma</span>
+            <span>{% trans "Jang'arma" %}</span>
             <i class="arrow-down"></i>
             <div class="dropdown-menu">
-                <a href="#">Biz haqimizda</a>
-                <a href="#">Rahbariyat</a>
-                <a href="#">Suddan</a>
-                <a href="#">Subsidiya</a>
-                <a href="#">Grantlar</a>
+                <a href="#">{% trans "Biz haqimizda" %}</a>
+                <a href="#">{% trans "Rahbariyat" %}</a>
+                <a href="#">{% trans "Suddan" %}</a>
+                <a href="#">{% trans "Subsidiya" %}</a>
+                <a href="#">{% trans "Grantlar" %}</a>
             </div>
         </div>
-        <a href="#ariza" data-page="ariza">Ariza qoldirish</a>
-        <a href="#news" data-page="yangiliklar">Yangiliklar</a>
-        <a href="hududlar.html" data-page="hududlar">Hududlar</a>
-        <a href="mahalla.html" data-page="mahalla">online.mahalla</a>
+        <a href="#ariza" data-page="ariza">{% trans "Ariza qoldirish" %}</a>
+        <a href="#news" data-page="yangiliklar">{% trans "Yangiliklar" %}</a>
+        <a href="#hududlar" data-page="hududlar">{% trans "Hududlar" %}</a>
+        <a href="#mahalla" data-page="mahalla">{% trans "online.mahalla" %}</a>
     </nav>
 
     <!-- Header Right Section -->
@@ -43,196 +43,199 @@
             <span></span>
             <span></span>
         </div>
+        <!-- Фрагмент селектора языка -->
+        <!-- Фрагмент селектора языка -->
         <div class="language-selector" id="language-selector">
-            <img src="/static/images/global-icon.svg" alt="World Icon">
-            <span id="current-language">O'zb</span>
+            <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+            <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
             <i class="arrow-down"></i>
             <div class="language-menu">
-                <a href="#" data-lang="O'zb" class="active" onclick="changeLanguage(this)">O'zbek</a>
-                <a href="#" data-lang="Рус" onclick="changeLanguage(this)">Русский</a>
-                <a href="#" data-lang="Eng" onclick="changeLanguage(this)">English</a>
+                <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
             </div>
         </div>
         <div class="search">
             <button>
-                <img src="/static/images/search-icon.svg" alt="Search Icon" class="search-icon">
-                <span>Qidiruv</span>
+                <img src="{% static 'images/search-icon.svg' %}" alt="search-icon" class="search-icon">
+                <span>{% trans "Qidiruv" %}</span>
             </button>
         </div>
     </div>
 
     <!-- Mobile Menu -->
     <nav class="mobile-menu" id="mobile-menu">
-        <a href="bosh-sahifa.html" data-page="bosh-sahifa" class="active">Bosh sahifa</a>
+        <a href="{% url 'home' %}" data-page="bosh-sahifa" class="active">{% trans "Bosh sahifa" %}</a>
         <div class="mobile-dropdown">
             <div class="mobile-dropdown-header" id="mobile-dropdown-header">
-                <span>Jang'arma</span>
+                <span>{% trans "Jang'arma" %}</span>
                 <i class="arrow-down"></i>
             </div>
             <div class="mobile-dropdown-content" id="mobile-dropdown-content">
-                <a href="#">Biz haqimizda</a>
-                <a href="#">Rahbariyat</a>
-                <a href="#">Sertifikatlar</a>
-                <a href="#">Suddan</a>
-                <a href="#">Subsidiya</a>
-                <a href="#">Grantlar</a>
+                <a href="#">{% trans "Biz haqimizda" %}</a>
+                <a href="#">{% trans "Rahbariyat" %}</a>
+                <a href="#">{% trans "Sertifikatlar" %}</a>
+                <a href="#">{% trans "Suddan" %}</a>
+                <a href="#">{% trans "Subsidiya" %}</a>
+                <a href="#">{% trans "Grantlar" %}</a>
             </div>
         </div>
-        <a href="ariza.html" data-page="ariza">Ariza qoldirish</a>
-        <a href="yangiliklar.html" data-page="yangiliklar">Yangiliklar</a>
-        <a href="hududlar.html" data-page="hududlar">Hududlar</a>
-        <a href="mahalla.html" data-page="mahalla">online.mahalla</a>
+        <a href="#ariza" data-page="ariza">{% trans "Ariza qoldirish" %}</a>
+        <a href="#news" data-page="yangiliklar">{% trans "Yangiliklar" %}</a>
+        <a href="#hududlar" data-page="hududlar">{% trans "Hududlar" %}</a>
+        <a href="#mahalla" data-page="mahalla">{% trans "online.mahalla" %}</a>
     </nav>
 </header>
 
 <!-- Main Content -->
 <main class="main-content">
     <div class="hero-section">
-        <img src="/static/images/image content.png" alt="Hero Image">
+        <img src="{% static 'images/image content.png' %}" alt="hero-image">
         <div class="overlay"></div>
         <div class="hero-text">
-            <h1>Yashash sharoitlarini yaxshilash – barchamiz uchun!</h1>
-            <p>Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash yo'lida davlatimiz barqaror
-                chora-tadbirlarni amalga oshirmoqda. Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash
-                yo'lida davlatimiz barqaror chora-tadbirlarni amalga oshirmoqda.</p>
+            <h1>{% trans "Yashash sharoitlarini yaxshilash – barchamiz uchun!" %}</h1>
+            <p>{% trans "Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash yo'lida davlatimiz barqaror
+                chora-tadbirlarni amalga oshirmoqda." %}</p>
             <div class="buttons">
-                <button class="btn btn-primary">Videoni ko'rish</button>
-                <button class="btn btn-secondary">Dasturlar bilan tanishing <i class="arrow-right"></i></button>
+                <button class="btn btn-primary">{% trans "Videoni ko'rish" %}</button>
+                <button class="btn btn-secondary">{% trans "Dasturlar bilan tanishing" %} <i class="arrow-right"></i>
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Application Section -->
-    <div class="headers" id="ariza">Ariza qoldirish</div>
+    <div class="headers" id="ariza">{% trans "Ariza qoldirish" %}</div>
     <div class="fade-line"></div>
     <div class="hero-section"></div>
 
     <!-- News Section -->
-    <div class="headers" id="news">Yangiliklar</div>
+    <div class="headers" id="news">{% trans "Yangiliklar" %}</div>
     <div class="fade-line"></div>
     <div class="news-container">
         <div class="news-card">
-            <img src="/static/images/image content.png" alt="News Image 1">
+            <img src="{% static 'images/image content.png' %}" alt="news-image">
             <div class="news-content">
-                <h2>Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq tayinlandi</h2>
-                <p>Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari tayinlandi.</p>
+                <h2>{% trans "Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq
+                    tayinlandi" %}</h2>
+                <p>{% trans "Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari
+                    tayinlandi." %}</p>
                 <span class="news-date">
-                    <span class="news-category">Tayinlov</span>:
-                    <span class="news-time">21 iyul, 12:21</span>
-                </span>
+                        <span class="news-category">{% trans "Tayinlov" %}</span>:
+                        <span class="news-time">{% trans "21 iyul, 12:21" %}</span>
+                    </span>
             </div>
         </div>
         <div class="news-card">
-            <img src="/static/images/image 6.png" alt="News Image 2">
+            <img src="{% static 'images/image 6.png' %}" alt="news-image">
             <div class="news-content">
-                <h2>Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi</h2>
-                <p>Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan.</p>
+                <h2>{% trans "Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi" %}</h2>
+                <p>{% trans "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan." %}</p>
                 <span class="news-date">
-                    <span class="news-category">Loyihalar</span>:
-                    <span class="news-time">10 avgust, 09:45</span>
-                </span>
+                        <span class="news-category">{% trans "Loyihalar" %}</span>:
+                        <span class="news-time">{% trans "10 avgust, 09:45" %}</span>
+                    </span>
             </div>
         </div>
         <div class="news-card">
-            <img src="/static/images/image 6.png" alt="News Image 3">
+            <img src="{% static 'images/image 6.png' %}" alt="news-image">
             <div class="news-content">
-                <h2>Buxoro shahrida yangi sport kompleksi ochildi</h2>
-                <p>Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan.</p>
+                <h2>{% trans "Buxoro shahrida yangi sport kompleksi ochildi" %}</h2>
+                <p>{% trans "Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan." %}</p>
                 <span class="news-date">
-                    <span class="news-category">Ochilish tadbiri</span>:
-                    <span class="news-time">5 sentabr, 15:30</span>
-                </span>
+                        <span class="news-category">{% trans "Ochilish tadbiri" %}</span>:
+                        <span class="news-time">{% trans "5 sentabr, 15:30" %}</span>
+                    </span>
             </div>
         </div>
     </div>
-    <button class="see-more-btn">Yana ko'rish</button>
+    <button class="see-more-btn">{% trans "Yana ko'rish" %}</button>
 
     <!-- Learners Section -->
-    <div class="headers" id="learners">Dasturlari bilan tanishing</div>
+    <div class="headers" id="learners">{% trans "Dasturlari bilan tanishing" %}</div>
     <div class="fade-line"></div>
     <div class="lern-container">
         <div class="lern-card">
-            <a href="">
-                <img src="/static/images/image content.png" alt="News Image 1">
+            <a href="#">
+                <img src="{% static 'images/image content.png' %}" alt="lern-image">
                 <div class="lern-content">
-                    <h2>Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq
-                        tayinlandi</h2>
-                    <p>Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari
-                        tayinlandi.</p>
-
+                    <h2>{% trans "Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq
+                        tayinlandi" %}</h2>
+                    <p>{% trans "Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari
+                        tayinlandi." %}</p>
                 </div>
             </a>
         </div>
         <div class="lern-card">
-            <a href="">
-                <img src="/static/images/image 6.png" alt="News Image 2">
-                <div class="news-content">
-                    <h2>Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi</h2>
-                    <p>Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan.</p>
+            <a href="#">
+                <img src="{% static 'images/image 6.png' %}" alt="lern-image">
+                <div class="lern-content">
+                    <h2>{% trans "Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi" %}</h2>
+                    <p>{% trans "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan." %}</p>
                 </div>
             </a>
         </div>
         <div class="lern-card">
-            <a href="">
-                <img src="/static/images/image 6.png" alt="News Image 3">
+            <a href="#">
+                <img src="{% static 'images/image 6.png' %}" alt="lern-image">
                 <div class="lern-content">
-                    <h2>Buxoro shahrida yangi sport kompleksi ochildi</h2>
-                    <p>Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan.</p>
+                    <h2>{% trans "Buxoro shahrida yangi sport kompleksi ochildi" %}</h2>
+                    <p>{% trans "Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan." %}</p>
                 </div>
             </a>
         </div>
     </div>
 
     <!-- Hududlar Section -->
-    <div class="headers" id="hududlar">Hududlar</div>
+    <div class="headers" id="hududlar">{% trans "Hududlar" %}</div>
     <div class="fade-line"></div>
     <div class="hero-section">
         <div class="content">
             <!-- Mobile Dropdown (visible only on mobile) -->
             <div class="mobile-region-dropdown">
-                <select id="region-select" onchange="selectRegion(this.value)">
-                    <option value="toshkent-shahar">Toshkent shahar</option>
-                    <option value="toshkent-viloyat">Toshkent viloyati</option>
-                    <option value="andijon">Andijon viloyati</option>
-                    <option value="buxoro">Buxoro viloyati</option>
-                    <option value="fargona">Farg'ona viloyati</option>
-                    <option value="jizzax">Jizzax viloyati</option>
-                    <option value="namangan">Namangan viloyati</option>
-                    <option value="navoiy">Navoiy viloyati</option>
-                    <option value="qashqadaryo">Qashqadaryo viloyati</option>
-                    <option value="samarkand">Samarkand viloyati</option>
-                    <option value="sirdaryo">Sirdaryo viloyati</option>
-                    <option value="surxondaryo">Surxondaryo viloyati</option>
-                    <option value="xorazm">Xorazm viloyati</option>
-                    <option value="qoraqalpogiston">Qoraqalpog'iston</option>
+                <select id="region-select">
+                    <option value="toshkent-shahar">{% trans "Toshkent shahar" %}</option>
+                    <option value="toshkent-viloyat">{% trans "Toshkent viloyati" %}</option>
+                    <option value="andijon">{% trans "Andijon viloyati" %}</option>
+                    <option value="buxoro">{% trans "Buxoro viloyati" %}</option>
+                    <option value="fargona">{% trans "Farg'ona viloyati" %}</option>
+                    <option value="jizzax">{% trans "Jizzax viloyati" %}</option>
+                    <option value="namangan">{% trans "Namangan viloyati" %}</option>
+                    <option value="navoiy">{% trans "Navoiy viloyati" %}</option>
+                    <option value="qashqadaryo">{% trans "Qashqadaryo viloyati" %}</option>
+                    <option value="samarkand">{% trans "Samarkand viloyati" %}</option>
+                    <option value="sirdaryo">{% trans "Sirdaryo viloyati" %}</option>
+                    <option value="surxondaryo">{% trans "Surxondaryo viloyati" %}</option>
+                    <option value="xorazm">{% trans "Xorazm viloyati" %}</option>
+                    <option value="qoraqalpogiston">{% trans "Qoraqalpog'iston" %}</option>
                 </select>
             </div>
             <!-- Sidebar (visible only on desktop) -->
             <div class="sidebar">
-                <button class="region" data-region="toshkent-shahar">Toshkent shahar</button>
-                <button class="region" data-region="toshkent-viloyat">Toshkent viloyati</button>
-                <button class="region" data-region="andijon">Andijon viloyati</button>
-                <button class="region" data-region="buxoro">Buxoro viloyati</button>
-                <button class="region" data-region="fargona">Farg'ona viloyati</button>
-                <button class="region" data-region="jizzax">Jizzax viloyati</button>
-                <button class="region" data-region="namangan">Namangan viloyati</button>
-                <button class="region" data-region="navoiy">Navoiy viloyati</button>
-                <button class="region" data-region="qashqadaryo">Qashqadaryo viloyati</button>
-                <button class="region" data-region="samarkand">Samarkand viloyati</button>
-                <button class="region" data-region="sirdaryo">Sirdaryo viloyati</button>
-                <button class="region" data-region="surxondaryo">Surxondaryo viloyati</button>
-                <button class="region" data-region="xorazm">Xorazm viloyati</button>
-                <button class="region" data-region="qoraqalpogiston">Qoraqalpog'iston</button>
+                <button class="region" data-region="toshkent-shahar">{% trans "Toshkent shahar" %}</button>
+                <button class="region" data-region="toshkent-viloyat">{% trans "Toshkent viloyati" %}</button>
+                <button class="region" data-region="andijon">{% trans "Andijon viloyati" %}</button>
+                <button class="region" data-region="buxoro">{% trans "Buxoro viloyati" %}</button>
+                <button class="region" data-region="fargona">{% trans "Farg'ona viloyati" %}</button>
+                <button class="region" data-region="jizzax">{% trans "Jizzax viloyati" %}</button>
+                <button class="region" data-region="namangan">{% trans "Namangan viloyati" %}</button>
+                <button class="region" data-region="navoiy">{% trans "Navoiy viloyati" %}</button>
+                <button class="region" data-region="qashqadaryo">{% trans "Qashqadaryo viloyati" %}</button>
+                <button class="region" data-region="samarkand">{% trans "Samarkand viloyati" %}</button>
+                <button class="region" data-region="sirdaryo">{% trans "Sirdaryo viloyati" %}</button>
+                <button class="region" data-region="surxondaryo">{% trans "Surxondaryo viloyati" %}</button>
+                <button class="region" data-region="xorazm">{% trans "Xorazm viloyati" %}</button>
+                <button class="region" data-region="qoraqalpogiston">{% trans "Qoraqalpog'iston" %}</button>
             </div>
             <div class="map-section">
                 <iframe id="region-map"
                         src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16"></iframe>
                 <div class="contact-card">
-                    <img src="/static/images/image 1.png" alt="Profile" class="profile-pic">
+                    <img src="{% static 'images/image 1.png' %}" alt="profile" class="profile-pic">
                     <div class="contact-info">
-                        <h3 id="contact-name">Alisher Alisherovich</h3>
-                        <p><a href="mailto:aalisherovich@mail.ru" id="contact-email">aalisherovich@mail.ru</a></p>
-                        <p><a href="tel:+998900000000" id="contact-phone">+998 90 000 00 00</a></p>
+                        <h3>Alisher Alisherovich</h3>
+                        <p><a href="mailto:aalisherovich@mail.ru">aalisherovich@mail.ru</a></p>
+                        <p><a href="tel:+998900000000">+998 90 000 00 00</a></p>
                     </div>
                 </div>
             </div>
@@ -240,266 +243,134 @@
     </div>
 
     <!-- Partners Section -->
-    <div class="headers" id="partners">Hamkorlarimiz</div>
+    <div class="headers" id="partners">{% trans "Hamkorlarimiz" %}</div>
     <div class="fade-line"></div>
     <section class="partners-section">
         <div class="partners-grid">
             <div class="partner-card">
                 <div class="partner-image">
-                    <img src="/static/images/logogerb.svg" alt="O'zbekiston Respublikasi Prezidenti">
+                    <img src="{% static 'images/logogerb.svg' %}" alt="partner-logo">
                 </div>
-                <p>O'zbekiston Respublikasi<br>Prezidenti</p>
+                <p>{% trans "O'zbekiston Respublikasi<br>Prezidenti" %}</p>
             </div>
             <div class="partner-card">
                 <div class="partner-image">
-                    <img src="/static/images/logomygov.svg" alt="Yagona interaktiv davlat xizmatlari portali">
+                    <img src="{% static 'images/logomygov.svg' %}" alt="partner-logo">
                 </div>
-                <p>Yagona interaktiv davlat<br>xizmatlari portali</p>
+                <p>{% trans "Yagona interaktiv davlat<br>xizmatlari portali" %}</p>
             </div>
             <div class="partner-card">
                 <div class="partner-image">
-                    <img src="/static/images/logomygov.svg" alt="Online mahalla">
+                    <img src="{% static 'images/logomygov.svg' %}" alt="partner-logo">
                 </div>
-                <p>Online mahalla</p>
-            </div>
-            <div class="partner-card">
-                <div class="partner-image">
-                    <img src="/static/images/logomygov.svg" alt="O'zbekiston Respublikasi Adliya vazirligi">
-                </div>
-                <p>O'zbekiston Respublikasi<br>Adliya vazirligi</p>
-            </div>
-            <div class="partner-card">
-                <div class="partner-image">
-                    <img src="/static/images/logomygov.svg" alt="Ijtimoiy himoya agentligi">
-                </div>
-                <p>Ijtimoiy himoya<br>agentligi</p>
+                <p>{% trans "Online mahalla" %}</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <img src="/static/images/logo.svg" alt="Kambag'allikni qisqartirish Davlat jang'armasi logo">
+        <img src="{% static 'images/logo.svg' %}" alt="Footer Logo">
         <div class="footer-left">
             <ul class="footer-links">
-                <li><a href="#">Asosiy</a></li>
-                <li><a href="#">Jang'arma haqida</a></li>
-                <li><a href="#">Arizalar qoldirish</a></li>
-                <li><a href="#">Hududlar</a></li>
-                <li><a href="#">online.mahalla</a></li>
+                <li><a href="#">{% trans "Asosiy" %}</a></li>
+                <li><a href="#">{% trans "Jang'arma haqida" %}</a></li>
+                <li><a href="#">{% trans "Arizalar qoldirish" %}</a></li>
+                <li><a href="#">{% trans "Hududlar" %}</a></li>
+                <li><a href="#">{% trans "online.mahalla" %}</a></li>
             </ul>
         </div>
         <div class="footer-map">
             <div class="map-box">
                 <iframe src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16"></iframe>
                 <div class="map-overlay">
-                    <p>O'zbekiston Respublikasi, Toshkent shahar, Amir Temur ko'chasi, 12a, uy. 100012</p>
+                    <p>{% trans "O'zbekiston Respublikasi, Toshkent shahar, Amir Temur ko'chasi, 12a, uy. 100012" %}</p>
                 </div>
             </div>
             <div class="contact-infos">
-                <span class="info">+998 71 123 45 67</span>
-                <span class="info">info@kqdimj.uz</span>
+                <span class="info">+998 71 123 45 67 </span>
+                <span class="info">info@kqdimj.uz </span>
             </div>
             <div class="social-icons">
-                <a href="#"><img src="/static/images/logotg.svg"></a>
-                <a href="#"><img src="/static/images/logoinst.svg"></a>
-                <a href="#"><img src="/static/images/logoyt.svg"></a>
-                <a href="#"><img src="/static/images/logoface.svg"></a>
+                <a href="#"><img src="{% static 'images/logotg.svg' %}" alt="Telegram"></a>
+                <a href="#"><img src="{% static 'images/logoinst.svg' %}" alt="Instagram"></a>
+                <a href="#"><img src="{% static 'images/logoyt.svg' %}" alt="YouTube"></a>
+                <a href="#"><img src="{% static 'images/logoface.svg' %}" alt="Facebook"></a>
             </div>
         </div>
     </footer>
 </main>
 
 <script>
-    // Region data with map coordinates and contact info
-    const regions = {
-        'toshkent-shahar': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=69.237650%2C41.311950&z=12',
-            name: 'Alisher Alisherovich',
-            email: 'toshkent@kqdimj.uz',
-            phone: '+998 71 123 45 67'
-        },
-        'toshkent-viloyat': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=69.347650%2C41.411950&z=10',
-            name: 'Bobur Boburov',
-            email: 'toshkent.vil@kqdimj.uz',
-            phone: '+998 69 456 78 90'
-        },
-        'andijon': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=72.344800%2C40.782200&z=10',
-            name: 'Sardor Sardorov',
-            email: 'andijon@kqdimj.uz',
-            phone: '+998 74 123 45 67'
-        },
-        'buxoro': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=64.428100%2C39.767500&z=10',
-            name: 'Ulugbek Ulugbekov',
-            email: 'buxoro@kqdimj.uz',
-            phone: '+998 65 789 01 23'
-        },
-        'fargona': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=71.785700%2C40.384400&z=10',
-            name: 'Dilshod Dilshodov',
-            email: 'fargona@kqdimj.uz',
-            phone: '+998 73 234 56 78'
-        },
-        'jizzax': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=67.842800%2C40.116000&z=10',
-            name: 'Jasur Jasurov',
-            email: 'jizzax@kqdimj.uz',
-            phone: '+998 72 345 67 89'
-        },
-        'namangan': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=71.672700%2C40.998500&z=10',
-            name: 'Nosir Nosirov',
-            email: 'namangan@kqdimj.uz',
-            phone: '+998 69 456 78 90'
-        },
-        'navoiy': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=65.379300%2C40.084200&z=10',
-            name: 'Navfal Navfalov',
-            email: 'navoiy@kqdimj.uz',
-            phone: '+998 79 567 89 01'
-        },
-        'qashqadaryo': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=65.784400%2C38.842200&z=10',
-            name: 'Qosim Qosimov',
-            email: 'qashqadaryo@kqdimj.uz',
-            phone: '+998 75 678 90 12'
-        },
-        'samarkand': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=66.975800%2C39.627000&z=10',
-            name: 'Sobir Sobirov',
-            email: 'samarkand@kqdimj.uz',
-            phone: '+998 66 789 01 23'
-        },
-        'sirdaryo': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=68.713300%2C40.837800&z=10',
-            name: 'Sirojiddin Sirojiddinov',
-            email: 'sirdaryo@kqdimj.uz',
-            phone: '+998 67 890 12 34'
-        },
-        'surxondaryo': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=67.548600%2C37.934400&z=10',
-            name: 'Suhrob Suhrobov',
-            email: 'surxondaryo@kqdimj.uz',
-            phone: '+998 76 901 23 45'
-        },
-        'xorazm': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=60.625000%2C41.377800&z=10',
-            name: 'Xurshid Xurshidov',
-            email: 'xorazm@kqdimj.uz',
-            phone: '+998 62 012 34 56'
-        },
-        'qoraqalpogiston': {
-            mapUrl: 'https://yandex.uz/map-widget/v1/?ll=59.611100%2C43.804400&z=8',
-            name: 'Qoraqalpaq Qoraqalpaqqizi',
-            email: 'qoraqalpogiston@kqdimj.uz',
-            phone: '+998 61 123 45 67'
+    // Function to get CSRF token from cookie
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
         }
-    };
-
-    // Language change function
-    function changeLanguage(element) {
-        document.querySelectorAll('.language-menu a').forEach(a => a.classList.remove('active'));
-        element.classList.add('active');
-        document.getElementById('current-language').textContent = element.getAttribute('data-lang');
-        return false;
+        return cookieValue;
     }
 
-    // Region selection function
-    function selectRegion(regionKey) {
-        const regionData = regions[regionKey];
-        if (!regionData) return;
+    function changeLanguage(lang) {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/i18n/setlang/';
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrfmiddlewaretoken';
+    csrfInput.value = getCookie('csrftoken');
+    form.appendChild(csrfInput);
+    const langInput = document.createElement('input');
+    langInput.type = 'hidden';
+    langInput.name = 'language';
+    langInput.value = lang;
+    form.appendChild(langInput);
+    const nextInput = document.createElement('input');
+    nextInput.type = 'hidden';
+    nextInput.name = 'next';
+    nextInput.value = window.location.pathname;
+    form.appendChild(nextInput);
+    document.body.appendChild(form);
+    form.submit();
+}
 
-        // Update active region button
-        document.querySelectorAll('.region').forEach(btn => btn.classList.remove('active'));
-        document.querySelector(`[data-region="${regionKey}"]`).classList.add('active');
-
-        // Update map
-        document.getElementById('region-map').src = regionData.mapUrl;
-
-        // Update contact info
-        document.getElementById('contact-name').textContent = regionData.name;
-        document.getElementById('contact-email').textContent = regionData.email;
-        document.getElementById('contact-email').href = `mailto:${regionData.email}`;
-        document.getElementById('contact-phone').textContent = regionData.phone;
-        document.getElementById('contact-phone').href = `tel:${regionData.phone}`;
-    }
-
-    // Initialize elements
+    // Hamburger menu toggle
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
-    const languageSelector = document.getElementById('language-selector');
-    const dropdown = document.getElementById('dropdown-jangarma');
-    const mobileDropdownHeader = document.getElementById('mobile-dropdown-header');
-    const mobileDropdownContent = document.getElementById('mobile-dropdown-content');
-
-    // Add event listeners to region buttons
-    document.querySelectorAll('.region').forEach(button => {
-        button.addEventListener('click', () => {
-            selectRegion(button.dataset.region);
-        });
-    });
-
-    // Set default region
-    selectRegion('toshkent-shahar');
-
-    // Original menu functions
     hamburger.addEventListener('click', function(e) {
         e.stopPropagation();
         hamburger.classList.toggle('active');
         mobileMenu.classList.toggle('active');
-        languageSelector.classList.remove('open');
-        dropdown.classList.remove('open');
     });
 
-    // Мобильный дропдаун: Jang'arma
-    mobileDropdownHeader.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const isActive = mobileDropdownContent.classList.contains('active');
-
-    // Переключаем активное состояние
-    mobileDropdownContent.classList.toggle('active');
-
-    // Меняем класс для стрелки
-    if (isActive) {
-        mobileDropdownHeader.classList.remove('open');
-    } else {
-        mobileDropdownHeader.classList.add('open');
-    }
-    });
-
+    // Language selector dropdown toggle
+    const languageSelector = document.getElementById('language-selector');
     languageSelector.addEventListener('click', function(e) {
         e.stopPropagation();
         if (window.innerWidth <= 768) {
             this.classList.toggle('open');
             const arrow = this.querySelector('.arrow-down');
             arrow.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
-            dropdown.classList.remove('open');
-            hamburger.classList.remove('active');
-            mobileMenu.classList.remove('active');
         }
     });
 
-    dropdown.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768) {
-            e.stopPropagation();
-            this.classList.toggle('open');
-            const arrow = this.querySelector('.arrow-down');
-            arrow.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
-            languageSelector.classList.remove('open');
-            hamburger.classList.remove('active');
-            mobileMenu.classList.remove('active');
-        }
+    // Jang'arma mobile dropdown toggle
+    const mobileDropdownHeader = document.getElementById('mobile-dropdown-header');
+    const mobileDropdownContent = document.getElementById('mobile-dropdown-content');
+    mobileDropdownHeader.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mobileDropdownContent.classList.toggle('active');
+        this.classList.toggle('open');
     });
 
-    document.querySelectorAll('.language-menu a, .dropdown-menu a, .mobile-dropdown-content a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    });
-
+    // Close menus when clicking outside
     document.addEventListener('click', function(e) {
         if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
             hamburger.classList.remove('active');
@@ -510,51 +381,17 @@
             const arrow = languageSelector.querySelector('.arrow-down');
             if (arrow) arrow.style.transform = 'rotate(0deg)';
         }
-        if (!dropdown.contains(e.target)) {
-            dropdown.classList.remove('open');
-            const arrow = dropdown.querySelector('.arrow-down');
-            if (arrow) arrow.style.transform = 'rotate(0deg)';
-        }
     });
 
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
+    // Close mobile menu when a link is clicked
+    document.querySelectorAll('.mobile-menu a, .mobile-dropdown-content a').forEach(link => {
         link.addEventListener('click', function() {
             hamburger.classList.remove('active');
             mobileMenu.classList.remove('active');
+            mobileDropdownContent.classList.remove('active');
+            mobileDropdownHeader.classList.remove('open');
         });
     });
-
-
-
-    const currentPage = window.location.pathname.split('/').pop().split('.')[0] || 'bosh-sahifa';
-    const links = document.querySelectorAll('.navbar a, .mobile-menu a');
-    links.forEach(link => {
-        const page = link.getAttribute('data-page');
-        if (page === currentPage) {
-            link.classList.add('active');
-        }
-    });
-
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            languageSelector.classList.remove('open');
-            dropdown.classList.remove('open');
-            hamburger.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            mobileDropdownContent.classList.remove('active');
-            document.querySelectorAll('.arrow-down').forEach(arrow => {
-                arrow.style.transform = 'rotate(0deg)';
-            });
-        }
-    });
-    document.querySelectorAll('.mobile-dropdown-content a').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        mobileDropdownContent.classList.remove('active');
-        mobileDropdownHeader.querySelector('.arrow-down').style.transform = 'rotate(0deg)';
-    });
-});
 </script>
 </body>
 </html>

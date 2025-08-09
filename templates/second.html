@@ -100,27 +100,19 @@
         });
     });
 
-    // Video play button functionality
-    document.querySelector('.play-button').addEventListener('click', function() {
-        alert('Video o\'ynatish funksiyasi');
-    });
-
-    document.querySelector('.video-btn').addEventListener('click', function() {
-        alert('Video o\'ynatish funksiyasi');
-    });
-
+    // Video thumbnail click to embed and play (no alert needed)
     document.getElementById('video-thumbnail').addEventListener('click', function () {
-    const container = document.getElementById('video-container');
-    container.innerHTML = `
-        <iframe
-            width="100%"
-            height="500"
-            src="https://www.youtube.com/embed/H2vTrHc-OGk?autoplay=1&rel=0"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-        </iframe>`;
-});
+        const container = document.getElementById('video-container');
+        container.innerHTML = `
+            <iframe
+                width="100%"
+                height="500"
+                src="https://www.youtube.com/embed/H2vTrHc-OGk?autoplay=1&rel=0"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen>
+            </iframe>`;
+    });
 </script>
 
 </body>

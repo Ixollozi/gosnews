@@ -3,7 +3,6 @@ Django settings for gosnews project.
 """
 
 from pathlib import Path
-from django.utils.translation import gettext_noop
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -83,9 +82,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'uz'
 LANGUAGES = [
-    ('uz', gettext_noop('Oʻzbekcha')),
-    ('ru', gettext_noop('Русский')),
-    ('kaa', gettext_noop('Qaraqalpaqsha')),
+    ('uz', 'Oʻzbekcha'),
+    ('ru', 'Русский'),
+    ('kaa', 'Qaraqalpaqsha'),
 ]
 LOCALE_PATHS = [
     BASE_DIR / 'locale',

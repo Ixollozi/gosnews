@@ -44,7 +44,6 @@
             <span></span>
         </div>
         <!-- Фрагмент селектора языка -->
-        <!-- Фрагмент селектора языка -->
         <div class="language-selector" id="language-selector">
             <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
             <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
@@ -94,8 +93,7 @@
         <div class="overlay"></div>
         <div class="hero-text">
             <h1>{% trans "Yashash sharoitlarini yaxshilash – barchamiz uchun!" %}</h1>
-            <p>{% trans "Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash yo'lida davlatimiz barqaror
-                chora-tadbirlarni amalga oshirmoqda." %}</p>
+            <p>{% trans "Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash yo'lida davlatimiz barqaror chora-tadbirlarni amalga oshirmoqda." %}</p>
             <div class="buttons">
                 <button class="btn btn-primary">{% trans "Videoni ko'rish" %}</button>
                 <button class="btn btn-secondary">{% trans "Dasturlar bilan tanishing" %} <i class="arrow-right"></i>
@@ -113,41 +111,58 @@
     <div class="headers" id="news">{% trans "Yangiliklar" %}</div>
     <div class="fade-line"></div>
     <div class="news-container">
+        {% for news_item in news %}
         <div class="news-card">
-            <img src="{% static 'images/image content.png' %}" alt="news-image">
+            <img src="{{ news_item.image.url }}" alt="news-image">
             <div class="news-content">
-                <h2>{% trans "Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq
-                    tayinlandi" %}</h2>
-                <p>{% trans "Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari
-                    tayinlandi." %}</p>
+                <h2>{{ news_item.title }}</h2>
+                <p>{{ news_item.short_description }}</p>
                 <span class="news-date">
-                        <span class="news-category">{% trans "Tayinlov" %}</span>:
-                        <span class="news-time">{% trans "21 iyul, 12:21" %}</span>
-                    </span>
+                    {% if news_item.category %}
+                        <span class="news-category">{{ news_item.category.name }}</span>:
+                    {% endif %}
+                    <span class="news-time">{{ news_item.news.created_at|date:"d M, H:i" }}</span>
+                </span>
             </div>
         </div>
-        <div class="news-card">
-            <img src="{% static 'images/image 6.png' %}" alt="news-image">
-            <div class="news-content">
-                <h2>{% trans "Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi" %}</h2>
-                <p>{% trans "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan." %}</p>
-                <span class="news-date">
-                        <span class="news-category">{% trans "Loyihalar" %}</span>:
-                        <span class="news-time">{% trans "10 avgust, 09:45" %}</span>
-                    </span>
+    {% empty %}
+            <!-- Fallback content if no news available -->
+            <div class="news-card">
+                <img src="{% static 'images/image content.png' %}" alt="news-image">
+                <div class="news-content">
+                    <h2>{% trans "Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq
+                        tayinlandi" %}</h2>
+                    <p>{% trans "Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari
+                        tayinlandi." %}</p>
+                    <span class="news-date">
+                            <span class="news-category">{% trans "Tayinlov" %}</span>:
+                            <span class="news-time">{% trans "21 iyul, 12:21" %}</span>
+                        </span>
+                </div>
             </div>
-        </div>
-        <div class="news-card">
-            <img src="{% static 'images/image 6.png' %}" alt="news-image">
-            <div class="news-content">
-                <h2>{% trans "Buxoro shahrida yangi sport kompleksi ochildi" %}</h2>
-                <p>{% trans "Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan." %}</p>
-                <span class="news-date">
-                        <span class="news-category">{% trans "Ochilish tadbiri" %}</span>:
-                        <span class="news-time">{% trans "5 sentabr, 15:30" %}</span>
-                    </span>
+            <div class="news-card">
+                <img src="{% static 'images/image 6.png' %}" alt="news-image">
+                <div class="news-content">
+                    <h2>{% trans "Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi" %}</h2>
+                    <p>{% trans "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan." %}</p>
+                    <span class="news-date">
+                            <span class="news-category">{% trans "Loyihalar" %}</span>:
+                            <span class="news-time">{% trans "10 avgust, 09:45" %}</span>
+                        </span>
+                </div>
             </div>
-        </div>
+            <div class="news-card">
+                <img src="{% static 'images/image 6.png' %}" alt="news-image">
+                <div class="news-content">
+                    <h2>{% trans "Buxoro shahrida yangi sport kompleksi ochildi" %}</h2>
+                    <p>{% trans "Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan." %}</p>
+                    <span class="news-date">
+                            <span class="news-category">{% trans "Ochilish tadbiri" %}</span>:
+                            <span class="news-time">{% trans "5 sentabr, 15:30" %}</span>
+                        </span>
+                </div>
+            </div>
+        {% endfor %}
     </div>
     <button class="see-more-btn">{% trans "Yana ko'rish" %}</button>
 
@@ -155,35 +170,52 @@
     <div class="headers" id="learners">{% trans "Dasturlari bilan tanishing" %}</div>
     <div class="fade-line"></div>
     <div class="lern-container">
-        <div class="lern-card">
-            <a href="#">
-                <img src="{% static 'images/image content.png' %}" alt="lern-image">
-                <div class="lern-content">
-                    <h2>{% trans "Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq
-                        tayinlandi" %}</h2>
-                    <p>{% trans "Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari
-                        tayinlandi." %}</p>
-                </div>
-            </a>
-        </div>
-        <div class="lern-card">
-            <a href="#">
-                <img src="{% static 'images/image 6.png' %}" alt="lern-image">
-                <div class="lern-content">
-                    <h2>{% trans "Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi" %}</h2>
-                    <p>{% trans "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan." %}</p>
-                </div>
-            </a>
-        </div>
-        <div class="lern-card">
-            <a href="#">
-                <img src="{% static 'images/image 6.png' %}" alt="lern-image">
-                <div class="lern-content">
-                    <h2>{% trans "Buxoro shahrida yangi sport kompleksi ochildi" %}</h2>
-                    <p>{% trans "Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan." %}</p>
-                </div>
-            </a>
-        </div>
+        {% for guide in guides_list %}
+            {% for choice in guide.choices.all %}
+                {% if choice.language == LANGUAGE_CODE %}
+                    <div class="lern-card">
+                        <a href="/guide">
+                            <img src="{% static 'images/image content.png' %}" alt="lern-image">
+                            <div class="lern-content">
+                                <h2>{{ guide.title }}</h2>
+                                <p>{{ guide.description }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% empty %}
+            <!-- Fallback content if no guides available -->
+            <div class="lern-card">
+                <a href="{{ guide_url }}">
+                    <img src="{% static 'images/image content.png' %}" alt="lern-image">
+                    <div class="lern-content">
+                        <h2>{% trans "Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq
+                            tayinlandi" %}</h2>
+                        <p>{% trans "Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari
+                            tayinlandi." %}</p>
+                    </div>
+                </a>
+            </div>
+            <div class="lern-card">
+                <a href="#">
+                    <img src="{% static 'images/image 6.png' %}" alt="lern-image">
+                    <div class="lern-content">
+                        <h2>{% trans "Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi" %}</h2>
+                        <p>{% trans "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan." %}</p>
+                    </div>
+                </a>
+            </div>
+            <div class="lern-card">
+                <a href="#">
+                    <img src="{% static 'images/image 6.png' %}" alt="lern-image">
+                    <div class="lern-content">
+                        <h2>{% trans "Buxoro shahrida yangi sport kompleksi ochildi" %}</h2>
+                        <p>{% trans "Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan." %}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
     </div>
 
     <!-- Hududlar Section -->
@@ -194,49 +226,58 @@
             <!-- Mobile Dropdown (visible only on mobile) -->
             <div class="mobile-region-dropdown">
                 <select id="region-select">
-                    <option value="toshkent-shahar">{% trans "Toshkent shahar" %}</option>
-                    <option value="toshkent-viloyat">{% trans "Toshkent viloyati" %}</option>
-                    <option value="andijon">{% trans "Andijon viloyati" %}</option>
-                    <option value="buxoro">{% trans "Buxoro viloyati" %}</option>
-                    <option value="fargona">{% trans "Farg'ona viloyati" %}</option>
-                    <option value="jizzax">{% trans "Jizzax viloyati" %}</option>
-                    <option value="namangan">{% trans "Namangan viloyati" %}</option>
-                    <option value="navoiy">{% trans "Navoiy viloyati" %}</option>
-                    <option value="qashqadaryo">{% trans "Qashqadaryo viloyati" %}</option>
-                    <option value="samarkand">{% trans "Samarkand viloyati" %}</option>
-                    <option value="sirdaryo">{% trans "Sirdaryo viloyati" %}</option>
-                    <option value="surxondaryo">{% trans "Surxondaryo viloyati" %}</option>
-                    <option value="xorazm">{% trans "Xorazm viloyati" %}</option>
-                    <option value="qoraqalpogiston">{% trans "Qoraqalpog'iston" %}</option>
+                    {% for leader in leaders_list %}
+                        <option value="{{ leader.region|lower }}">{{ leader.region }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <!-- Sidebar (visible only on desktop) -->
             <div class="sidebar">
-                <button class="region" data-region="toshkent-shahar">{% trans "Toshkent shahar" %}</button>
-                <button class="region" data-region="toshkent-viloyat">{% trans "Toshkent viloyati" %}</button>
-                <button class="region" data-region="andijon">{% trans "Andijon viloyati" %}</button>
-                <button class="region" data-region="buxoro">{% trans "Buxoro viloyati" %}</button>
-                <button class="region" data-region="fargona">{% trans "Farg'ona viloyati" %}</button>
-                <button class="region" data-region="jizzax">{% trans "Jizzax viloyati" %}</button>
-                <button class="region" data-region="namangan">{% trans "Namangan viloyati" %}</button>
-                <button class="region" data-region="navoiy">{% trans "Navoiy viloyati" %}</button>
-                <button class="region" data-region="qashqadaryo">{% trans "Qashqadaryo viloyati" %}</button>
-                <button class="region" data-region="samarkand">{% trans "Samarkand viloyati" %}</button>
-                <button class="region" data-region="sirdaryo">{% trans "Sirdaryo viloyati" %}</button>
-                <button class="region" data-region="surxondaryo">{% trans "Surxondaryo viloyati" %}</button>
-                <button class="region" data-region="xorazm">{% trans "Xorazm viloyati" %}</button>
-                <button class="region" data-region="qoraqalpogiston">{% trans "Qoraqalpog'iston" %}</button>
+                {% for leader in leaders_list %}
+                    <button class="region" data-region="{{ leader.region|lower }}">{{ leader.region }}</button>
+                {% empty %}
+                    <!-- Fallback regions if no leaders available -->
+                    <button class="region" data-region="toshkent-shahar">{% trans "Toshkent shahar" %}</button>
+                    <button class="region" data-region="toshkent-viloyat">{% trans "Toshkent viloyati" %}</button>
+                    <button class="region" data-region="andijon">{% trans "Andijon viloyati" %}</button>
+                    <button class="region" data-region="buxoro">{% trans "Buxoro viloyati" %}</button>
+                    <button class="region" data-region="fargona">{% trans "Farg'ona viloyati" %}</button>
+                    <button class="region" data-region="jizzax">{% trans "Jizzax viloyati" %}</button>
+                    <button class="region" data-region="namangan">{% trans "Namangan viloyati" %}</button>
+                    <button class="region" data-region="navoiy">{% trans "Navoiy viloyati" %}</button>
+                    <button class="region" data-region="qashqadaryo">{% trans "Qashqadaryo viloyati" %}</button>
+                    <button class="region" data-region="samarkand">{% trans "Samarkand viloyati" %}</button>
+                    <button class="region" data-region="sirdaryo">{% trans "Sirdaryo viloyati" %}</button>
+                    <button class="region" data-region="surxondaryo">{% trans "Surxondaryo viloyati" %}</button>
+                    <button class="region" data-region="xorazm">{% trans "Xorazm viloyati" %}</button>
+                    <button class="region" data-region="qoraqalpogiston">{% trans "Qoraqalpog'iston" %}</button>
+                {% endfor %}
             </div>
             <div class="map-section">
                 <iframe id="region-map"
                         src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16"></iframe>
                 <div class="contact-card">
-                    <img src="{% static 'images/image 1.png' %}" alt="profile" class="profile-pic">
-                    <div class="contact-info">
-                        <h3>Alisher Alisherovich</h3>
-                        <p><a href="mailto:aalisherovich@mail.ru">aalisherovich@mail.ru</a></p>
-                        <p><a href="tel:+998900000000">+998 90 000 00 00</a></p>
-                    </div>
+                    {% if current_leader %}
+                        <img src="{{ current_leader.leader_image.url }}" alt="profile" class="profile-pic">
+                        <div class="contact-info">
+                            <h3>{{ current_leader.leader_name }}</h3>
+                            <p>{{ current_leader.leader_position }}</p>
+                            {% if current_leader.leader_mail %}
+                                <p><a href="mailto:{{ current_leader.leader_mail }}">{{ current_leader.leader_mail }}</a></p>
+                            {% endif %}
+                            {% if current_leader.leader_phone %}
+                                <p><a href="tel:{{ current_leader.leader_phone }}">{{ current_leader.leader_phone }}</a></p>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <!-- Fallback content if no leader selected -->
+                        <img src="{% static 'images/image 1.png' %}" alt="profile" class="profile-pic">
+                        <div class="contact-info">
+                            <h3>Alisher Alisherovich</h3>
+                            <p><a href="mailto:aalisherovich@mail.ru">aalisherovich@mail.ru</a></p>
+                            <p><a href="tel:+998900000000">+998 90 000 00 00</a></p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

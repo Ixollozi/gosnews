@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     News, NewsTranslation,
     Category, CategoryTranslation,
-    Leaders, LeadersRegion,
+    Leaders,
     Debt,
     Guide, GuideChoices
 )
@@ -37,16 +37,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 # ================== Leaders ==================
-class LeadersRegionInline(admin.StackedInline):  # и здесь
-    model = LeadersRegion
-    extra = 1
-
-
 @admin.register(Leaders)
 class LeadersAdmin(admin.ModelAdmin):
     list_display = ("leader_name", "leader_position", "leader_phone", "region")
-    inlines = [LeadersRegionInline]
     search_fields = ("leader_name", "leader_position")
+    list_filter = ("region",)
 
 
 # ================== Debt ==================

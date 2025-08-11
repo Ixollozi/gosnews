@@ -1,10 +1,12 @@
 from django.db import models
+from django import forms
+from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
 # ================== Category ==================
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name="Название")
-    slug = models.SlugField(max_length=50, unique=True, verbose_name="Slug")
+    slug = models.SlugField(max_length=50, unique=True, verbose_name="Ссылка для категории по URL")
 
     class Meta:
         verbose_name = "Категория"
@@ -61,6 +63,7 @@ class NewsTranslation(models.Model):
 
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name="translations")
     lang = models.CharField(max_length=5, choices=LANG_CHOICES, verbose_name="Язык")
+    image = models.ImageField(upload_to='news/', verbose_name="Изображение")
     title = models.CharField(max_length=255, verbose_name="Заголовок")
     short_title = models.CharField(max_length=100, verbose_name="Короткий заголовок")
     description = models.TextField(verbose_name="Описание")
@@ -72,6 +75,13 @@ class NewsTranslation(models.Model):
         verbose_name = "Перевод новости"
         verbose_name_plural = "Переводы новостей"
 
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        # Если нет картинки — запрещаем сохранение
+        if not image:
+            raise ValidationError("⚠ Пожалуйста, загрузите изображение.")
+        return image
+
     def __str__(self):
         return f"{self.lang} — {self.title}"
 
@@ -79,22 +89,6 @@ class NewsTranslation(models.Model):
 
 # ================== Leaders ==================
 class Leaders(models.Model):
-    leader_name = models.CharField(max_length=50, verbose_name="ФИО")
-    leader_position = models.CharField(max_length=50, verbose_name="Должность")
-    leader_image = models.ImageField(upload_to='leaders/', verbose_name="Фото")
-    leader_mail = models.EmailField(blank=True, verbose_name="Email")
-    leader_phone = models.CharField(max_length=50, blank=True, verbose_name="Телефон")
-    region = models.CharField(max_length=50, blank=True, verbose_name="Регион")
-
-    class Meta:
-        verbose_name = "Руководитель"
-        verbose_name_plural = "Руководители"
-
-    def __str__(self):
-        return f"{self.leader_position} - {self.leader_name} - {self.leader_phone}"
-
-
-class LeadersRegion(models.Model):
     REGION_CHOICES = [
         ('Toshkent', "Toshkent"),
         ('Andijon', "Andijon"),
@@ -111,15 +105,28 @@ class LeadersRegion(models.Model):
         ('Qoraqalpog`iston', "Qoraqalpog`iston"),
     ]
 
-    leader = models.ForeignKey(Leaders, on_delete=models.CASCADE, related_name="regions")
-    region = models.CharField(max_length=50, choices=REGION_CHOICES, verbose_name="Регион")
+    leader_name = models.CharField(max_length=50, verbose_name="ФИО")
+    leader_position = models.CharField(max_length=50, verbose_name="Должность")
+    leader_image = models.ImageField(upload_to='leaders/', verbose_name="Фото")
+    leader_mail = models.EmailField(blank=True, verbose_name="Email")
+    leader_phone = models.CharField(max_length=50, blank=True, verbose_name="Телефон")
+    region = models.CharField(max_length=50, choices=REGION_CHOICES, blank=True, verbose_name="Регион")
+    region_link = models.URLField(blank=True, verbose_name="Ссылка яндкес карты на местоположение")
 
     class Meta:
-        verbose_name = "Регион руководителя"
-        verbose_name_plural = "Регионы руководителей"
+        verbose_name = "Лидер"
+        verbose_name_plural = "Лидеры"
+
+    def clean_image(self):
+        image = self.cleaned_data.get('leader_image')
+        # Если нет картинки — запрещаем сохранение
+        if not image:
+            raise ValidationError("⚠ Пожалуйста, загрузите изображение.")
+        return image
 
     def __str__(self):
-        return f"{self.leader} - {self.region}"
+        return f"{self.leader_name} - {self.leader_phone} - {self.leader_position}"
+
 
 
 # ================== Debt ==================
@@ -144,10 +151,14 @@ class Debt(models.Model):
     def __str__(self):
         return f"{self.inn} - {self.full_name}"
 
+
+#=================== Guide ==================
 class Guide(models.Model):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
+    short_guide_title = models.CharField(max_length=100, verbose_name="Короткий заголовок", blank=True, null=True)
     description = models.TextField(verbose_name="Описание")
-    link = models.URLField(null=False, verbose_name="Ссылка")
+    short_guide_description = models.TextField(verbose_name="Короткое описание", blank=True, null=True)
+    link = models.URLField(null=False, verbose_name="Ссылка на видео")
 
     class Meta:
         verbose_name = "Гайд"
@@ -170,7 +181,7 @@ class GuideChoices(models.Model):
 
     guide = models.ForeignKey(Guide, on_delete=models.CASCADE, related_name="choices", verbose_name="Гайд")
     guide_type = models.CharField(max_length=20, choices=GUIDE_TYPE_CHOICES, verbose_name="Тип гайда")
-    language = models.CharField(max_length=20, choices=LANG_CHOICES, verbose_name="Язык")
+    language = models.CharField(max_length=20, choices=LANG_CHOICES,default='uz', verbose_name="Язык")
 
     class Meta:
         verbose_name = "Тип гайда"

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Kambag'allikni qisqartirish" %}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={% now 'U' %}">
 </head>
 <body>
 {% csrf_token %}
@@ -25,7 +25,7 @@
             <div class="dropdown-menu">
                 <a href="#">{% trans "Biz haqimizda" %}</a>
                 <a href="#">{% trans "Rahbariyat" %}</a>
-                <a href="#">{% trans "Suddan" %}</a>
+                <a href="guide/loan">{% trans "Suddan" %}</a>
                 <a href="#">{% trans "Subsidiya" %}</a>
                 <a href="#">{% trans "Grantlar" %}</a>
             </div>
@@ -74,7 +74,7 @@
                 <a href="#">{% trans "Biz haqimizda" %}</a>
                 <a href="#">{% trans "Rahbariyat" %}</a>
                 <a href="#">{% trans "Sertifikatlar" %}</a>
-                <a href="#">{% trans "Suddan" %}</a>
+                <a href="guide/loan/">{% trans "Suddan" %}</a>
                 <a href="#">{% trans "Subsidiya" %}</a>
                 <a href="#">{% trans "Grantlar" %}</a>
             </div>
@@ -170,48 +170,39 @@
     <div class="headers" id="learners">{% trans "Dasturlari bilan tanishing" %}</div>
     <div class="fade-line"></div>
     <div class="lern-container">
-        {% for guide in guides_list %}
-            {% for choice in guide.choices.all %}
-                {% if choice.language == LANGUAGE_CODE %}
-                    <div class="lern-card">
-                        <a href="/guide">
-                            <img src="{% static 'images/image content.png' %}" alt="lern-image">
-                            <div class="lern-content">
-                                <h2>{{ guide.title }}</h2>
-                                <p>{{ guide.description }}</p>
-                            </div>
-                        </a>
+        {% for guide_choice in guide_choices %}
+            <div class="lern-card">
+                <a href="{% url 'guide' guide_type=guide_choice.guide_type %}">
+                    <img src="{{ guide_choice.guide.preview_url }}" alt="lern-image">
+                    <div class="lern-content">
+                        <h2>
+                            {% if guide_choice.guide.short_guide_title %}
+                                {{ guide_choice.guide.short_guide_title }}
+                            {% else %}
+                                {{ guide_choice.guide.title }}
+                            {% endif %}
+                        </h2>
+                        <p>
+                            {% if guide_choice.guide.short_guide_description %}
+                                {{ guide_choice.guide.short_guide_description }}
+                            {% else %}
+                                {{ guide_choice.guide.description|truncatewords:20 }}
+                            {% endif %}
+                        </p>
+                        <span class="guide-type-badge" data-type="{{ guide_choice.guide_type }}">
+                            {{ guide_choice.get_guide_type_display }}
+                        </span>
                     </div>
-                {% endif %}
-            {% endfor %}
+                </a>
+            </div>
         {% empty %}
             <!-- Fallback content if no guides available -->
             <div class="lern-card">
-                <a href="{{ guide_url }}">
+                <a href="#">
                     <img src="{% static 'images/image content.png' %}" alt="lern-image">
                     <div class="lern-content">
-                        <h2>{% trans "Toshkent shahar Kambag'allikni qisqartirish va bandlik bosqarmasiga yangi boshliq
-                            tayinlandi" %}</h2>
-                        <p>{% trans "Mazkur turinova Mazkur bank Toshkent shahar bosh boshqarmasi boshlig'i o'rinbosari
-                            tayinlandi." %}</p>
-                    </div>
-                </a>
-            </div>
-            <div class="lern-card">
-                <a href="#">
-                    <img src="{% static 'images/image 6.png' %}" alt="lern-image">
-                    <div class="lern-content">
-                        <h2>{% trans "Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi" %}</h2>
-                        <p>{% trans "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan." %}</p>
-                    </div>
-                </a>
-            </div>
-            <div class="lern-card">
-                <a href="#">
-                    <img src="{% static 'images/image 6.png' %}" alt="lern-image">
-                    <div class="lern-content">
-                        <h2>{% trans "Buxoro shahrida yangi sport kompleksi ochildi" %}</h2>
-                        <p>{% trans "Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan." %}</p>
+                        <h2>{% trans "Dasturlar haqida ma'lumot" %}</h2>
+                        <p>{% trans "Kambag'allikni qisqartirish dasturlari bilan tanishing" %}</p>
                     </div>
                 </a>
             </div>

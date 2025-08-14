@@ -1,5 +1,5 @@
 from django.db import models
-from django import forms
+from urllib.parse import urlparse, parse_qs
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
@@ -163,6 +163,42 @@ class Guide(models.Model):
     class Meta:
         verbose_name = "Гайд"
         verbose_name_plural = "Гайды"
+
+    @property
+    def preview_url(self) -> str | None:
+        """
+        Возвращает URL превью, если link — YouTube.
+        Поддерживает форматы:
+        - https://www.youtube.com/watch?v=VIDEO_ID
+        - https://youtu.be/VIDEO_ID
+        - https://www.youtube.com/embed/VIDEO_ID
+        Иначе возвращает None.
+        """
+        if not self.link:
+            return None
+
+        u = urlparse(self.link)
+        host = (u.netloc or "").lower()
+
+        # youtu.be/VIDEO_ID
+        if "youtu.be" in host and u.path:
+            vid = u.path.lstrip("/")
+            return f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg"
+
+        # youtube.com/watch?v=VIDEO_ID
+        if "youtube.com" in host:
+            if u.path == "/watch":
+                qs = parse_qs(u.query or "")
+                vid = qs.get("v", [None])[0]
+                if vid:
+                    return f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg"
+            # youtube.com/embed/VIDEO_ID
+            if u.path.startswith("/embed/"):
+                vid = u.path.split("/embed/")[1]
+                if vid:
+                    return f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg"
+
+        return None
 
     def __str__(self):
         return self.title

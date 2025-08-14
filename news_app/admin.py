@@ -52,7 +52,7 @@ class DebtAdmin(admin.ModelAdmin):
     search_fields = ("inn", "full_name")
 
 #=================== Guide ==================
-class GuideChoicesInline(admin.TabularInline):
+class GuideChoicesInline(admin.StackedInline):
     model = GuideChoices
     extra = 1
 
@@ -60,12 +60,5 @@ class GuideChoicesInline(admin.TabularInline):
 @admin.register(Guide)
 class GuideAdmin(admin.ModelAdmin):
     list_display = ("title", "link")
-    search_fields = ("title",)
     inlines = [GuideChoicesInline]
-
-
-@admin.register(GuideChoices)
-class GuideChoicesAdmin(admin.ModelAdmin):
-    list_display = ("guide", "guide_type")
-    list_filter = ("guide_type",)
-    search_fields = ("guide__title",)
+    search_fields = ("title",)

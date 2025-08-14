@@ -555,7 +555,7 @@ main {
 }
 
 /* ========================================
-   9. Новости
+   9. Новости - ИСПРАВЛЕНО
 ======================================== */
 .page-title {
     color: white;
@@ -565,10 +565,11 @@ main {
 
 .news-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 385px));
     gap: 20px;
     width: 100%;
     max-width: 1200px;
+    justify-content: center;
 }
 
 .news-card {
@@ -578,6 +579,8 @@ main {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
+    max-width: 350px;
 }
 
 .news-card img {
@@ -638,17 +641,17 @@ main {
     background-color: #1E3D1E;
 }
 
-
 /* ========================================
-   9.5 Dasturlar
+   9.5 Dasturlar - ИСПРАВЛЕНО
 ======================================== */
 
 .lern-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 385px));
     gap: 20px;
     width: 100%;
     max-width: 1200px;
+    justify-content: center;
 }
 
 .lern-card {
@@ -658,15 +661,23 @@ main {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
+    max-width: 350px;
 }
+
 .lern-card img {
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    object-fit: align;
 }
+
 .lern-card a {
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
+
 .lern-content {
     padding: 15px;
     color: white;
@@ -675,6 +686,7 @@ main {
     flex: 1;
     justify-content: space-between;
 }
+
 .lern-content h2 {
     font-size: 1.2rem;
     margin-bottom: 10px;
@@ -684,6 +696,35 @@ main {
     font-size: 0.9rem;
     color: #d1e7dd;
     margin-bottom: 10px;
+}
+
+
+/* Адаптивные изменения для мобильных устройств */
+@media (max-width: 768px) {
+    .news-container,
+    .lern-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
+        padding: 0 10px;
+    }
+
+    .news-card,
+    .lern-card {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .news-container,
+    .lern-container {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+
+    .news-card,
+    .lern-card {
+        max-width: 100%;
+        min-width: 280px;
+    }
 }
 
 /* ========================================

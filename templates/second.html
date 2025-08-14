@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="uz">
+{% load i18n %}
+{% load static %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suddan - Kambag'allikni qisqartirish</title>
-    <link rel="stylesheet" href="/static/css/second.css">
+    <title>{{ guide_choice.get_guide_type_display }} - {% trans "Kambag'allikni qisqartirish" %}</title>
+    <link rel="stylesheet" href="{% static 'css/second.css' %}?v=1.2">
 </head>
 <body>
 <!-- Header -->
 <header class="header">
     <div class="logo">
-        <a href="/"><img src="/static/images/logo.svg" alt="Logo"></a>
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="Logo"></a>
     </div>
 
     <!-- Desktop Navigation -->
@@ -22,9 +24,9 @@
             <div class="dropdown-menu">
                 <a href="#">Biz haqimizda</a>
                 <a href="#">Rahbariyat</a>
-                <a href="#" class="active">Suddan</a>
-                <a href="#">Subsidiya</a>
-                <a href="#">Grantlar</a>
+                <a href="/guide/loan" class="active">Suddan</a>
+                <a href="/guide/subsidy">Subsidiya</a>
+                <a href="/guide/grant">Grantlar</a>
             </div>
         </div>
         <a href="#" data-page="ariza">Ariza qoldirish</a>
@@ -36,52 +38,51 @@
     <div class="header-right">
         <div class="search">
             <button>
-                <img src="/static/images/search-icon.svg" alt="Search Icon" class="search-icon">
-                <span>Qidiruv</span>
+                <img src="{% static 'images/search-icon.svg' %}" alt="Search Icon" class="search-icon">
+                <span>{% trans "Qidiruv" %}</span>
             </button>
         </div>
-        <div class="language-selector">
-            <img src="/static/images/global-icon.svg" alt="World Icon">
-            <span id="current-language">O'zb</span>
+        <div class="language-selector" id="language-selector">
+            <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+            <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
             <i class="arrow-down"></i>
             <div class="language-menu">
-                <a href="#" data-lang="O'zb" class="active">O'zbek</a>
-                <a href="#" data-lang="Рус">Русский</a>
-                <a href="#" data-lang="Eng">English</a>
+                <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
             </div>
+        </div>
         </div>
     </div>
 </header>
 
 <!-- Breadcrumb -->
 <div class="breadcrumb">
-    <a href="/">Bosh sahifa</a>
+    <a href="{% url 'home' %}">{% trans "Bosh sahifa" %}</a>
     <span>></span>
-    <span>Suddan</span>
+    <span>{{ guide_choice.get_guide_type_display }}</span>
 </div>
 
 <!-- Main Content -->
 <main class="main-content">
-    <h1 class="page-title">Suddan</h1>
+    <h1 class="page-title">{{ guide_choice.get_guide_type_display }}</h1>
     <div class="fade-line"></div>
 
     <div class="content-section">
         <div class="text-content">
-            <h2>Suddan - Bu kambag'allik xavfi ostida yashayotgan fuqarolarga ko'rsatiladigan bir martalik yoki davriy
-                moddiy yordam shaklidir.</h2>
+            <h2>{{ guide.title }}</h2>
 
-            <p>Suddan mablag' olish uchun fuqarolar mahalla yoki hududiy ijtimoiy himoya bo'limlariga murojaat
-                qilishlari mumkin. Arizalar ijtimoiy mezonlar asosida baholanadi va maqsadli yordam taqdim etiladi.</p>
+            <p>{{ guide.description }}</p>
 
         </div>
 
         <div class="video-container" id="video-container">
             <div class="video-thumbnail" id="video-thumbnail" style="position: relative; cursor: pointer;">
-                <img src="https://img.youtube.com/vi/H2vTrHc-OGk/maxresdefault.jpg" alt="YouTube Thumbnail"
-                     style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="https://img.youtube.com/vi/{{ preview }}/maxresdefault.jpg" alt="YouTube Thumbnail"
+                             style="width: 100%; height: 100%; object-fit: cover;">
                 <div class="play-button"
                      style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                    <img src="/static/images/youtube - icon.svg" alt="Play Button">
+                    <img src="{% static 'images/youtube - icon.svg' %}" alt="Play Button">
                 </div>
             </div>
         </div>
@@ -90,30 +91,116 @@
 </main>
 
 <script>
-    // Language selector functionality
-    document.querySelectorAll('.language-menu a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelectorAll('.language-menu a').forEach(a => a.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById('current-language').textContent = this.getAttribute('data-lang');
-        });
-    });
+    // Function to get CSRF token from cookie
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
-    // Video thumbnail click to embed and play (no alert needed)
+    // Language change function
+    function changeLanguage(lang) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/i18n/setlang/';
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = getCookie('csrftoken');
+        form.appendChild(csrfInput);
+        const langInput = document.createElement('input');
+        langInput.type = 'hidden';
+        langInput.name = 'language';
+        langInput.value = lang;
+        form.appendChild(langInput);
+        const nextInput = document.createElement('input');
+        nextInput.type = 'hidden';
+        nextInput.name = 'next';
+        nextInput.value = window.location.pathname;
+        form.appendChild(nextInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    // Extract YouTube video ID (улучшенная версия)
+    function getYouTubeVideoId(url) {
+        if (!url) return null;
+
+        const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[7].length === 11) ? match[7] : null;
+    }
+
+    // Video thumbnail click to embed and play
     document.getElementById('video-thumbnail').addEventListener('click', function () {
         const container = document.getElementById('video-container');
-        container.innerHTML = `
-            <iframe
-                width="100%"
-                height="500"
-                src="https://www.youtube.com/embed/H2vTrHc-OGk?autoplay=1&rel=0"
-                frameborder="0"
-                allow="autoplay; encrypted-media"
-                allowfullscreen>
-            </iframe>`;
+        const videoUrl = "{{ link }}";
+
+        // Извлекаем ID из полной ссылки
+        const videoId = getYouTubeVideoId(videoUrl);
+
+        console.log('Video URL:', videoUrl);
+        console.log('Extracted Video ID:', videoId);
+
+        if (videoId) {
+            container.innerHTML = `
+                <iframe
+                    width="100%"
+                    height="500"
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>`;
+        } else {
+            console.error('Не удалось извлечь YouTube ID из:', videoUrl);
+            // Если не удалось извлечь ID, открываем в новом окне
+            window.open(videoUrl, '_blank');
+        }
+    });
+
+    // Исправляем превью тоже, если оно не работает
+    document.addEventListener('DOMContentLoaded', function() {
+        const videoUrl = "{{ link }}";
+        const videoId = getYouTubeVideoId(videoUrl);
+        const thumbnailImg = document.querySelector('#video-thumbnail img');
+
+        if (videoId && thumbnailImg) {
+            // Обновляем src превью, если текущее не работает
+            const currentSrc = thumbnailImg.src;
+            if (!currentSrc.includes(videoId)) {
+                thumbnailImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            }
+        }
+
+        console.log('Page loaded. Video URL:', videoUrl);
+        console.log('Video ID:', videoId);
+    });
+
+    // Language selector dropdown toggle
+    const languageSelector = document.getElementById('language-selector');
+    if (languageSelector) {
+        languageSelector.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('open');
+        });
+    }
+
+    // Close language menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (languageSelector && !languageSelector.contains(e.target)) {
+            languageSelector.classList.remove('open');
+        }
     });
 </script>
-
 </body>
 </html>

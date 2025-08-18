@@ -124,6 +124,59 @@ class Leaders(models.Model):
             raise ValidationError("⚠ Пожалуйста, загрузите изображение.")
         return image
 
+    def _to_yandex_embed(self):
+        """
+        Преобразует короткую ссылку вида https://yandex.uz/maps/-/CHxAQEyc
+        в embed-URL вида https://yandex.uz/map-widget/v1/-/CHxAQEyc
+        Если не распознал — вернёт None.
+        """
+        if not self.region_link:
+            return None
+        try:
+            u = urlparse(self.region_link)
+            host = u.netloc or 'yandex.uz'
+            path = (u.path or '').strip('/')
+
+            # Уже embed (без изменений)
+            if 'map-widget' in self.region_link:
+                return self.region_link
+
+            # Формат /-/CODE или maps/-/CODE
+            if '/-/' in u.path:
+                code = u.path.split('/-/')[-1].strip('/')
+                if code:
+                    return f"https://{host}/map-widget/v1/-/{code}"
+
+            # Если ссылка содержит /org/ (организация) — можно преобразовать в виджет org
+            # Пример: /org/123701252573/...
+            parts = [p for p in path.split('/') if p]
+            if 'org' in parts:
+                # найдём id после 'org'
+                try:
+                    idx = parts.index('org')
+                    org_id = parts[idx + 1]
+                    return f"https://{host}/map-widget/v1/org/{org_id}"
+                except Exception:
+                    pass
+
+            # Если в query есть ll и z — вернуть как widget с query
+            if u.query:
+                return f"https://{host}/map-widget/v1/?{u.query}"
+
+        except Exception:
+            return None
+        return None
+
+    @property
+    def region_embed(self):
+        """
+        Возвращает корректный embed URL для iframe или None.
+        Админ может вставлять короткую share-ссылку — это преобразуется.
+        """
+        embed = self._to_yandex_embed()
+        # если удалось получить embed — возвращаем его, иначе если указан region_link — возвращаем region_link (fallback)
+        return embed or (self.region_link or None)
+
     def __str__(self):
         return f"{self.leader_name} - {self.leader_phone} - {self.leader_position}"
 

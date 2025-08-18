@@ -1,6 +1,6 @@
 from django.utils.translation import get_language
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import NewsTranslation, CategoryTranslation, Leaders, Debt, GuideChoices, Guide
+from .models import NewsTranslation, CategoryTranslation, Leaders, Debt, GuideTranslation, Guide
 
 
 def index(request):
@@ -12,14 +12,13 @@ def index(request):
 
     # Получаем все гайды с их переводами для текущего языка
     guides_with_choices = Guide.objects.prefetch_related(
-        'choices'
+        'translations'
     ).filter(
-        choices__language=lang
+        translations__lang=lang
     ).distinct()
 
-    # Также получаем отдельно guide_choices для удобства работы с типами
-    guide_choices = GuideChoices.objects.filter(language=lang).select_related('guide')
-
+    # Получаем переводы гайдов для текущего языка
+    guide_choices = GuideTranslation.objects.filter(lang=lang).select_related('guide')
 
     # Получаем первого лидера для отображения по умолчанию
     current_leader = leaders.first() if leaders.exists() else None
@@ -42,22 +41,21 @@ def index(request):
 def guide(request, guide_type):
     current_lang = request.LANGUAGE_CODE or get_language()
     try:
-        guide_choice = GuideChoices.objects.get(
-            guide_type=guide_type,
-            language=current_lang
+        guide_choice = GuideTranslation.objects.select_related('guide').get(
+            guide__guide_type=guide_type,  # ← связь через guide
+            lang=current_lang               # ← поле называется lang, не language
         )
 
-        # Вместо прямого перенаправления, покажем промежуточную страницу
-
         context = {
-            'guide': guide_choice.guide,
-            'guide_choice': guide_choice,
+            'guide': guide_choice,
+            'guide_type': guide_choice.guide.guide_type,
             'link': guide_choice.guide.link,
-            'preview': guide_choice.guide.link.split('?')[0].split('/')[-1],
+            'preview': guide_choice.guide.preview_url,
         }
-
         return render(request, 'second.html', context)
+    except GuideTranslation.DoesNotExist:
+        return redirect('home')
     except Exception as e:
-        print(e)
-        return redirect(f'/{current_lang}/')
+        print("Error:", e)
+        return redirect('home')
 

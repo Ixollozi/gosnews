@@ -167,47 +167,51 @@
     <button class="see-more-btn">{% trans "Yana ko'rish" %}</button>
 
     <!-- Learners Section -->
-    <div class="headers" id="learners">{% trans "Dasturlari bilan tanishing" %}</div>
-    <div class="fade-line"></div>
-    <div class="lern-container">
-        {% for guide_choice in guide_choices %}
-            <div class="lern-card">
-                <a href="{% url 'guide' guide_type=guide_choice.guide_type %}">
-                    <img src="{{ guide_choice.guide.preview_url }}" alt="lern-image">
-                    <div class="lern-content">
-                        <h2>
-                            {% if guide_choice.guide.short_guide_title %}
-                                {{ guide_choice.guide.short_guide_title }}
-                            {% else %}
-                                {{ guide_choice.guide.title }}
-                            {% endif %}
-                        </h2>
-                        <p>
-                            {% if guide_choice.guide.short_guide_description %}
-                                {{ guide_choice.guide.short_guide_description }}
-                            {% else %}
-                                {{ guide_choice.guide.description|truncatewords:20 }}
-                            {% endif %}
-                        </p>
-                        <span class="guide-type-badge" data-type="{{ guide_choice.guide_type }}">
-                            {{ guide_choice.get_guide_type_display }}
-                        </span>
-                    </div>
-                </a>
-            </div>
-        {% empty %}
-            <!-- Fallback content if no guides available -->
-            <div class="lern-card">
+<div class="headers" id="learners">{% trans "Dasturlari bilan tanishing" %}</div>
+<div class="fade-line"></div>
+<div class="lern-container">
+    {% for guide_choice in guide_choices %}
+        <div class="lern-card">
+            {% if guide_choice.guide.guide_type %}
+                <a href="{% url 'guide' guide_type=guide_choice.guide.guide_type %}">
+            {% else %}
                 <a href="#">
-                    <img src="{% static 'images/image content.png' %}" alt="lern-image">
-                    <div class="lern-content">
-                        <h2>{% trans "Dasturlar haqida ma'lumot" %}</h2>
-                        <p>{% trans "Kambag'allikni qisqartirish dasturlari bilan tanishing" %}</p>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
+            {% endif %}
+                <img src="{{ guide_choice.guide.preview_url }}" alt="lern-image">
+                <div class="lern-content">
+                    <h2>
+                        {% if guide_choice.short_title %}
+                            {{ guide_choice.short_title }}
+                        {% else %}
+                            {{ guide_choice.title }}
+                        {% endif %}
+                    </h2>
+                    <p>
+                        {% if guide_choice.short_description %}
+                            {{ guide_choice.short_description }}
+                        {% else %}
+                            {{ guide_choice.description|truncatewords:20 }}
+                        {% endif %}
+                    </p>
+                    <span class="guide-type-badge" data-type="{{ guide_choice.guide.guide_type }}">
+                        {{ guide_choice.guide.get_guide_type_display }}
+                    </span>
+                </div>
+            </a>
+        </div>
+    {% empty %}
+        <!-- Fallback content if no guides available -->
+        <div class="lern-card">
+            <a href="#">
+                <img src="{% static 'images/image content.png' %}" alt="lern-image">
+                <div class="lern-content">
+                    <h2>{% trans "Dasturlar haqida ma'lumot" %}</h2>
+                    <p>{% trans "Kambag'allikni qisqartirish dasturlari bilan tanishing" %}</p>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
 
     <!-- Hududlar Section -->
     <div class="headers" id="hududlar">{% trans "Hududlar" %}</div>

@@ -3,6 +3,7 @@ from urllib.parse import urlparse, parse_qs
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
+
 # ================== Category ==================
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name="Название")
@@ -86,7 +87,6 @@ class NewsTranslation(models.Model):
         return f"{self.lang} — {self.title}"
 
 
-
 # ================== Leaders ==================
 class Leaders(models.Model):
     REGION_CHOICES = [
@@ -128,7 +128,6 @@ class Leaders(models.Model):
         return f"{self.leader_name} - {self.leader_phone} - {self.leader_position}"
 
 
-
 # ================== Debt ==================
 class Debt(models.Model):
     STATUS_CHOICES = [
@@ -152,28 +151,25 @@ class Debt(models.Model):
         return f"{self.inn} - {self.full_name}"
 
 
-#=================== Guide ==================
+# =================== Guide ==================
 class Guide(models.Model):
-    title = models.CharField(max_length=255, verbose_name="Заголовок")
-    short_guide_title = models.CharField(max_length=100, verbose_name="Короткий заголовок", blank=True, null=True)
-    description = models.TextField(verbose_name="Описание")
-    short_guide_description = models.TextField(verbose_name="Короткое описание", blank=True, null=True)
+    GUIDE_TYPE_CHOICES = [
+        ('loan', "Ссуда"),
+        ('grant', "Грант"),
+        ('subsidy', "Субсидия"),
+    ]
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    guide_type = models.CharField(max_length=20, choices=GUIDE_TYPE_CHOICES, verbose_name="Тип гайда")
     link = models.URLField(null=False, verbose_name="Ссылка на видео")
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = "Гайд"
         verbose_name_plural = "Гайды"
 
     @property
     def preview_url(self) -> str | None:
-        """
-        Возвращает URL превью, если link — YouTube.
-        Поддерживает форматы:
-        - https://www.youtube.com/watch?v=VIDEO_ID
-        - https://youtu.be/VIDEO_ID
-        - https://www.youtube.com/embed/VIDEO_ID
-        Иначе возвращает None.
-        """
         if not self.link:
             return None
 
@@ -201,27 +197,27 @@ class Guide(models.Model):
         return None
 
     def __str__(self):
-        return self.title
+        return f"{self.get_guide_type_display()} - Guide {self.id}"
 
-class GuideChoices(models.Model):
-    GUIDE_TYPE_CHOICES = [
-        ('loan', "Ссуда"),
-        ('grant', "Грант"),
-        ('subsidy', "Субсидия"),
-    ]
+
+class GuideTranslation(models.Model):
     LANG_CHOICES = [
         ('uz', "O'zbek"),
         ('ru', "Русский"),
         ('kaa', "Karakalpak"),
     ]
 
-    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, related_name="choices", verbose_name="Гайд")
-    guide_type = models.CharField(max_length=20, choices=GUIDE_TYPE_CHOICES, verbose_name="Тип гайда")
-    language = models.CharField(max_length=20, choices=LANG_CHOICES,default='uz', verbose_name="Язык")
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, related_name="translations")
+    lang = models.CharField(max_length=5, choices=LANG_CHOICES, verbose_name="Язык")
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    short_title = models.CharField(max_length=100, verbose_name="Короткий заголовок", blank=True)
+    description = models.TextField(verbose_name="Описание")
+    short_description = models.TextField(verbose_name="Короткое описание", blank=True)
 
     class Meta:
-        verbose_name = "Тип гайда"
-        verbose_name_plural = "Типы гайдов"
+        unique_together = ('guide', 'lang')
+        verbose_name = "Перевод гайда"
+        verbose_name_plural = "Переводы гайдов"
 
     def __str__(self):
-        return f"{self.get_guide_type_display()} — {self.guide.title}"
+        return f"{self.lang} — {self.title}"

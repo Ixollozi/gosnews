@@ -4,12 +4,12 @@ from .models import (
     Category, CategoryTranslation,
     Leaders,
     Debt,
-    Guide, GuideChoices
+    Guide, GuideTranslation
 )
 
 
 # ================== News ==================
-class NewsTranslationInline(admin.StackedInline):  # меняем на StackedInline
+class NewsTranslationInline(admin.StackedInline):
     model = NewsTranslation
     extra = 1
 
@@ -19,11 +19,10 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = ("id", "created_at")
     inlines = [NewsTranslationInline]
     ordering = ["-created_at"]
-    search_fields = ("title",)
 
 
 # ================== Category ==================
-class CategoryTranslationInline(admin.StackedInline):  # тоже меняем
+class CategoryTranslationInline(admin.StackedInline):
     model = CategoryTranslation
     extra = 1
 
@@ -51,14 +50,19 @@ class DebtAdmin(admin.ModelAdmin):
     list_filter = ("status", "debt_type")
     search_fields = ("inn", "full_name")
 
+
 #=================== Guide ==================
-class GuideChoicesInline(admin.StackedInline):
-    model = GuideChoices
+class GuideTranslationInline(admin.StackedInline):
+    model = GuideTranslation
     extra = 1
+    verbose_name = "Перевод"
+    verbose_name_plural = "Переводы"
 
 
 @admin.register(Guide)
 class GuideAdmin(admin.ModelAdmin):
-    list_display = ("title", "link")
-    inlines = [GuideChoicesInline]
-    search_fields = ("title",)
+    list_display = ("id", "guide_type", "created_at", "link")
+    list_filter = ("guide_type",)
+    inlines = [GuideTranslationInline]
+    ordering = ["-created_at"]
+    readonly_fields = ("created_at",)

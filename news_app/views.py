@@ -1,33 +1,47 @@
 from django.utils.translation import get_language
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from .models import NewsTranslation, CategoryTranslation, Leaders, Debt, GuideTranslation, Guide
-
 
 def index(request):
     lang = get_language()
+
+    # Новости
     news = NewsTranslation.objects.select_related("news", "category").filter(lang=lang)[:3]
     categories = CategoryTranslation.objects.filter(lang=lang)
-    leaders = Leaders.objects.all()
-    debts = Debt.objects.all()
 
-    # Получаем все гайды с их переводами для текущего языка
-    guides_with_choices = Guide.objects.prefetch_related(
-        'translations'
-    ).filter(
-        translations__lang=lang
+    # Все лидеры с region_link и не пустым регионом
+    valid_leaders = Leaders.objects.exclude(region='').filter(
+        region_link__isnull=False
     ).distinct()
 
-    # Получаем переводы гайдов для текущего языка
-    guide_choices = GuideTranslation.objects.filter(lang=lang).select_related('guide')
+    # Создаём словарь для уникальности и сохранения порядка
+    region_map = {}
+    for leader in valid_leaders:
+        if leader.region not in region_map:
+            region_map[leader.region] = leader
 
-    # Получаем первого лидера для отображения по умолчанию
-    current_leader = leaders.first() if leaders.exists() else None
+    # Порядок из модели Leaders.REGION_CHOICES
+    region_order = [region[0] for region in Leaders.REGION_CHOICES]
+
+    # Сортируем регионы по порядку из REGION_CHOICES
+    sorted_leaders = [
+        region_map[region] for region in region_order if region in region_map
+    ]
+
+    leaders_list = sorted_leaders
+    current_leader = leaders_list[0] if leaders_list else None
+
+    # Остальные данные
+    debts = Debt.objects.all()
+    guides_with_choices = Guide.objects.prefetch_related('translations').filter(
+        translations__lang=lang
+    ).distinct()
+    guide_choices = GuideTranslation.objects.filter(lang=lang).select_related('guide')
 
     context = {
         'news': news,
         'categories': categories,
-        'leaders_list': leaders,
-        'leaders': leaders,  # Для совместимости со старым кодом
+        'leaders_list': leaders_list,
         'debts': debts,
         'guides_list': guides_with_choices,
         'guide_choices': guide_choices,

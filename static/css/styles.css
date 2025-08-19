@@ -809,7 +809,7 @@ main {
     left: 20px;
     background-color: #193B19;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     gap: 10px;

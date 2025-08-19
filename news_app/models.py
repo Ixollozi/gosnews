@@ -91,6 +91,7 @@ class NewsTranslation(models.Model):
 class Leaders(models.Model):
     REGION_CHOICES = [
         ('Toshkent', "Toshkent"),
+        ("Toshkent-viloyati", "Toshkent-viloyati"),
         ('Andijon', "Andijon"),
         ('Buxoro', "Buxoro"),
         ('Farg`ona', "Farg`ona"),
@@ -169,12 +170,7 @@ class Leaders(models.Model):
 
     @property
     def region_embed(self):
-        """
-        Возвращает корректный embed URL для iframe или None.
-        Админ может вставлять короткую share-ссылку — это преобразуется.
-        """
         embed = self._to_yandex_embed()
-        # если удалось получить embed — возвращаем его, иначе если указан region_link — возвращаем region_link (fallback)
         return embed or (self.region_link or None)
 
     def __str__(self):

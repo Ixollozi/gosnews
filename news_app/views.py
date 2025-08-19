@@ -6,7 +6,7 @@ def index(request):
     lang = get_language()
 
     # Новости
-    news = NewsTranslation.objects.select_related("news", "category").filter(lang=lang)[:3]
+    news = NewsTranslation.objects.select_related("news", "category").filter(lang=lang).order_by('-news__created_at')[:3]
     categories = CategoryTranslation.objects.filter(lang=lang)
 
     # Все лидеры с region_link и не пустым регионом
@@ -72,4 +72,9 @@ def guide(request, guide_type):
     except Exception as e:
         print("Error:", e)
         return redirect('home')
+
+
+def leaders(request):
+    leaders = Leaders.objects.all()
+    return render(request, 'leaders.html', {'leaders': leaders})
 

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% load static %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Rahbariyat" %} - {% trans "Kambag'allikni qisqartirish" %}</title>
+    <link rel="stylesheet" href="{% static 'css/leaders.css' %}?v=1.2">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="Logo"></a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="navbar">
+        <a href="#" data-page="bosh-sahifa">Bosh sahifa</a>
+        <div class="dropdown active">
+            <span>Jang'arma</span>
+            <i class="arrow-down"></i>
+            <div class="dropdown-menu">
+                <a href="#">Biz haqimizda</a>
+                <a href="#">Rahbariyat</a>
+                <a href="/guide/loan">Suddan</a>
+                <a href="/guide/subsidy">Subsidiya</a>
+                <a href="/guide/grant">Grantlar</a>
+            </div>
+        </div>
+        <a href="#" data-page="ariza">Ariza qoldirish</a>
+        <a href="#" data-page="yangiliklar">Yangiliklar</a>
+        <a href="#" data-page="hududlar">Hududlar</a>
+        <a href="#" data-page="mahalla">online.mahalla</a>
+    </nav>
+
+    <div class="header-right">
+        <div class="search">
+            <button>
+                <img src="{% static 'images/search-icon.svg' %}" alt="Search Icon" class="search-icon">
+                <span>{% trans "Qidiruv" %}</span>
+            </button>
+        </div>
+        <div class="language-selector" id="language-selector">
+            <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+            <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
+            <i class="arrow-down"></i>
+            <div class="language-menu">
+                <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <a href="{% url 'home' %}">{% trans "Bosh sahifa" %}</a>
+    <span>></span>
+    <span>{% trans "Rahbariyat" %}</span>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+    <h1 class="page-title">{% trans "Rahbariyat" %}</h1>
+    <div class="fade-line"></div>
+
+    <!-- Leaders Section -->
+    <div class="leaders-section">
+        <div class="leaders-container" id="leadersContainer">
+            {% for leader in leaders %}
+            <div class="leader-card">
+                <h3>jasdhakjsdh</h3>
+                <p class="position">kzxklz</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>hdsahdadak</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>jshajkdhasd</span>
+                    </div>
+                </div>
+                <img src="{% static 'media/news/Снимок_экрана_13.png' %}" alt="{{ leader.name }}" class="leader-image">
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Navigation arrows -->
+        <div class="slider-controls">
+            <div class="border">
+                <button class="prev-btn" onclick="scrollLeaders(-1)">&#8249;</button>
+                <button class="next-btn" onclick="scrollLeaders(1)">&#8250;</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // Language change function (unchanged)
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function changeLanguage(lang) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/i18n/setlang/';
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = getCookie('csrftoken');
+        form.appendChild(csrfInput);
+        const langInput = document.createElement('input');
+        langInput.type = 'hidden';
+        langInput.name = 'language';
+        langInput.value = lang;
+        form.appendChild(langInput);
+        const nextInput = document.createElement('input');
+        nextInput.type = 'hidden';
+        nextInput.name = 'next';
+        nextInput.value = window.location.pathname;
+        form.appendChild(nextInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    // Scroll leaders horizontally
+    function scrollLeaders(direction) {
+        const container = document.getElementById('leadersContainer');
+        const scrollAmount = 300; // Ширина карточки + отступ
+        container.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+
+    // Language selector dropdown toggle
+    const languageSelector = document.getElementById('language-selector');
+    if (languageSelector) {
+        languageSelector.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('open');
+        });
+    }
+
+    document.addEventListener('click', function(e) {
+        if (languageSelector && !languageSelector.contains(e.target)) {
+            languageSelector.classList.remove('open');
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* === Глобальные сбросы и настройкиWon шрифтов === */
+/* === Глобальные сбросы и настройки шрифтов === */
 * {
     margin: 0;
     padding: 0;
@@ -17,6 +17,14 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    color: white;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-y: auto;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 /* === Header === */
@@ -26,17 +34,25 @@ body {
     align-items: center;
     background-color: #193B19;
     color: white;
-    padding: 15px 20px;
-    flex-shrink: 0;
+    padding: 10px 15px;
     position: relative;
+    flex-shrink: 0;
 }
 
 .logo img {
-    width: 254px;
-    height: 50px;
+    width: 280px;
+    height: 48px;
     vertical-align: middle;
+    margin-right: 10px;
 }
 
+.logo span {
+    display: block;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+/* === Основное меню (десктоп) === */
 .navbar {
     display: flex;
     gap: 5px;
@@ -46,11 +62,12 @@ body {
     border-radius: 15px;
     padding: 5px;
     background-color: #1E3D1E;
-    min-width: 683px;
+    min-width: 500px;
     min-height: 48px;
 }
 
-.navbar a {
+.navbar a,
+.dropdown {
     flex: 1;
     text-align: center;
     color: white;
@@ -59,23 +76,22 @@ body {
     padding: 12px 0;
     border-radius: 10px;
     min-height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: background-color 0.3s ease;
 }
 
+.navbar a:hover,
+.dropdown:hover,
+.navbar a.active {
+    background-color: #327632;
+}
+
+/* === Выпадающее меню (десктоп) === */
 .dropdown {
     position: relative;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    color: white;
     cursor: pointer;
-    flex: 1;
-    min-height: 38px;
-    padding: 12px 5px;
-    border-radius: 10px;
     gap: 5px;
 }
 
@@ -83,19 +99,27 @@ body {
     font-size: 14px;
 }
 
-.dropdown .arrow-down {
+.dropdown .arrow-down,
+.language-selector .arrow-down {
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 5px solid white;
+    transition: transform 0.3s ease;
 }
 
-.dropdown-menu {
+.dropdown:hover .arrow-down,
+.dropdown.open .arrow-down,
+.language-selector:hover .arrow-down,
+.language-selector.open .arrow-down {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu,
+.language-menu {
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -107,41 +131,134 @@ body {
     margin-top: 5px;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown-menu {
+    left: 0;
+    right: 0;
+}
+
+.language-menu {
+    right: 0;
+    min-width: 120px;
+    z-index: 1200;
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown.open .dropdown-menu,
+.language-selector:hover .language-menu,
+.language-selector.open .language-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.dropdown-menu a {
+.dropdown-menu a,
+.language-menu a {
     display: block;
     padding: 12px 16px;
     color: #193B19;
     text-decoration: none;
     font-size: 14px;
     border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.3s ease;
 }
 
+.language-menu button {
+    display: block;
+    padding: 12px 16px;
+    color: #193B19;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-menu a:first-child,
+.language-menu a:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.dropdown-menu a:last-child,
+.language-menu a:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.dropdown-menu a:hover,
+.language-menu a:hover {
+    background-color: #f8f9fa;
+}
+
+.language-menu a.active {
+    background-color: #327632;
+    color: white;
+}
+
+.language-menu a.active:hover {
+    background-color: #2a642a;
+}
+
+/* === Правая часть шапки (язык, поиск) === */
 .header-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 6px;
+    flex-direction: row-reverse;
 }
 
+/* Гамбургер-меню */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 1100;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -8px);
+}
+
+/* Поиск */
 .search button {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #327632;
     color: white;
-    padding: 17px 15px;
+    padding: 10px;
     border: none;
     border-radius: 15px;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
-    min-height: 48px;
+    min-height: 54px;
+    min-width: 40px;
     font-weight: bold;
+    transition: background-color 0.3s ease;
     gap: 8px;
+}
+
+.search button:hover {
+    background-color: #2a642a;
 }
 
 .search-icon {
@@ -149,9 +266,9 @@ body {
     height: 16px;
     margin-right: 8px;
     filter: brightness(100%);
-    vertical-align: middle;
 }
 
+/* Язык */
 .language-selector {
     position: relative;
     display: flex;
@@ -165,50 +282,115 @@ body {
     background-color: #1E3D1E;
     min-width: 100px;
     min-height: 48px;
+    transition: background-color 0.3s ease;
+    z-index: 1100;
 }
 
-.language-selector .arrow-down {
+.language-selector:hover {
+    background-color: #304F30;
+}
+
+/* === Мобильное меню === */
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #1E3D1E;
+    border: 2px solid #304F30;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.mobile-menu.active {
+    display: flex;
+}
+
+.mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-bottom: 1px solid #304F30;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+    background-color: #327632;
+}
+
+.mobile-menu a:last-child {
+    border-bottom: none;
+}
+
+/* Мобильный дропдаун */
+.mobile-dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #304F30;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    color: white;
+}
+
+.mobile-dropdown-header .arrow-down {
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 5px solid white;
+    transition: transform 0.3s ease;
+    margin-left: auto;
+    display: inline-block;
 }
 
-.language-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    margin-top: 5px;
-    min-width: 120px;
+.mobile-dropdown-header.open .arrow-down {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown-header:hover {
+    background-color: #327632;
+}
+
+.mobile-dropdown-content {
+    display: none;
+    background-color: #2a5a2a;
     overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: 0;
+    opacity: 0;
 }
 
-.language-menu a {
+.mobile-dropdown-content.active {
     display: block;
-    padding: 12px 16px;
-    color: #193B19;
+    max-height: 300px;
+    opacity: 1;
+    padding: 0;
+}
+
+.mobile-dropdown-content a {
+    padding: 12px 40px;
+    display: block;
+    color: white;
     text-decoration: none;
     font-size: 14px;
-    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.3s ease;
 }
 
-.language-menu a.active {
+.mobile-dropdown-content a:hover {
     background-color: #327632;
-    color: white;
 }
 
 /* === Breadcrumb === */
 .breadcrumb {
-    padding: 20px 40px;
+    padding: 5px 40px;
     color: white;
     display: flex;
     font-size: 14px;
@@ -226,7 +408,7 @@ body {
 /* === Main Content === */
 .main-content {
     flex: 1;
-    padding: 0 40px 40px;
+    padding: 0 30px 0px;
 }
 
 .page-title {
@@ -255,15 +437,18 @@ body {
 .leaders-container {
     display: flex;
     gap: 30px;
-    overflow-x: auto;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Disable vertical scrolling */
     scroll-behavior: smooth;
     padding: 20px 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+    height: auto; /* Adapt height to content */
+    flex-wrap: nowrap; /* Prevent wrapping to maintain single row */
 }
 
 .leaders-container::-webkit-scrollbar {
-    display: none;
+    display: none; /* Hide scrollbar for WebKit browsers */
 }
 
 .leader-card {
@@ -273,7 +458,6 @@ body {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    padding: 20px;
     color: white;
     text-align: left;
 }
@@ -306,11 +490,13 @@ body {
 
 .leader-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 300px;
+    height: 300px; /* Fixed height to prevent resizing */
+    object-fit: cover; /* Maintain aspect ratio */
     border-radius: 10px;
     border: 1px solid #304F30;
-    flex-grow: 1;
+    flex-grow: 0; /* Prevent image from growing */
+    flex-shrink: 0; /* Prevent image from shrinking */
     margin-top: auto;
 }
 
@@ -319,7 +505,6 @@ body {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin-top: 20px;
 }
 
 .border {
@@ -346,82 +531,124 @@ body {
 }
 
 /* === Адаптивность === */
+@media (min-width: 1200px) {
+    .header {
+        padding: 20px 40px;
+    }
+    .navbar {
+        min-width: 800px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .header {
+        padding: 12px 20px;
+    }
+    .logo img {
+        width: 220px;
+        height: 44px;
+    }
+    .navbar {
+        min-width: 500px;
+    }
+    .header-right {
+        gap: 8px;
+    }
+}
+
 @media (max-width: 768px) {
     .header {
         padding: 10px 15px;
-        flex-wrap: wrap;
-        gap: 10px;
     }
-
     .logo img {
-        width: 200px;
-        height: auto;
+        width: 180px;
+        height: 36px;
     }
-
     .navbar {
         display: none;
     }
-
-    .header-right {
-        flex: 1;
-        justify-content: flex-end;
+    .hamburger {
+        display: flex;
     }
-
+    .header-right {
+        gap: 6px;
+    }
+    .search button {
+        padding: 10px;
+        min-height: 40px;
+        min-width: 40px;
+        font-size: 12px;
+    }
+    .search button span {
+        display: none;
+    }
+    .language-selector {
+        padding: 8px 6px;
+        min-width: 80px;
+        min-height: 40px;
+        font-size: 12px;
+    }
+    .dropdown:hover .dropdown-menu,
+    .language-selector:hover .language-menu {
+        opacity: 0;
+        visibility: hidden;
+    }
+    .dropdown.open .dropdown-menu,
+    .language-selector.open .language-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    .dropdown.open .arrow-down,
+    .language-selector.open .arrow-down {
+        transform: rotate(180deg);
+    }
     .breadcrumb {
         padding: 15px 20px;
         font-size: 12px;
     }
-
     .main-content {
         padding: 0 20px 30px;
     }
-
     .page-title {
         font-size: 32px;
         margin-bottom: 30px;
     }
-
     .leaders-section {
         padding: 0 10px;
     }
-
     .leaders-container {
         gap: 15px;
+        overflow-x: auto; /* Ensure horizontal scrolling */
+        overflow-y: hidden; /* Ensure no vertical scrolling */
+        flex-wrap: nowrap; /* Prevent wrapping */
     }
-
     .leader-card {
         min-width: 240px;
         padding: 15px;
         aspect-ratio: 1 / 1.1;
     }
-
     .leader-card h3 {
         font-size: 20px;
         margin-bottom: 6px;
     }
-
     .position {
         font-size: 13px;
         margin-bottom: 12px;
     }
-
     .contact-item {
         font-size: 13px;
     }
-
     .leader-image {
-        height: 180px;
+        height: 300px; /* Maintain fixed height */
     }
-
     .slider-controls {
         margin-top: 10px;
     }
-
     .border {
         padding: 8px;
         gap: 15px;
     }
-
     .prev-btn, .next-btn {
         width: 36px;
         height: 36px;
@@ -433,67 +660,90 @@ body {
     .header {
         padding: 8px 10px;
     }
-
     .logo img {
-        width: 150px;
+        width: 140px;
+        height: 30px;
     }
-
+    .hamburger {
+        padding: 5px;
+    }
     .search button {
-        padding: 12px 10px;
-        font-size: 12px;
-        min-height: 40px;
+        padding: 8px;
+        min-height: 35px;
+        min-width: 35px;
     }
-
     .language-selector {
-        padding: 10px 8px;
-        min-width: 80px;
-        min-height: 40px;
-        font-size: 12px;
+        padding: 6px 5px;
+        min-width: 70px;
+        min-height: 35px;
+        font-size: 11px;
     }
-
     .language-menu {
         min-width: 100px;
     }
-
     .language-menu a {
         padding: 10px 12px;
         font-size: 12px;
     }
-
     .breadcrumb {
         padding: 10px 15px;
         font-size: 10px;
     }
-
     .page-title {
         font-size: 24px;
         margin-bottom: 20px;
     }
-
     .leader-card {
         min-width: 200px;
         padding: 10px;
     }
-
     .leader-card h3 {
         font-size: 18px;
     }
-
     .position {
         font-size: 12px;
     }
-
     .contact-item {
         font-size: 12px;
     }
-
     .leader-image {
-        height: 150px;
+        height: 300px; /* Maintain fixed height */
     }
-
     .prev-btn, .next-btn {
         width: 32px;
         height: 32px;
         font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    .header {
+        padding: 6px 8px;
+    }
+    .logo img {
+        width: 120px;
+        height: 26px;
+    }
+    .hamburger {
+        padding: 4px;
+    }
+    .hamburger span {
+        width: 20px;
+        height: 2px;
+        margin: 2px 0;
+    }
+    .search button {
+        padding: 6px;
+        min-height: 30px;
+        min-width: 30px;
+    }
+    .language-selector {
+        padding: 5px 4px;
+        min-width: 60px;
+        min-height: 30px;
+        font-size: 10px;
+    }
+    .language-menu {
+        min-width: 100px;
     }
 }

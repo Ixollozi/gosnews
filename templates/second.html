@@ -12,36 +12,37 @@
 <!-- Header -->
 <header class="header">
     <div class="logo">
-        <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="Logo"></a>
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="logo"></a>
     </div>
 
     <!-- Desktop Navigation -->
-    <nav class="navbar">
-        <a href="#" data-page="bosh-sahifa">Bosh sahifa</a>
-        <div class="dropdown active">
-            <span>Jang'arma</span>
+    <nav class="navbar" id="navbar">
+        <a href="{% url 'home' %}" data-page="bosh-sahifa" class="active">{% trans "Bosh sahifa" %}</a>
+        <div class="dropdown" id="dropdown-jangarma">
+            <span>{% trans "Jang'arma" %}</span>
             <i class="arrow-down"></i>
             <div class="dropdown-menu">
-                <a href="#">Biz haqimizda</a>
-                <a href="#">Rahbariyat</a>
-                <a href="/guide/loan" class="active">Suddan</a>
-                <a href="/guide/subsidy">Subsidiya</a>
-                <a href="/guide/grant">Grantlar</a>
+                <a href="#">{% trans "Biz haqimizda" %}</a>
+                <a href="leaders">{% trans "Rahbariyat" %}</a>
+                <a href="guide/loan">{% trans "Suddan" %}</a>
+                <a href="guide/subsidy">{% trans "Subsidiya" %}</a>
+                <a href="guide/grant">{% trans "Grantlar" %}</a>
             </div>
         </div>
-        <a href="#" data-page="ariza">Ariza qoldirish</a>
-        <a href="#" data-page="yangiliklar">Yangiliklar</a>
-        <a href="#" data-page="hududlar">Hududlar</a>
-        <a href="#" data-page="mahalla">online.mahalla</a>
+        <a href="#ariza" data-page="ariza">{% trans "Ariza qoldirish" %}</a>
+        <a href="#news" data-page="yangiliklar">{% trans "Yangiliklar" %}</a>
+        <a href="#hududlar" data-page="hududlar">{% trans "Hududlar" %}</a>
+        <a href="#mahalla" data-page="mahalla">{% trans "online.mahalla" %}</a>
     </nav>
 
+    <!-- Header Right Section -->
     <div class="header-right">
-        <div class="search">
-            <button>
-                <img src="{% static 'images/search-icon.svg' %}" alt="Search Icon" class="search-icon">
-                <span>{% trans "Qidiruv" %}</span>
-            </button>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
+        <!-- Language selector -->
         <div class="language-selector" id="language-selector">
             <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
             <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
@@ -52,8 +53,35 @@
                 <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
             </div>
         </div>
+        <div class="search">
+            <button>
+                <img src="{% static 'images/search-icon.svg' %}" alt="search-icon" class="search-icon">
+                <span>{% trans "Qidiruv" %}</span>
+            </button>
         </div>
     </div>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" id="mobile-menu">
+        <a href="{% url 'home' %}" data-page="bosh-sahifa" class="active">{% trans "Bosh sahifa" %}</a>
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-header" id="mobile-dropdown-header">
+                <span>{% trans "Jang'arma" %}</span>
+                <i class="arrow-down"></i>
+            </div>
+            <div class="mobile-dropdown-content" id="mobile-dropdown-content">
+                <a href="#">{% trans "Biz haqimizda" %}</a>
+                <a href="leaders">{% trans "Rahbariyat" %}</a>
+                <a href="guide/loan">{% trans "Suddan" %}</a>
+                <a href="guide/subsidy">{% trans "Subsidiya" %}</a>
+                <a href="guide/grant">{% trans "Grantlar" %}</a>
+            </div>
+        </div>
+        <a href="#ariza" data-page="ariza">{% trans "Ariza qoldirish" %}</a>
+        <a href="#news" data-page="yangiliklar">{% trans "Yangiliklar" %}</a>
+        <a href="#hududlar" data-page="hududlar">{% trans "Hududlar" %}</a>
+        <a href="#mahalla" data-page="mahalla">{% trans "online.mahalla" %}</a>
+    </nav>
 </header>
 
 <!-- Breadcrumb -->

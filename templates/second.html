@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ guide_choice.get_guide_type_display }} - {% trans "Kambag'allikni qisqartirish" %}</title>
-    <link rel="stylesheet" href="{% static 'css/second.css' %}?v=1.2">
+    <link rel="stylesheet" href="{% static 'css/second.css' %}? v={% now 'U' %}">
 </head>
 <body>
 <!-- Header -->
@@ -23,10 +23,10 @@
             <i class="arrow-down"></i>
             <div class="dropdown-menu">
                 <a href="#">{% trans "Biz haqimizda" %}</a>
-                <a href="leaders">{% trans "Rahbariyat" %}</a>
+                <a href="{% url 'leaders' %}">{% trans "Rahbariyat" %}</a>
                 <a href="guide/loan">{% trans "Suddan" %}</a>
-                <a href="guide/subsidy">{% trans "Subsidiya" %}</a>
-                <a href="guide/grant">{% trans "Grantlar" %}</a>
+                <a href="subsidy">{% trans "Subsidiya" %}</a>
+                <a href="grant">{% trans "Grantlar" %}</a>
             </div>
         </div>
         <a href="#ariza" data-page="ariza">{% trans "Ariza qoldirish" %}</a>
@@ -42,6 +42,12 @@
             <span></span>
             <span></span>
         </div>
+        <div class="search">
+            <button>
+                <img src="{% static 'images/search-icon.svg' %}" alt="search-icon" class="search-icon">
+                <span>{% trans "Qidiruv" %}</span>
+            </button>
+        </div>
         <!-- Language selector -->
         <div class="language-selector" id="language-selector">
             <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
@@ -52,12 +58,6 @@
                 <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
                 <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
             </div>
-        </div>
-        <div class="search">
-            <button>
-                <img src="{% static 'images/search-icon.svg' %}" alt="search-icon" class="search-icon">
-                <span>{% trans "Qidiruv" %}</span>
-            </button>
         </div>
     </div>
 
@@ -159,6 +159,58 @@
         form.submit();
     }
 
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    });
+
+    // Language selector dropdown toggle
+    const languageSelector = document.getElementById('language-selector');
+    languageSelector.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (window.innerWidth <= 768) {
+            this.classList.toggle('open');
+            const arrow = this.querySelector('.arrow-down');
+            arrow.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+    });
+
+    // Mobile dropdown for Jang'arma
+    const mobileDropdownHeader = document.getElementById('mobile-dropdown-header');
+    const mobileDropdownContent = document.getElementById('mobile-dropdown-content');
+    mobileDropdownHeader.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mobileDropdownContent.classList.toggle('active');
+        this.classList.toggle('open');
+    });
+
+    // Close menus on outside click
+    document.addEventListener('click', function(e) {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+        if (!languageSelector.contains(e.target)) {
+            languageSelector.classList.remove('open');
+            const arrow = languageSelector.querySelector('.arrow-down');
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-menu a, .mobile-dropdown-content a').forEach(link => {
+        link.addEventListener('click', function() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileDropdownContent.classList.remove('active');
+            mobileDropdownHeader.classList.remove('open');
+        });
+    });
+
     // Extract YouTube video ID (улучшенная версия)
     function getYouTubeVideoId(url) {
         if (!url) return null;
@@ -212,22 +264,6 @@
 
         console.log('Page loaded. Video URL:', videoUrl);
         console.log('Video ID:', videoId);
-    });
-
-    // Language selector dropdown toggle
-    const languageSelector = document.getElementById('language-selector');
-    if (languageSelector) {
-        languageSelector.addEventListener('click', function(e) {
-            e.stopPropagation();
-            this.classList.toggle('open');
-        });
-    }
-
-    // Close language menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (languageSelector && !languageSelector.contains(e.target)) {
-            languageSelector.classList.remove('open');
-        }
     });
 </script>
 </body>

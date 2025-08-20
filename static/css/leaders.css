@@ -1,4 +1,4 @@
-/* === Глобальные сбросы и настройки шрифтов === */
+/* === Global resets and font settings === */
 * {
     margin: 0;
     padding: 0;
@@ -52,7 +52,7 @@ body::-webkit-scrollbar {
     line-height: 1.2;
 }
 
-/* === Основное меню (десктоп) === */
+/* === Desktop Navigation === */
 .navbar {
     display: flex;
     gap: 5px;
@@ -81,11 +81,12 @@ body::-webkit-scrollbar {
 
 .navbar a:hover,
 .dropdown:hover,
-.navbar a.active {
+.navbar a.active,
+.dropdown.active {
     background-color: #327632;
 }
 
-/* === Выпадающее меню (десктоп) === */
+/* === Desktop Dropdown === */
 .dropdown {
     position: relative;
     display: flex;
@@ -200,7 +201,7 @@ body::-webkit-scrollbar {
     background-color: #2a642a;
 }
 
-/* === Правая часть шапки (язык, поиск) === */
+/* === Header Right Section === */
 .header-right {
     display: flex;
     align-items: center;
@@ -208,7 +209,7 @@ body::-webkit-scrollbar {
     flex-direction: row-reverse;
 }
 
-/* Гамбургер-меню */
+/* Hamburger Menu */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -238,7 +239,7 @@ body::-webkit-scrollbar {
     transform: rotate(45deg) translate(-5px, -8px);
 }
 
-/* Поиск */
+/* Search */
 .search button {
     display: flex;
     align-items: center;
@@ -268,7 +269,7 @@ body::-webkit-scrollbar {
     filter: brightness(100%);
 }
 
-/* Язык */
+/* Language Selector */
 .language-selector {
     position: relative;
     display: flex;
@@ -290,7 +291,7 @@ body::-webkit-scrollbar {
     background-color: #304F30;
 }
 
-/* === Мобильное меню === */
+/* === Mobile Menu === */
 .mobile-menu {
     display: none;
     position: absolute;
@@ -327,7 +328,7 @@ body::-webkit-scrollbar {
     border-bottom: none;
 }
 
-/* Мобильный дропдаун */
+/* Mobile Dropdown */
 .mobile-dropdown-header {
     display: flex;
     justify-content: space-between;
@@ -426,7 +427,7 @@ body::-webkit-scrollbar {
     margin: 20px 0;
 }
 
-/* === Секция лидеров === */
+/* === Leaders Section === */
 .leaders-section {
     margin-top: 40px;
     max-width: 1400px;
@@ -437,18 +438,18 @@ body::-webkit-scrollbar {
 .leaders-container {
     display: flex;
     gap: 30px;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: hidden; /* Disable vertical scrolling */
+    overflow-x: auto;
+    overflow-y: hidden;
     scroll-behavior: smooth;
     padding: 20px 0;
-    scrollbar-width: none; /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
-    height: auto; /* Adapt height to content */
-    flex-wrap: nowrap; /* Prevent wrapping to maintain single row */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    height: auto;
+    flex-wrap: nowrap;
 }
 
 .leaders-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for WebKit browsers */
+    display: none;
 }
 
 .leader-card {
@@ -491,16 +492,16 @@ body::-webkit-scrollbar {
 .leader-image {
     width: 100%;
     max-width: 300px;
-    height: 300px; /* Fixed height to prevent resizing */
-    object-fit: cover; /* Maintain aspect ratio */
+    height: 300px;
+    object-fit: cover;
     border-radius: 10px;
     border: 1px solid #304F30;
-    flex-grow: 0; /* Prevent image from growing */
-    flex-shrink: 0; /* Prevent image from shrinking */
+    flex-grow: 0;
+    flex-shrink: 0;
     margin-top: auto;
 }
 
-/* === Управление каруселью === */
+/* === Slider Controls === */
 .slider-controls {
     display: flex;
     justify-content: center;
@@ -530,7 +531,7 @@ body::-webkit-scrollbar {
     justify-content: center;
 }
 
-/* === Адаптивность === */
+/* === Responsive Design === */
 @media (min-width: 1200px) {
     .header {
         padding: 20px 40px;
@@ -608,24 +609,24 @@ body::-webkit-scrollbar {
         font-size: 12px;
     }
     .main-content {
-        padding: 0 20px 30px;
+        padding: 0 20px;
     }
     .page-title {
         font-size: 32px;
         margin-bottom: 30px;
     }
     .leaders-section {
-        padding: 0 10px;
+        padding: 0 5px;
     }
     .leaders-container {
         gap: 15px;
-        overflow-x: auto; /* Ensure horizontal scrolling */
-        overflow-y: hidden; /* Ensure no vertical scrolling */
-        flex-wrap: nowrap; /* Prevent wrapping */
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
     }
     .leader-card {
         min-width: 240px;
-        padding: 15px;
+        padding: 5px;
         aspect-ratio: 1 / 1.1;
     }
     .leader-card h3 {
@@ -640,10 +641,10 @@ body::-webkit-scrollbar {
         font-size: 13px;
     }
     .leader-image {
-        height: 300px; /* Maintain fixed height */
+        height: 300px;
     }
     .slider-controls {
-        margin-top: 10px;
+        margin-top: 1px;
     }
     .border {
         padding: 8px;
@@ -707,7 +708,7 @@ body::-webkit-scrollbar {
         font-size: 12px;
     }
     .leader-image {
-        height: 300px; /* Maintain fixed height */
+        height: 300px;
     }
     .prev-btn, .next-btn {
         width: 32px;

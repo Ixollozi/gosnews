@@ -1,0 +1,245 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gosnews\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-10 15:47+0500\n"
+"PO-Revision-Date: 2025-08-09 00:18+0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Uzbek <uz@li.org>\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\templates\index.html:8
+msgid "Kambag'allikni qisqartirish"
+msgstr "Kambag‘allikni qisqartirish"
+
+#: .\templates\index.html:21 .\templates\index.html:67
+msgid "Bosh sahifa"
+msgstr "Bosh sahifa"
+
+#: .\templates\index.html:23 .\templates\index.html:70
+msgid "Jang'arma"
+msgstr "Jang‘arma"
+
+#: .\templates\index.html:26 .\templates\index.html:74
+msgid "Biz haqimizda"
+msgstr "Biz haqimizda"
+
+#: .\templates\index.html:27 .\templates\index.html:75
+msgid "Rahbariyat"
+msgstr "Rahbariyat"
+
+#: .\templates\index.html:28 .\templates\index.html:77
+msgid "Suddan"
+msgstr "Suddan"
+
+#: .\templates\index.html:29 .\templates\index.html:78
+msgid "Subsidiya"
+msgstr "Subsidiya"
+
+#: .\templates\index.html:30 .\templates\index.html:79
+msgid "Grantlar"
+msgstr "Grantlar"
+
+#: .\templates\index.html:33 .\templates\index.html:82
+#: .\templates\index.html:106
+msgid "Ariza qoldirish"
+msgstr "Ariza qoldirish"
+
+#: .\templates\index.html:34 .\templates\index.html:83
+#: .\templates\index.html:111
+msgid "Yangiliklar"
+msgstr "Yangiliklar"
+
+#: .\templates\index.html:35 .\templates\index.html:84
+#: .\templates\index.html:188 .\templates\index.html:277
+msgid "Hududlar"
+msgstr "Hududlar"
+
+#: .\templates\index.html:36 .\templates\index.html:85
+#: .\templates\index.html:278
+msgid "online.mahalla"
+msgstr "online.mahalla"
+
+#: .\templates\index.html:52
+msgid "O'zbek"
+msgstr "O‘zbek"
+
+#: .\templates\index.html:53
+msgid "Русский"
+msgstr "Русский"
+
+#: .\templates\index.html:54
+msgid "Karakalpak"
+msgstr "Qoraqalpaq"
+
+#: .\templates\index.html:60
+msgid "Qidiruv"
+msgstr "Qidiruv"
+
+#: .\templates\index.html:76
+msgid "Sertifikatlar"
+msgstr "Sertifikatlar"
+
+#: .\templates\index.html:95
+msgid "Yashash sharoitlarini yaxshilash – barchamiz uchun!"
+msgstr "Yashash sharoitlarini yaxshilash – barchamiz uchun!"
+
+#: .\templates\index.html:96
+msgid ""
+"Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash yo'lida "
+"davlatimiz barqaror chora-tadbirlarni amalga oshirmoqda."
+msgstr ""
+"Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash yo'lida "
+"davlatimiz barqarorchora-tadbirlarni amalga oshirmoqda."
+
+#: .\templates\index.html:98
+msgid "Videoni ko'rish"
+msgstr "Videoni ko‘rish"
+
+#: .\templates\index.html:99
+msgid "Dasturlar bilan tanishing"
+msgstr "Dasturlar bilan tanishing"
+
+#: .\templates\index.html:122
+msgid "Tayinlov"
+msgstr "Tayinlov"
+
+#: .\templates\index.html:123
+msgid "21 iyul, 12:21"
+msgstr "21 iyul, 12:21"
+
+#: .\templates\index.html:130 .\templates\index.html:171
+msgid "Samarkand viloyatida yangi ijtimoiy loyihalar boshlab olindi"
+msgstr "Samarqand viloyatida yangi ijtimoiy loyihalar boshlab olindi"
+
+#: .\templates\index.html:131 .\templates\index.html:172
+msgid "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan."
+msgstr "Ushbu loyihalar yoshlar imkoniyatlarini kengaytirishga qaratilgan."
+
+#: .\templates\index.html:133
+msgid "Loyihalar"
+msgstr "Loyihalar"
+
+#: .\templates\index.html:134
+msgid "10 avgust, 09:45"
+msgstr "10 avgust, 09:45"
+
+#: .\templates\index.html:141 .\templates\index.html:180
+msgid "Buxoro shahrida yangi sport kompleksi ochildi"
+msgstr "Buxoro shahrida yangi sport kompleksi ochildi"
+
+#: .\templates\index.html:142 .\templates\index.html:181
+msgid "Kompleks hududi sport musobaqalari o'tkazish uchun mo'ljallangan."
+msgstr "Kompleks hududi sport musobaqalari o‘tkazish uchun mo‘ljallangan."
+
+#: .\templates\index.html:144
+msgid "Ochilish tadbiri"
+msgstr "Ochilish tadbiri"
+
+#: .\templates\index.html:145
+msgid "5 sentabr, 15:30"
+msgstr "5 sentabr, 15:30"
+
+#: .\templates\index.html:150
+msgid "Yana ko'rish"
+msgstr "Yana ko‘rish"
+
+#: .\templates\index.html:153
+msgid "Dasturlari bilan tanishing"
+msgstr "Dasturlari bilan tanishing"
+
+#: .\templates\index.html:195 .\templates\index.html:213
+msgid "Toshkent shahar"
+msgstr "Toshkent shahar"
+
+#: .\templates\index.html:196 .\templates\index.html:214
+msgid "Toshkent viloyati"
+msgstr "Toshkent viloyati"
+
+#: .\templates\index.html:197 .\templates\index.html:215
+msgid "Andijon viloyati"
+msgstr "Andijon viloyati"
+
+#: .\templates\index.html:198 .\templates\index.html:216
+msgid "Buxoro viloyati"
+msgstr "Buxoro viloyati"
+
+#: .\templates\index.html:199 .\templates\index.html:217
+msgid "Farg'ona viloyati"
+msgstr "Farg‘ona viloyati"
+
+#: .\templates\index.html:200 .\templates\index.html:218
+msgid "Jizzax viloyati"
+msgstr "Jizzax viloyati"
+
+#: .\templates\index.html:201 .\templates\index.html:219
+msgid "Namangan viloyati"
+msgstr "Namangan viloyati"
+
+#: .\templates\index.html:202 .\templates\index.html:220
+msgid "Navoiy viloyati"
+msgstr "Navoiy viloyati"
+
+#: .\templates\index.html:203 .\templates\index.html:221
+msgid "Qashqadaryo viloyati"
+msgstr "Qashqadaryo viloyati"
+
+#: .\templates\index.html:204 .\templates\index.html:222
+msgid "Samarkand viloyati"
+msgstr "Samarqand viloyati"
+
+#: .\templates\index.html:205 .\templates\index.html:223
+msgid "Sirdaryo viloyati"
+msgstr "Sirdaryo viloyati"
+
+#: .\templates\index.html:206 .\templates\index.html:224
+msgid "Surxondaryo viloyati"
+msgstr "Surxondaryo viloyati"
+
+#: .\templates\index.html:207 .\templates\index.html:225
+msgid "Xorazm viloyati"
+msgstr "Xorazm viloyati"
+
+#: .\templates\index.html:208 .\templates\index.html:226
+msgid "Qoraqalpog'iston"
+msgstr "Qoraqalpog‘iston"
+
+#: .\templates\index.html:244
+msgid "Hamkorlarimiz"
+msgstr "Hamkorlarimiz"
+
+#: .\templates\index.html:252
+msgid "O'zbekiston Respublikasi<br>Prezidenti"
+msgstr "O‘zbekiston Respublikasi<br>Prezidenti"
+
+#: .\templates\index.html:258
+msgid "Yagona interaktiv davlat<br>xizmatlari portali"
+msgstr "Yagona interaktiv davlat<br>xizmatlari portali"
+
+#: .\templates\index.html:264
+msgid "Online mahalla"
+msgstr "Online mahalla"
+
+#: .\templates\index.html:274
+msgid "Asosiy"
+msgstr "Asosiy"
+
+#: .\templates\index.html:275
+msgid "Jang'arma haqida"
+msgstr "Jang‘arma haqida"
+
+#: .\templates\index.html:276
+msgid "Arizalar qoldirish"
+msgstr "Arizalar qoldirish"
+
+#: .\templates\index.html:285
+msgid ""
+"O'zbekiston Respublikasi, Toshkent shahar, Amir Temur ko'chasi, 12a, uy. "
+"100012"
+msgstr ""
+"O‘zbekiston Respublikasi, Toshkent shahar, Amir Temur ko‘chasi, 12a, uy. "
+"100012"

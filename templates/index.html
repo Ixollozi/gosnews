@@ -95,8 +95,7 @@
             <h1>{% trans "Yashash sharoitlarini yaxshilash – barchamiz uchun!" %}</h1>
             <p>{% trans "Kambag'allikni kamaytirish va fuqarolarimizni qo'llab-quvvatlash yo'lida davlatimiz barqaror chora-tadbirlarni amalga oshirmoqda." %}</p>
             <div class="buttons">
-                <button class="btn btn-primary">{% trans "Videoni ko'rish" %}</button>
-                <button class="btn btn-secondary">{% trans "Dasturlar bilan tanishing" %} <i class="arrow-right"></i></button>
+                <button class="btn btn-secondary"><a href="#learners">{% trans "Dasturlar bilan tanishing" %} <i class="arrow-right"></i></a></button>
             </div>
         </div>
     </div>
@@ -287,22 +286,12 @@
     <section class="partners-section">
         <div class="partners-grid">
             <div class="partner-card">
+                {% for partner in partners %}
                 <div class="partner-image">
-                    <img src="{% static 'images/logogerb.svg' %}" alt="partner-logo">
+                    <img src="{{ partner.image.url }}" alt="partner-logo">
                 </div>
-                <p>{% trans "O'zbekiston Respublikasi<br>Prezidenti" %}</p>
-            </div>
-            <div class="partner-card">
-                <div class="partner-image">
-                    <img src="{% static 'images/logomygov.svg' %}" alt="partner-logo">
-                </div>
-                <p>{% trans "Yagona interaktiv davlat<br>xizmatlari portali" %}</p>
-            </div>
-            <div class="partner-card">
-                <div class="partner-image">
-                    <img src="{% static 'images/logomygov.svg' %}" alt="partner-logo">
-                </div>
-                <p>{% trans "Online mahalla" %}</p>
+                <p>{{ partner.name }}</p>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -314,9 +303,27 @@
         <div class="partners-grid">
             <div class="partner-card">
                 <div class="partner-image">
-                    <img src="{% static 'images/logopaynet.svg' %}" alt="payment-logo">
+                    <img src="{% static 'images/paymelogo.png' %}" alt="payme-logo">
                 </div>
-                <p>{% trans "To'lovlar" %}</p>
+                <p>Payme</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-image">
+                    <img src="{% static 'images/clicklogo.png' %}" alt="click-logo">
+                </div>
+                <p>Click</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-image">
+                    <img src="{% static 'images/uzumbanklogo.png' %}" alt="uzum-logo">
+                </div>
+                <p>Uzum</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-image">
+                    <img src="{% static 'images/sqblogo.png' %}" alt="sqb-logo">
+                </div>
+                <p>SQB</p>
             </div>
         </div>
     </section>
@@ -342,13 +349,13 @@
             </div>
             <div class="contact-infos">
                 <span class="info">+998 71 123 45 67</span>
-                <span class="info">info@kqdimj.uz</span>
+                <span class="info">poverty@reduction.uz</span>
             </div>
             <div class="social-icons">
-                <a href="#"><img src="{% static 'images/logotg.svg' %}" alt="Telegram"></a>
-                <a href="#"><img src="{% static 'images/logoinst.svg' %}" alt="Instagram"></a>
-                <a href="#"><img src="{% static 'images/logoyt.svg' %}" alt="YouTube"></a>
-                <a href="#"><img src="{% static 'images/logoface.svg' %}" alt="Facebook"></a>
+                <a href="https://t.me/maqsadlijamgarma"><img src="{% static 'images/logotg.svg' %}" alt="Telegram"></a>
+                <a href="https://www.instagram.com/maqsadli_jamgarma/"><img src="{% static 'images/logoinst.svg' %}" alt="Instagram"></a>
+                <a href="https://www.youtube.com/@Maqsadljamgarma"><img src="{% static 'images/logoyt.svg' %}" alt="YouTube"></a>
+                <a href="https://facebook.com/maqsadlijamgarma"><img src="{% static 'images/logoface.svg' %}" alt="Facebook"></a>
             </div>
         </div>
     </footer>

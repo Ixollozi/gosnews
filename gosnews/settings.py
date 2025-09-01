@@ -146,6 +146,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')  # файлы все ра
 os.makedirs(MEDIA_ROOT, exist_ok=True)
 os.makedirs(os.path.join(MEDIA_ROOT, 'news'), exist_ok=True)
 os.makedirs(os.path.join(MEDIA_ROOT, 'leaders'), exist_ok=True)
+os.makedirs(os.path.join(MEDIA_ROOT, 'partners'), exist_ok=True)
 
 
 # Default primary key field type

@@ -4,7 +4,8 @@ from .models import (
     Category, CategoryTranslation,
     Leaders,
     Debt,
-    Guide, GuideTranslation
+    Guide, GuideTranslation,
+    Partners
 )
 
 
@@ -41,6 +42,15 @@ class LeadersAdmin(admin.ModelAdmin):
     list_display = ("leader_name", "leader_position", "leader_phone", "region")
     search_fields = ("leader_name", "leader_position")
     list_filter = ("region",)
+    
+    
+# ================== Partners ==================
+@admin.register(Partners)
+class PartnersAdmin(admin.ModelAdmin):
+    list_display = ("name", "image", "link")
+    search_fields = ("name",)
+    list_filter = ("name",)
+    
 
 
 # ================== Debt ==================

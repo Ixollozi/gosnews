@@ -270,3 +270,17 @@ class GuideTranslation(models.Model):
 
     def __str__(self):
         return f"{self.lang} — {self.title}"
+    
+    
+# ================== Partners ==================
+class Partners(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Название")
+    image = models.ImageField(upload_to='partners/', verbose_name="Изображение")
+    link = models.URLField(verbose_name="Ссылка")
+
+    class Meta:
+        verbose_name = "Партнер"
+        verbose_name_plural = "Партнеры"
+
+    def __str__(self):
+        return self.name

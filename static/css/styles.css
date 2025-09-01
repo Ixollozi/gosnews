@@ -483,6 +483,11 @@ main {
     gap: 15px;
 }
 
+.buttons a {
+    text-decoration: none;
+    color: white;
+}
+
 .btn {
     padding: 12px 24px;
     border-radius: 8px;

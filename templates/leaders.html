@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Rahbariyat" %} - {% trans "Kambag'allikni qisqartirish" %}</title>
     <link rel="stylesheet" href="{% static 'css/leaders.css' %}?v={% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}? v={% now 'U' %}">
 </head>
 <body>
 {% csrf_token %}
@@ -91,11 +92,12 @@
     <span>{% trans "Rahbariyat" %}</span>
 </div>
 
-<!-- Main Content -->
-<main class="main-content">
-    <h1 class="page-title">{% trans "Rahbariyat" %}</h1>
+<h1 class="page-title">{% trans "Rahbariyat" %}</h1>
     <div class="fade-line"></div>
 
+<!-- Main Content -->
+<main class="main-content">
+    
     <!-- Leaders Section -->
     <div class="leaders-section">
         <div class="leaders-container" id="leadersContainer">

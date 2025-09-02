@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ guide_choice.get_guide_type_display }} - {% trans "Kambag'allikni qisqartirish" %}</title>
     <link rel="stylesheet" href="{% static 'css/guides.css' %}? v={% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}? v={% now 'U' %}">
 </head>
 <body>
 <!-- Header -->
@@ -42,12 +43,7 @@
             <span></span>
             <span></span>
         </div>
-        <div class="search">
-            <button>
-                <img src="{% static 'images/search-icon.svg' %}" alt="search-icon" class="search-icon">
-                <span>{% trans "Qidiruv" %}</span>
-            </button>
-        </div>
+
         <!-- Language selector -->
         <div class="language-selector" id="language-selector">
             <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
@@ -59,6 +55,13 @@
                 <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
             </div>
         </div>
+        <div class="search">
+            <button>
+                <img src="{% static 'images/search-icon.svg' %}" alt="search-icon" class="search-icon">
+                <span>{% trans "Qidiruv" %}</span>
+            </button>
+        </div>
+        
     </div>
 
     <!-- Mobile Menu -->
@@ -91,10 +94,10 @@
     <span>{{ guide_type }}</span>
 </div>
 
+<h1 class="page-title">{{ guide_type }}</h1>
+    <div class="fade-line"></div>
 <!-- Main Content -->
 <main class="main-content">
-    <h1 class="page-title">{{ guide_type }}</h1>
-    <div class="fade-line"></div>
 
     <div class="content-section">
         <div class="text-content">
@@ -225,21 +228,53 @@
         const container = document.getElementById('video-container');
         const videoUrl = "{{ link }}";
 
+        const isMobile = window.innerWidth <= 768;
+        const isSmallMobile = window.innerWidth <= 480;
+        
+        let containerWidth, containerHeight;
+        
+        if (isSmallMobile) {
+            containerWidth = Math.min(container.offsetWidth, window.innerWidth - 40);
+            containerHeight = 220; // Fixed height for small mobile
+        } else if (isMobile) {
+            containerWidth = Math.min(container.offsetWidth, window.innerWidth - 40);
+            containerHeight = 250; // Fixed height for mobile
+        } else {
+            // Desktop sizing
+            containerWidth = container.offsetWidth;
+            containerHeight = container.offsetHeight;
+        }
+        
+        container.style.setProperty('width', containerWidth + 'px', 'important');
+        container.style.setProperty('height', containerHeight + 'px', 'important');
+        container.style.setProperty('max-width', containerWidth + 'px', 'important');
+        container.style.setProperty('min-width', containerWidth + 'px', 'important');
+        container.style.setProperty('max-height', containerHeight + 'px', 'important');
+        container.style.setProperty('min-height', containerHeight + 'px', 'important');
+        
+        if (isMobile) {
+            container.style.setProperty('margin', '0 auto', 'important');
+            container.style.setProperty('overflow', 'hidden', 'important');
+        }
+
         // Извлекаем ID из полной ссылки
         const videoId = getYouTubeVideoId(videoUrl);
 
         console.log('Video URL:', videoUrl);
         console.log('Extracted Video ID:', videoId);
+        console.log('Container dimensions:', containerWidth, 'x', containerHeight);
+        console.log('Is mobile:', isMobile);
 
         if (videoId) {
             container.innerHTML = `
                 <iframe
-                    width="100%"
-                    height="500"
+                    width="${containerWidth}"
+                    height="${containerHeight}"
                     src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
                     frameborder="0"
                     allow="autoplay; encrypted-media"
-                    allowfullscreen>
+                    allowfullscreen
+                    style="width: ${containerWidth}px !important; height: ${containerHeight}px !important; max-width: none !important; display: block !important; border: none !important;">
                 </iframe>`;
         } else {
             console.error('Не удалось извлечь YouTube ID из:', videoUrl);
@@ -268,3 +303,4 @@
 </script>
 </body>
 </html>
+

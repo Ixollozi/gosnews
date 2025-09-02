@@ -1,6 +1,7 @@
 from django.utils.translation import get_language
-from django.shortcuts import render, redirect
-from .models import NewsTranslation, CategoryTranslation, Leaders, Debt, GuideTranslation, Guide, Partners
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import News, NewsTranslation, CategoryTranslation, Leaders, Debt, GuideTranslation, Guide, Partners
 
 def get_news_data(lang):
     """Получение данных о новостях и категориях"""
@@ -112,4 +113,66 @@ def guide(request, guide_type):
 def leaders(request):
     leaders = Leaders.objects.all()
     return render(request, 'leaders.html', {'leaders': leaders})
+
+
+def news_detail(request, news_id: int):
+    current_lang = request.LANGUAGE_CODE or get_language()
+    base_news = get_object_or_404(News, id=news_id)
+    news_tr = get_object_or_404(NewsTranslation.objects.select_related('category'), news=base_news, lang=current_lang)
+
+    related_news = (
+        NewsTranslation.objects.select_related('news', 'category')
+        .filter(lang=current_lang)
+        .exclude(news=base_news)
+        .order_by('-news__created_at')
+    )
+
+    context = {
+        'news': news_tr,
+        'related_news': related_news,
+    }
+    return render(request, 'news_detail.html', context)
+
+
+def all_news(request):
+    """Страница со всеми новостями"""
+    current_lang = request.LANGUAGE_CODE or get_language()
+    
+    # Получаем все новости
+    news_list = NewsTranslation.objects.select_related('news', 'category').filter(
+        lang=current_lang
+    ).order_by('-news__created_at')
+    
+    # Получаем все категории для фильтрации
+    categories = CategoryTranslation.objects.filter(lang=current_lang)
+    
+    # Фильтрация по категории
+    category_filter = request.GET.get('category')
+    if category_filter:
+        news_list = news_list.filter(category__slug=category_filter)
+    
+    # Поиск по заголовку
+    search_query = request.GET.get('search')
+    if search_query:
+        news_list = news_list.filter(title__icontains=search_query)
+    
+    # Пагинация
+    paginator = Paginator(news_list, 12)  # 12 новостей на страницу
+    page = request.GET.get('page')
+    
+    try:
+        news_list = paginator.page(page)
+    except PageNotAnInteger:
+        news_list = paginator.page(1)
+    except EmptyPage:
+        news_list = paginator.page(paginator.num_pages)
+    
+    context = {
+        'news_list': news_list,
+        'categories': categories,
+        'current_category': category_filter,
+        'search_query': search_query,
+        'paginator': paginator,
+    }
+    return render(request, 'all_news.html', context)
 

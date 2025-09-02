@@ -100,17 +100,17 @@
         </div>
     </div>
 
-    <!-- Application Section -->
+    {% comment %} <!-- Application Section -->
     <div class="headers" id="ariza">{% trans "Ariza qoldirish" %}</div>
     <div class="fade-line"></div>
-    <!-- Content for applications can be added here if needed -->
+    <!-- Content for applications can be added here if needed --> {% endcomment %}
 
     <!-- News Section -->
     <div class="headers" id="news">{% trans "Yangiliklar" %}</div>
     <div class="fade-line"></div>
     <div class="news-container">
         {% for news_item in news %}
-        <div class="news-card">
+        <a class="news-card" href="{% url 'news_detail' news_id=news_item.news.id %}">
             <img src="{{ news_item.image.url }}" alt="news-image">
             <div class="news-content">
                 <h2>{{ news_item.title }}</h2>
@@ -119,10 +119,10 @@
                     {% if news_item.category %}
                         <span class="news-category">{{ news_item.category.name }}</span>:
                     {% endif %}
-                    <span class="news-time">{{ news_item.created_at|date:"d M, H:i" }}</span>
+                    <span class="news-time">{{ news_item.news.created_at|date:"d M, H:i" }}</span>
                 </span>
             </div>
-        </div>
+        </a>
         {% empty %}
         <div class="news-card">
             <img src="{% static 'images/image content.png' %}" alt="news-image">
@@ -159,7 +159,7 @@
         </div>
         {% endfor %}
     </div>
-    <button class="see-more-btn">{% trans "Yana ko'rish" %}</button>
+    <a href="{% url 'all_news' %}" class="see-more-btn">{% trans "Yana ko'rish" %}</a>
 
     <!-- Learners Section -->
     <div class="headers" id="learners">{% trans "Dasturlari bilan tanishing" %}</div>

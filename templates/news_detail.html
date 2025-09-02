@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% load static %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ news.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'css/news_detail.css' %}?v={% now 'U' %}">
+</head>
+<body>
+{% csrf_token %}
+<header class="header">
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="logo"></a>
+    </div>
+    <nav class="navbar" id="navbar">
+        <a href="{% url 'home' %}" class="active">{% trans "Bosh sahifa" %}</a>
+        <div class="dropdown" id="dropdown-jangarma">
+            <span>{% trans "Jang'arma" %}</span>
+            <i class="arrow-down"></i>
+            <div class="dropdown-menu">
+                <a href="#footer">{% trans "Biz haqimizda" %}</a>
+                <a href="{% url 'leaders' %}">{% trans "Rahbariyat" %}</a>
+                <a href="{% url 'guide' guide_type='loan' %}">{% trans "Suddan" %}</a>
+                <a href="{% url 'guide' guide_type='subsidy' %}">{% trans "Subsidiya" %}</a>
+                <a href="{% url 'guide' guide_type='grant' %}">{% trans "Grantlar" %}</a>
+            </div>
+        </div>
+        <a href="{% url 'home' %}#ariza">{% trans "Ariza qoldirish" %}</a>
+        <a href="{% url 'home' %}#news">{% trans "Yangiliklar" %}</a>
+        <a href="{% url 'home' %}#hududlar">{% trans "Hududlar" %}</a>
+        <a href="{% url 'home' %}#mahalla">{% trans "online.mahalla" %}</a>
+    </nav>
+    <div class="header-right">
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="language-selector" id="language-selector">
+            <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+            <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
+            <i class="arrow-down"></i>
+            <div class="language-menu">
+                <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
+            </div>
+        </div>
+        <div class="search">
+            <button>
+                <img src="{% static 'images/search-icon.svg' %}" alt="search-icon" class="search-icon">
+                <span>{% trans "Qidiruv" %}</span>
+            </button>
+        </div>
+    </div>
+    <nav class="mobile-menu" id="mobile-menu">
+        <a href="{% url 'home' %}" class="active">{% trans "Bosh sahifa" %}</a>
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-header" id="mobile-dropdown-header">
+                <span>{% trans "Jang'arma" %}</span>
+                <i class="arrow-down"></i>
+            </div>
+            <div class="mobile-dropdown-content" id="mobile-dropdown-content">
+                <a href="#">{% trans "Biz haqimizda" %}</a>
+                <a href="{% url 'leaders' %}">{% trans "Rahbariyat" %}</a>
+                <a href="{% url 'guide' guide_type='loan' %}">{% trans "Suddan" %}</a>
+                <a href="{% url 'guide' guide_type='subsidy' %}">{% trans "Subsidiya" %}</a>
+                <a href="{% url 'guide' guide_type='grant' %}">{% trans "Grantlar" %}</a>
+            </div>
+        </div>
+        <a href="{% url 'home' %}#ariza">{% trans "Ariza qoldirish" %}</a>
+        <a href="{% url 'home' %}#news">{% trans "Yangiliklar" %}</a>
+        <a href="{% url 'home' %}#hududlar">{% trans "Hududlar" %}</a>
+        <a href="{% url 'home' %}#mahalla">{% trans "online.mahalla" %}</a>
+    </nav>
+</header>
+
+<div class="breadcrumb">
+    <a href="{% url 'home' %}">{% trans "Bosh sahifa" %}</a>
+    <span>/</span>
+    <a href="{% url 'home' %}#news">{% trans "Yangiliklar" %}</a>
+    <span>/</span>
+    <span class="current">{{ news.title }}</span>
+</div>
+
+<main class="news-detail">
+    <div class="container">
+        
+
+        <h1 class="title">{{ news.title }}</h1>
+
+        <div class="news-body">
+            <div class="content">
+                {{ news.description|safe }}
+            </div>
+            {% if news.image %}
+            <figure class="cover">
+                <img src="{{ news.image.url }}" alt="{{ news.title }}">
+            </figure>
+            {% endif %}
+        </div>
+
+        <div class="share">
+            <span>{% trans "Ulashish:" %}</span>
+            <a class="share-link share-tg" href="https://t.me/maqsadlijamgarma" target="_blank" rel="noopener">Telegram</a>
+            <a class="share-link share-fb" href="https://www.facebook.com/maqsadlijamgarma" target="_blank" rel="noopener">Facebook</a>
+            <a class="share-link share-ig" href="https://www.instagram.com/maqsadli_jamgarma/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+
+        <div class="meta meta-bottom">
+            {% if news.category %}
+                <span class="badge">{{ news.category.name }}</span>
+            {% endif %}
+            <time datetime="{{ news.news.created_at|date:'c' }}">{{ news.news.created_at|date:"d M, H:i" }}</time>
+        </div>
+
+        {% if related_news %}
+        <section class="related">
+            <h2>{% trans "O'xshash yangiliklar" %}</h2>
+            <div class="related-grid">
+                {% for item in related_news %}
+                <a class="related-card" href="{% url 'news_detail' news_id=item.news.id %}">
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    <div class="related-info">
+                        <h3>{{ item.title }}</h3>
+                        <span class="news-date">
+                            {% if item.category %}<span class="news-category">{{ item.category.name }}</span>:{% endif %}
+                            <span class="news-time">{{ item.news.created_at|date:"d M, H:i" }}</span>
+                        </span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <footer class="footer" id="footer">
+        <img src="{% static 'images/logo.svg' %}" alt="Footer Logo">
+        <div class="footer-left">
+            <ul class="footer-links">
+                <li><a href="#">{% trans "Asosiy" %}</a></li>
+                <li><a href="#">{% trans "Jang'arma haqida" %}</a></li>
+                <li><a href="#">{% trans "Arizalar qoldirish" %}</a></li>
+                <li><a href="#">{% trans "Hududlar" %}</a></li>
+                <li><a href="#">{% trans "online.mahalla" %}</a></li>
+            </ul>
+        </div>
+        <div class="footer-map">
+            <div class="map-box">
+                <iframe src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16"></iframe>
+                <div class="map-overlay">
+                    <p>{% trans "O'zbekiston Respublikasi, Toshkent shahar, Amir Temur ko'chasi, 12a, uy. 100012" %}</p>
+                </div>
+            </div>
+            <div class="contact-infos">
+                <span class="info">+998 71 123 45 67</span>
+                <span class="info">poverty@reduction.uz</span>
+            </div>
+            <div class="social-icons">
+                <a href="https://t.me/maqsadlijamgarma"><img src="{% static 'images/logotg.svg' %}" alt="Telegram"></a>
+                <a href="https://www.instagram.com/maqsadli_jamgarma/"><img src="{% static 'images/logoinst.svg' %}" alt="Instagram"></a>
+                <a href="https://www.youtube.com/@Maqsadljamgarma"><img src="{% static 'images/logoyt.svg' %}" alt="YouTube"></a>
+                <a href="https://facebook.com/maqsadlijamgarma"><img src="{% static 'images/logoface.svg' %}" alt="Facebook"></a>
+            </div>
+        </div>
+    </footer>
+</main>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function changeLanguage(lang) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/i18n/setlang/';
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = getCookie('csrftoken');
+        form.appendChild(csrfInput);
+        const langInput = document.createElement('input');
+        langInput.type = 'hidden';
+        langInput.name = 'language';
+        langInput.value = lang;
+        form.appendChild(langInput);
+        const nextInput = document.createElement('input');
+        nextInput.type = 'hidden';
+        nextInput.name = 'next';
+        nextInput.value = window.location.pathname;
+        form.appendChild(nextInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+    }
+
+    const languageSelector = document.getElementById('language-selector');
+    if (languageSelector) {
+        languageSelector.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (window.innerWidth <= 768) {
+                this.classList.toggle('open');
+                const arrow = this.querySelector('.arrow-down');
+                arrow.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+        });
+    }
+
+    const mobileDropdownHeader = document.getElementById('mobile-dropdown-header');
+    const mobileDropdownContent = document.getElementById('mobile-dropdown-content');
+    if (mobileDropdownHeader && mobileDropdownContent) {
+        mobileDropdownHeader.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileDropdownContent.classList.toggle('active');
+            this.classList.toggle('open');
+        });
+    }
+
+    document.addEventListener('click', function(e) {
+        if (hamburger && mobileMenu && !hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+        if (languageSelector && !languageSelector.contains(e.target)) {
+            languageSelector.classList.remove('open');
+            const arrow = languageSelector.querySelector('.arrow-down');
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    document.querySelectorAll('.mobile-menu a, .mobile-dropdown-content a').forEach(link => {
+        link.addEventListener('click', function() {
+            if (hamburger && mobileMenu) {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+            if (mobileDropdownContent && mobileDropdownHeader) {
+                mobileDropdownContent.classList.remove('active');
+                mobileDropdownHeader.classList.remove('open');
+            }
+        });
+    });
+</script>
+</body>
+</html>
+

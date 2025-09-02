@@ -586,6 +586,16 @@ main {
     height: 100%;
     width: 100%;
     max-width: 350px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.news-card:hover,
+.news-card:visited,
+.news-card:active,
+.news-card:focus {
+    text-decoration: none;
+    color: inherit;
 }
 
 .news-card img {
@@ -640,10 +650,14 @@ main {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .see-more-btn:hover {
     background-color: #1E3D1E;
+    color: white;
+    text-decoration: none;
 }
 
 /* ========================================

@@ -117,9 +117,10 @@
                 <p>{{ news_item.short_description }}</p>
                 <span class="news-date">
                     {% if news_item.category %}
-                        <span class="news-category">{{ news_item.category.name }}</span>:
+                        <span class="news-category">{{ news_item.category.name }}</span>
+                        <span class="news-time">{{ news_item.news.created_at|date:"d M, H:i" }}</span>
                     {% endif %}
-                    <span class="news-time">{{ news_item.news.created_at|date:"d M, H:i" }}</span>
+                    
                 </span>
             </div>
         </a>

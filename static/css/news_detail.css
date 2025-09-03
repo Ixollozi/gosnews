@@ -155,7 +155,7 @@
 
 .news-date { display: inline-flex; gap: 6px; color: #D1E7DD; font-size: 12px; }
 .news-category { color: #ffffff; font-weight: 600; }
-.news-time { color: #63C563; }
+.news-time { color: #63C563; padding: 10px; }
 
 /* Responsive */
 @media (max-width: 1180px) {

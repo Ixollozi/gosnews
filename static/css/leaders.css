@@ -33,7 +33,7 @@
     overflow-x: auto; /* Горизонтальный скролл */
     overflow-y: hidden; /* Скрыть вертикальный скролл */
     scroll-behavior: smooth; /* Плавная прокрутка */
-    padding: 20px 0;
+    padding: 0px 0px 15px 0px;
     /* Скрыть полосу прокрутки в разных браузерах */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */

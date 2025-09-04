@@ -38,6 +38,9 @@ whitenoise
 django-cors-headers
 django
 
+# API
+djangorestframework
+
 # Forms
 django-widget-tweaks
 

@@ -1,7 +1,18 @@
 from django.utils.translation import get_language
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import News, NewsTranslation, CategoryTranslation, Leaders, Debt, GuideTranslation, Guide, Partners
+from rest_framework import viewsets, status
+from rest_framework.decorators import api_view, action
+from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
+# from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+from .models import News, NewsTranslation, Category, CategoryTranslation, Leaders, Debt, GuideTranslation, Guide, Partners
+from .serializers import (
+    NewsTranslationSerializer, LeadersSerializer, DebtSerializer,
+    GuideTranslationSerializer, PartnersSerializer, CategorySerializer,
+    CategoryTranslationSerializer
+)
 
 def get_news_data(lang):
     """Получение данных о новостях и категориях"""
@@ -175,4 +186,156 @@ def all_news(request):
         'paginator': paginator,
     }
     return render(request, 'all_news.html', context)
+
+
+# ================== API VIEWS ==================
+
+class NewsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = NewsTranslation.objects.all()
+    serializer_class = NewsTranslationSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'description']
+    ordering_fields = ['news__created_at']
+    ordering = ['-news__created_at']
+    
+    def get_queryset(self):
+        lang = self.request.query_params.get('lang', 'uz')
+        queryset = NewsTranslation.objects.select_related('news', 'category').filter(lang=lang)
+        
+        # Manual filtering for category
+        category_slug = self.request.query_params.get('category__slug')
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
+            
+        return queryset
+
+
+class LeadersViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Leaders.objects.all()
+    serializer_class = LeadersSerializer
+    
+    def get_queryset(self):
+        queryset = Leaders.objects.all()
+        region = self.request.query_params.get('region')
+        if region:
+            queryset = queryset.filter(region=region)
+        return queryset
+
+
+class DebtViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Debt.objects.all()
+    serializer_class = DebtSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['inn', 'full_name']
+    
+    def get_queryset(self):
+        queryset = Debt.objects.all()
+        status = self.request.query_params.get('status')
+        debt_type = self.request.query_params.get('debt_type')
+        if status:
+            queryset = queryset.filter(status=status)
+        if debt_type:
+            queryset = queryset.filter(debt_type=debt_type)
+        return queryset
+
+
+class GuideViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = GuideTranslation.objects.all()
+    serializer_class = GuideTranslationSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['guide__created_at']
+    ordering = ['-guide__created_at']
+    
+    def get_queryset(self):
+        lang = self.request.query_params.get('lang', 'uz')
+        queryset = GuideTranslation.objects.select_related('guide').filter(lang=lang)
+        guide_type = self.request.query_params.get('guide__guide_type')
+        if guide_type:
+            queryset = queryset.filter(guide__guide_type=guide_type)
+        return queryset
+
+
+class PartnersViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Partners.objects.all()
+    serializer_class = PartnersSerializer
+
+
+class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    
+    def get_queryset(self):
+        queryset = Category.objects.all()
+        slug = self.request.query_params.get('slug')
+        if slug:
+            queryset = queryset.filter(slug=slug)
+        return queryset
+
+
+# API endpoints for specific data
+@api_view(['GET'])
+def home_data(request):
+    """Get all data for homepage"""
+    lang = request.query_params.get('lang', 'uz')
+    
+    # Get news data
+    news_data = get_news_data(lang)
+    news_serializer = NewsTranslationSerializer(news_data['news'], many=True)
+    categories_serializer = CategoryTranslationSerializer(news_data['categories'], many=True)
+    
+    # Get leaders data
+    leaders_data = get_leaders_data(lang)
+    leaders_serializer = LeadersSerializer(leaders_data['leaders_list'], many=True)
+    
+    # Get debts data
+    debts_data = get_debts_data()
+    debts_serializer = DebtSerializer(debts_data['debts'], many=True)
+    
+    # Get guides data
+    guides_data = get_guides_data(lang)
+    guides_serializer = GuideTranslationSerializer(guides_data['guide_choices'], many=True)
+    
+    # Get partners data
+    partners_data = get_partners_data()
+    partners_serializer = PartnersSerializer(partners_data['partners'], many=True)
+    
+    return Response({
+        'news': news_serializer.data,
+        'categories': categories_serializer.data,
+        'leaders': leaders_serializer.data,
+        'debts': debts_serializer.data,
+        'guides': guides_serializer.data,
+        'partners': partners_serializer.data,
+    })
+
+
+@api_view(['GET'])
+def news_detail_api(request, news_id):
+    """Get news detail by ID"""
+    lang = request.query_params.get('lang', 'uz')
+    
+    try:
+        base_news = News.objects.get(id=news_id)
+        news_translation = NewsTranslation.objects.select_related('category').get(
+            news=base_news, lang=lang
+        )
+        
+        # Get related news
+        related_news = NewsTranslation.objects.select_related('news', 'category').filter(
+            lang=lang
+        ).exclude(news=base_news).order_by('-news__created_at')[:3]
+        
+        news_serializer = NewsTranslationSerializer(news_translation)
+        related_serializer = NewsTranslationSerializer(related_news, many=True)
+        
+        return Response({
+            'news': news_serializer.data,
+            'related_news': related_serializer.data,
+        })
+        
+    except (News.DoesNotExist, NewsTranslation.DoesNotExist):
+        return Response(
+            {'error': 'News not found'}, 
+            status=status.HTTP_404_NOT_FOUND
+        )
 

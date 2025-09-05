@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - GovPortal</title>
+    {% load static %}
+    {% load i18n %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="{% url 'home' %}" style="text-decoration: none;">
+                        <span class="logo-text">GovPortal</span>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav">
+                    <a href="{% url 'home' %}" class="nav-link">Главная</a>
+                    <a href="{% url 'all_news' %}" class="nav-link">Новости</a>
+                    <a href="{% url 'guide' 'business' %}" class="nav-link">Руководства</a>
+                    <a href="{% url 'leaders' %}" class="nav-link">Лидеры</a>
+                    <a href="{% url 'debt_check' %}" class="nav-link">Проверка долгов</a>
+                    <a href="{% url 'dashboard' %}" class="nav-link active">Личный кабинет</a>
+                </nav>
+
+                <!-- Right Section -->
+                <div class="header-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-selector" id="language-selector">
+                        <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+                        <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
+                        <i class="arrow-down"></i>
+                        <div class="language-menu">
+                            <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                            <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                            <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <button class="search-btn" onclick="toggleSearch()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+
+                    <!-- User Profile -->
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="Пользователь">
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Анна Иванова</span>
+                            <span class="user-role">Гражданин</span>
+                        </div>
+                        <button class="logout-btn" onclick="logout()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16,17 21,12 16,7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Mobile Menu -->
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="Поиск новостей и руководств..." class="search-input">
+                <button class="search-close" onclick="toggleSearch()">×</button>
+            </div>
+            <div class="search-suggestions">
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Новая программа поддержки бизнеса</span>
+                    <span class="suggestion-type">Новость</span>
+                </div>
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Как получить льготный кредит</span>
+                    <span class="suggestion-type">Руководство</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span class="logo-text">GovPortal</span>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="{% url 'home' %}" class="mobile-nav-link">Главная</a>
+            <a href="{% url 'all_news' %}" class="mobile-nav-link">Новости</a>
+            <a href="{% url 'guide' 'business' %}" class="mobile-nav-link">Руководства</a>
+            <a href="{% url 'leaders' %}" class="mobile-nav-link">Лидеры</a>
+            <a href="{% url 'debt_check' %}" class="mobile-nav-link">Проверка долгов</a>
+            <a href="{% url 'dashboard' %}" class="mobile-nav-link">Личный кабинет</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="breadcrumb">
+                    <a href="{% url 'home' %}">Главная</a>
+                    <span>→</span>
+                    <span>Личный кабинет</span>
+                </div>
+                <h1 class="page-title">Личный кабинет</h1>
+                <p class="page-description">Управляйте своими государственными услугами и отслеживайте статус заявок</p>
+            </div>
+
+            <!-- Dashboard Layout -->
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <div class="sidebar-menu">
+                        <a href="#overview" class="sidebar-item active" onclick="showSection('overview')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            Обзор
+                        </a>
+                        <a href="#applications" class="sidebar-item" onclick="showSection('applications')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10,9 9,9 8,9"></polyline>
+                            </svg>
+                            Мои заявки
+                        </a>
+                        <a href="#documents" class="sidebar-item" onclick="showSection('documents')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10,9 9,9 8,9"></polyline>
+                            </svg>
+                            Документы
+                        </a>
+                        <a href="#payments" class="sidebar-item" onclick="showSection('payments')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                            Платежи
+                        </a>
+                        <a href="#notifications" class="sidebar-item" onclick="showSection('notifications')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            Уведомления
+                        </a>
+                        <a href="#profile" class="sidebar-item" onclick="showSection('profile')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Профиль
+                        </a>
+                        <a href="#settings" class="sidebar-item" onclick="showSection('settings')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                            Настройки
+                        </a>
+                    </div>
+                </aside>
+
+                <!-- Main Content Area -->
+                <div class="dashboard-content">
+                    <!-- Overview Section -->
+                    <section id="overview" class="dashboard-section active">
+                        <div class="section-header">
+                            <h2>Обзор</h2>
+                            <p>Добро пожаловать в ваш личный кабинет</p>
+                        </div>
+
+                        <!-- Stats Cards -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14,2 14,8 20,8"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>5</h3>
+                                    <p>Активных заявок</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 12l2 2 4-4"></path>
+                                        <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"></path>
+                                        <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"></path>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>12</h3>
+                                    <p>Завершенных услуг</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>3</h3>
+                                    <p>Ожидающих оплаты</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>8</h3>
+                                    <p>Новых уведомлений</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="recent-activity">
+                            <h3>Последняя активность</h3>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14,2 14,8 20,8"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h4>Подана заявка на получение льготного кредита</h4>
+                                        <p>15 января 2024, 14:30</p>
+                                    </div>
+                                    <span class="activity-status pending">В обработке</span>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M9 12l2 2 4-4"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h4>Заявка на субсидию одобрена</h4>
+                                        <p>12 января 2024, 10:15</p>
+                                    </div>
+                                    <span class="activity-status approved">Одобрено</span>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h4>Оплачен налог на имущество</h4>
+                                        <p>10 января 2024, 16:45</p>
+                                    </div>
+                                    <span class="activity-status paid">Оплачено</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Applications Section -->
+                    <section id="applications" class="dashboard-section">
+                        <div class="section-header">
+                            <h2>Мои заявки</h2>
+                            <button class="btn btn-primary" onclick="createNewApplication()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                Новая заявка
+                            </button>
+                        </div>
+
+                        <div class="applications-grid">
+                            <div class="application-card">
+                                <div class="application-header">
+                                    <h3>Льготный кредит для малого бизнеса</h3>
+                                    <span class="application-status pending">В обработке</span>
+                                </div>
+                                <div class="application-details">
+                                    <p><strong>Номер заявки:</strong> #2024-001234</p>
+                                    <p><strong>Дата подачи:</strong> 15 января 2024</p>
+                                    <p><strong>Сумма:</strong> 50,000,000 сум</p>
+                                    <p><strong>Статус:</strong> На рассмотрении</p>
+                                </div>
+                                <div class="application-actions">
+                                    <button class="btn btn-outline">Подробнее</button>
+                                    <button class="btn btn-primary">Отследить</button>
+                                </div>
+                            </div>
+
+                            <div class="application-card">
+                                <div class="application-header">
+                                    <h3>Субсидия для фермеров</h3>
+                                    <span class="application-status approved">Одобрено</span>
+                                </div>
+                                <div class="application-details">
+                                    <p><strong>Номер заявки:</strong> #2024-001198</p>
+                                    <p><strong>Дата подачи:</strong> 10 января 2024</p>
+                                    <p><strong>Сумма:</strong> 25,000,000 сум</p>
+                                    <p><strong>Статус:</strong> Готово к получению</p>
+                                </div>
+                                <div class="application-actions">
+                                    <button class="btn btn-outline">Подробнее</button>
+                                    <button class="btn btn-success">Получить</button>
+                                </div>
+                            </div>
+
+                            <div class="application-card">
+                                <div class="application-header">
+                                    <h3>Грант на образование</h3>
+                                    <span class="application-status rejected">Отклонено</span>
+                                </div>
+                                <div class="application-details">
+                                    <p><strong>Номер заявки:</strong> #2024-001156</p>
+                                    <p><strong>Дата подачи:</strong> 5 января 2024</p>
+                                    <p><strong>Сумма:</strong> 15,000,000 сум</p>
+                                    <p><strong>Статус:</strong> Требуются дополнительные документы</p>
+                                </div>
+                                <div class="application-actions">
+                                    <button class="btn btn-outline">Подробнее</button>
+                                    <button class="btn btn-warning">Исправить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Other sections would be added here -->
+                    <section id="documents" class="dashboard-section">
+                        <div class="section-header">
+                            <h2>Документы</h2>
+                            <p>Управляйте своими документами</p>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Раздел документов в разработке</p>
+                        </div>
+                    </section>
+
+                    <section id="payments" class="dashboard-section">
+                        <div class="section-header">
+                            <h2>Платежи</h2>
+                            <p>История и управление платежами</p>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Раздел платежей в разработке</p>
+                        </div>
+                    </section>
+
+                    <section id="notifications" class="dashboard-section">
+                        <div class="section-header">
+                            <h2>Уведомления</h2>
+                            <p>Ваши уведомления и сообщения</p>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Раздел уведомлений в разработке</p>
+                        </div>
+                    </section>
+
+                    <section id="profile" class="dashboard-section">
+                        <div class="section-header">
+                            <h2>Профиль</h2>
+                            <p>Управление личной информацией</p>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Раздел профиля в разработке</p>
+                        </div>
+                    </section>
+
+                    <section id="settings" class="dashboard-section">
+                        <div class="section-header">
+                            <h2>Настройки</h2>
+                            <p>Настройки аккаунта и предпочтения</p>
+                        </div>
+                        <div class="placeholder-content">
+                            <p>Раздел настроек в разработке</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Свяжитесь с нами</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <a href="tel:+1234567890">+1 (234) 567-890</a>
+                        </div>
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <a href="mailto:info@example.gov">info@example.gov</a>
+                        </div>
+                        <address>
+                            123 Government Street<br>
+                            Capital City, ST 12345
+                        </address>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'all_news' %}">Новости</a></li>
+                        <li><a href="{% url 'guide' 'business' %}">Руководства</a></li>
+                        <li><a href="{% url 'leaders' %}">Лидеры</a></li>
+                        <li><a href="#payments">Платежи</a></li>
+                        <li><a href="{% url 'debt_check' %}">Проверка долгов</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Правовая информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#privacy">Политика конфиденциальности</a></li>
+                        <li><a href="#terms">Условия использования</a></li>
+                        <li><a href="#accessibility">Заявление о доступности</a></li>
+                        <li><a href="#cookies">Политика cookies</a></li>
+                        <li><a href="#disclaimer">Отказ от ответственности</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Подключиться</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-utilities">
+                    <button class="utility-btn" onclick="window.print()">Печать страницы</button>
+                    <button class="utility-btn" onclick="toggleHighContrast()">Высокий контраст</button>
+                    <button class="utility-btn" onclick="toggleLargeText()">Крупный текст</button>
+                </div>
+                <p class="footer-copyright">
+                    © 2024 Государственные услуги. Все права защищены. | Функция печати доступна на всех страницах статей.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        // Dashboard page specific functionality
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all sidebar items
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked sidebar item
+            document.querySelector(`[onclick="showSection('${sectionId}')"]`).classList.add('active');
+        }
+
+        function createNewApplication() {
+            alert('Открывается форма создания новой заявки');
+        }
+
+        function logout() {
+            if (confirm('Вы уверены, что хотите выйти из системы?')) {
+                // In a real application, this would clear the session and redirect
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial active section
+            showSection('overview');
+        });
+    </script>
+</body>
+</html>

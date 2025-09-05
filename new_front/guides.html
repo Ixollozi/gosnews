@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Руководства - GovPortal</title>
+    {% load static %}
+    {% load i18n %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/guides.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="{% url 'home' %}" style="text-decoration: none;">
+                        <span class="logo-text">GovPortal</span>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav">
+                    <a href="{% url 'home' %}" class="nav-link">Главная</a>
+                    <a href="{% url 'all_news' %}" class="nav-link">Новости</a>
+                    <a href="{% url 'guide' 'business' %}" class="nav-link active">Руководства</a>
+                    <a href="{% url 'leaders' %}" class="nav-link">Лидеры</a>
+                    <a href="{% url 'debt_check' %}" class="nav-link">Проверка долгов</a>
+                    <a href="{% url 'dashboard' %}" class="nav-link">Личный кабинет</a>
+                </nav>
+
+                <!-- Right Section -->
+                <div class="header-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-selector" id="language-selector">
+                        <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+                        <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
+                        <i class="arrow-down"></i>
+                        <div class="language-menu">
+                            <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                            <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                            <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <button class="search-btn" onclick="toggleSearch()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Login -->
+                    <button class="login-btn" onclick="toggleLogin()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                            <polyline points="10,17 15,12 10,7"></polyline>
+                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                        </svg>
+                        Войти
+                    </button>
+
+                    <!-- Mobile Menu -->
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="Поиск новостей и руководств..." class="search-input">
+                <button class="search-close" onclick="toggleSearch()">×</button>
+            </div>
+            <div class="search-suggestions">
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Новая программа поддержки бизнеса</span>
+                    <span class="suggestion-type">Новость</span>
+                </div>
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Как получить льготный кредит</span>
+                    <span class="suggestion-type">Руководство</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Вход в систему</h3>
+                <button class="modal-close" onclick="toggleLogin()">×</button>
+            </div>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span class="logo-text">GovPortal</span>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="{% url 'home' %}" class="mobile-nav-link">Главная</a>
+            <a href="{% url 'all_news' %}" class="mobile-nav-link">Новости</a>
+            <a href="{% url 'guide' 'business' %}" class="mobile-nav-link">Руководства</a>
+            <a href="{% url 'leaders' %}" class="mobile-nav-link">Лидеры</a>
+            <a href="{% url 'debt_check' %}" class="mobile-nav-link">Проверка долгов</a>
+            <a href="{% url 'dashboard' %}" class="mobile-nav-link">Личный кабинет</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="breadcrumb">
+                    <a href="{% url 'home' %}">Главная</a>
+                    <span>→</span>
+                    <span>Руководства</span>
+                </div>
+                <h1 class="page-title">Руководства и инструкции</h1>
+                <p class="page-description">Пошаговые руководства по получению государственных услуг и участию в программах поддержки</p>
+            </div>
+
+            <!-- Featured Guide -->
+            <section class="featured-guide">
+                <div class="featured-guide-card">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=400&fit=crop" alt="Руководство">
+                        <div class="guide-badge featured">Популярное</div>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-meta">
+                            <span class="guide-category">Бизнес</span>
+                            <span class="guide-difficulty">Начинающий</span>
+                            <span class="guide-time">15 мин</span>
+                        </div>
+                        <h2 class="guide-title">Как получить льготный кредит для малого бизнеса</h2>
+                        <p class="guide-excerpt">Полное руководство по оформлению льготного кредита для развития малого и среднего бизнеса. Включает все необходимые документы, требования и пошаговую инструкцию.</p>
+                        <div class="guide-stats">
+                            <span>2,847 просмотров</span>
+                            <span>4.8 ★</span>
+                        </div>
+                        <a href="guide-detail.html" class="btn btn-primary">Начать изучение</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories -->
+            <section class="guide-categories">
+                <h2 class="section-title">Категории руководств</h2>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="business">
+                        <div class="category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Бизнес и предпринимательство</h3>
+                        <p>Регистрация бизнеса, получение лицензий, налоговые льготы</p>
+                        <span class="guide-count">24 руководства</span>
+                    </div>
+
+                    <div class="category-card" data-category="agriculture">
+                        <div class="category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3>Сельское хозяйство</h3>
+                        <p>Субсидии для фермеров, программы развития сельского хозяйства</p>
+                        <span class="guide-count">18 руководств</span>
+                    </div>
+
+                    <div class="category-card" data-category="social">
+                        <div class="category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <h3>Социальные услуги</h3>
+                        <p>Пенсии, пособия, социальная поддержка</p>
+                        <span class="guide-count">15 руководств</span>
+                    </div>
+
+                    <div class="category-card" data-category="education">
+                        <div class="category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <h3>Образование</h3>
+                        <p>Гранты на обучение, стипендии, образовательные программы</p>
+                        <span class="guide-count">12 руководств</span>
+                    </div>
+
+                    <div class="category-card" data-category="healthcare">
+                        <div class="category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <h3>Здравоохранение</h3>
+                        <p>Медицинские услуги, льготы на лечение</p>
+                        <span class="guide-count">8 руководств</span>
+                    </div>
+
+                    <div class="category-card" data-category="housing">
+                        <div class="category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Жилищные программы</h3>
+                        <p>Доступное жилье, ипотечные программы</p>
+                        <span class="guide-count">10 руководств</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-group">
+                    <input type="text" placeholder="Поиск руководств..." class="search-input" id="guideSearch">
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">Все категории</option>
+                        <option value="business">Бизнес</option>
+                        <option value="agriculture">Сельское хозяйство</option>
+                        <option value="social">Социальные</option>
+                        <option value="education">Образование</option>
+                        <option value="healthcare">Здравоохранение</option>
+                        <option value="housing">Жилищные</option>
+                    </select>
+                    <select class="filter-select" id="difficultyFilter">
+                        <option value="">Любой уровень</option>
+                        <option value="beginner">Начинающий</option>
+                        <option value="intermediate">Средний</option>
+                        <option value="advanced">Продвинутый</option>
+                    </select>
+                    <select class="filter-select" id="timeFilter">
+                        <option value="">Любое время</option>
+                        <option value="short">До 10 мин</option>
+                        <option value="medium">10-30 мин</option>
+                        <option value="long">Более 30 мин</option>
+                    </select>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-outline" onclick="clearFilters()">Очистить фильтры</button>
+                </div>
+            </div>
+
+            <!-- Guides Grid -->
+            <div class="guides-grid" id="guidesGrid">
+                <article class="guide-card" data-category="business" data-difficulty="beginner" data-time="short">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=250&fit=crop" alt="Руководство">
+                        <div class="guide-badge">Бизнес</div>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-meta">
+                            <span class="guide-category">Бизнес</span>
+                            <span class="guide-difficulty">Начинающий</span>
+                            <span class="guide-time">15 мин</span>
+                        </div>
+                        <h3 class="guide-title">Как получить льготный кредит для малого бизнеса</h3>
+                        <p class="guide-excerpt">Полное руководство по оформлению льготного кредита для развития малого и среднего бизнеса.</p>
+                        <div class="guide-stats">
+                            <span>2,847 просмотров</span>
+                            <span>4.8 ★</span>
+                        </div>
+                        <a href="guide-detail.html" class="btn btn-outline">Изучить</a>
+                    </div>
+                </article>
+
+                <article class="guide-card" data-category="agriculture" data-difficulty="intermediate" data-time="medium">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=250&fit=crop" alt="Руководство">
+                        <div class="guide-badge">Сельское хозяйство</div>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-meta">
+                            <span class="guide-category">Сельское хозяйство</span>
+                            <span class="guide-difficulty">Средний</span>
+                            <span class="guide-time">25 мин</span>
+                        </div>
+                        <h3 class="guide-title">Оформление субсидий для фермеров</h3>
+                        <p class="guide-excerpt">Пошаговая инструкция по получению государственных субсидий для развития сельского хозяйства.</p>
+                        <div class="guide-stats">
+                            <span>1,923 просмотра</span>
+                            <span>4.6 ★</span>
+                        </div>
+                        <a href="guide-detail.html" class="btn btn-outline">Изучить</a>
+                    </div>
+                </article>
+
+                <article class="guide-card" data-category="social" data-difficulty="beginner" data-time="short">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=250&fit=crop" alt="Руководство">
+                        <div class="guide-badge">Социальные</div>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-meta">
+                            <span class="guide-category">Социальные</span>
+                            <span class="guide-difficulty">Начинающий</span>
+                            <span class="guide-time">10 мин</span>
+                        </div>
+                        <h3 class="guide-title">Как оформить социальные пособия</h3>
+                        <p class="guide-excerpt">Руководство по оформлению различных видов социальных пособий и льгот.</p>
+                        <div class="guide-stats">
+                            <span>3,156 просмотров</span>
+                            <span>4.7 ★</span>
+                        </div>
+                        <a href="guide-detail.html" class="btn btn-outline">Изучить</a>
+                    </div>
+                </article>
+
+                <article class="guide-card" data-category="education" data-difficulty="intermediate" data-time="medium">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=250&fit=crop" alt="Руководство">
+                        <div class="guide-badge">Образование</div>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-meta">
+                            <span class="guide-category">Образование</span>
+                            <span class="guide-difficulty">Средний</span>
+                            <span class="guide-time">20 мин</span>
+                        </div>
+                        <h3 class="guide-title">Получение образовательных грантов</h3>
+                        <p class="guide-excerpt">Инструкция по подаче заявки на получение грантов для обучения в вузах.</p>
+                        <div class="guide-stats">
+                            <span>2,234 просмотра</span>
+                            <span>4.9 ★</span>
+                        </div>
+                        <a href="guide-detail.html" class="btn btn-outline">Изучить</a>
+                    </div>
+                </article>
+
+                <article class="guide-card" data-category="housing" data-difficulty="advanced" data-time="long">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=250&fit=crop" alt="Руководство">
+                        <div class="guide-badge">Жилищные</div>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-meta">
+                            <span class="guide-category">Жилищные</span>
+                            <span class="guide-difficulty">Продвинутый</span>
+                            <span class="guide-time">45 мин</span>
+                        </div>
+                        <h3 class="guide-title">Программа доступного жилья: полное руководство</h3>
+                        <p class="guide-excerpt">Подробная инструкция по участию в программе доступного жилья для молодых семей.</p>
+                        <div class="guide-stats">
+                            <span>1,567 просмотров</span>
+                            <span>4.5 ★</span>
+                        </div>
+                        <a href="guide-detail.html" class="btn btn-outline">Изучить</a>
+                    </div>
+                </article>
+
+                <article class="guide-card" data-category="healthcare" data-difficulty="beginner" data-time="short">
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=250&fit=crop" alt="Руководство">
+                        <div class="guide-badge">Здравоохранение</div>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-meta">
+                            <span class="guide-category">Здравоохранение</span>
+                            <span class="guide-difficulty">Начинающий</span>
+                            <span class="guide-time">12 мин</span>
+                        </div>
+                        <h3 class="guide-title">Медицинские льготы и услуги</h3>
+                        <p class="guide-excerpt">Как получить льготы на медицинское обслуживание и лечение.</p>
+                        <div class="guide-stats">
+                            <span>1,789 просмотров</span>
+                            <span>4.4 ★</span>
+                        </div>
+                        <a href="guide-detail.html" class="btn btn-outline">Изучить</a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn" disabled>Предыдущая</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">Следующая</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Свяжитесь с нами</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <a href="tel:+1234567890">+1 (234) 567-890</a>
+                        </div>
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <a href="mailto:info@example.gov">info@example.gov</a>
+                        </div>
+                        <address>
+                            123 Government Street<br>
+                            Capital City, ST 12345
+                        </address>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'all_news' %}">Новости</a></li>
+                        <li><a href="{% url 'guide' 'business' %}">Руководства</a></li>
+                        <li><a href="{% url 'leaders' %}">Лидеры</a></li>
+                        <li><a href="#payments">Платежи</a></li>
+                        <li><a href="{% url 'debt_check' %}">Проверка долгов</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Правовая информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#privacy">Политика конфиденциальности</a></li>
+                        <li><a href="#terms">Условия использования</a></li>
+                        <li><a href="#accessibility">Заявление о доступности</a></li>
+                        <li><a href="#cookies">Политика cookies</a></li>
+                        <li><a href="#disclaimer">Отказ от ответственности</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Подключиться</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-utilities">
+                    <button class="utility-btn" onclick="window.print()">Печать страницы</button>
+                    <button class="utility-btn" onclick="toggleHighContrast()">Высокий контраст</button>
+                    <button class="utility-btn" onclick="toggleLargeText()">Крупный текст</button>
+                </div>
+                <p class="footer-copyright">
+                    © 2024 Государственные услуги. Все права защищены. | Функция печати доступна на всех страницах статей.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        // Guides page specific functionality
+        function clearFilters() {
+            document.getElementById('guideSearch').value = '';
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('difficultyFilter').value = '';
+            document.getElementById('timeFilter').value = '';
+            filterGuides();
+        }
+
+        function filterGuides() {
+            const searchTerm = document.getElementById('guideSearch').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const difficulty = document.getElementById('difficultyFilter').value;
+            const time = document.getElementById('timeFilter').value;
+            const guides = document.querySelectorAll('.guide-card');
+            
+            guides.forEach(guide => {
+                const title = guide.querySelector('.guide-title').textContent.toLowerCase();
+                const excerpt = guide.querySelector('.guide-excerpt').textContent.toLowerCase();
+                const guideCategory = guide.getAttribute('data-category');
+                const guideDifficulty = guide.getAttribute('data-difficulty');
+                const guideTime = guide.getAttribute('data-time');
+                
+                const matchesSearch = !searchTerm || title.includes(searchTerm) || excerpt.includes(searchTerm);
+                const matchesCategory = !category || guideCategory === category;
+                const matchesDifficulty = !difficulty || guideDifficulty === difficulty;
+                const matchesTime = !time || guideTime === time;
+                
+                if (matchesSearch && matchesCategory && matchesDifficulty && matchesTime) {
+                    guide.style.display = 'block';
+                } else {
+                    guide.style.display = 'none';
+                }
+            });
+        }
+
+        // Category click handler
+        function filterByCategory(category) {
+            document.getElementById('categoryFilter').value = category;
+            filterGuides();
+        }
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('guideSearch').addEventListener('input', filterGuides);
+            document.getElementById('categoryFilter').addEventListener('change', filterGuides);
+            document.getElementById('difficultyFilter').addEventListener('change', filterGuides);
+            document.getElementById('timeFilter').addEventListener('change', filterGuides);
+
+            // Add click handlers to category cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    filterByCategory(category);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

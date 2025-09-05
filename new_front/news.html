@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости - GovPortal</title>
+    {% load static %}
+    {% load i18n %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="{% url 'home' %}" style="text-decoration: none;">
+                        <span class="logo-text">GovPortal</span>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav">
+                    <a href="{% url 'home' %}" class="nav-link">Главная</a>
+                    <a href="{% url 'all_news' %}" class="nav-link active">Новости</a>
+                    <a href="{% url 'guide' 'business' %}" class="nav-link">Руководства</a>
+                    <a href="{% url 'leaders' %}" class="nav-link">Лидеры</a>
+                    <a href="{% url 'debt_check' %}" class="nav-link">Проверка долгов</a>
+                    <a href="{% url 'dashboard' %}" class="nav-link">Личный кабинет</a>
+                </nav>
+
+                <!-- Right Section -->
+                <div class="header-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-selector" id="language-selector">
+                        <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+                        <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
+                        <i class="arrow-down"></i>
+                        <div class="language-menu">
+                            <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                            <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                            <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <button class="search-btn" onclick="toggleSearch()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Login -->
+                    <button class="login-btn" onclick="toggleLogin()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                            <polyline points="10,17 15,12 10,7"></polyline>
+                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                        </svg>
+                        Войти
+                    </button>
+
+                    <!-- Mobile Menu -->
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="Поиск новостей и руководств..." class="search-input">
+                <button class="search-close" onclick="toggleSearch()">×</button>
+            </div>
+            <div class="search-suggestions">
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Новая программа поддержки бизнеса</span>
+                    <span class="suggestion-type">Новость</span>
+                </div>
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Как получить льготный кредит</span>
+                    <span class="suggestion-type">Руководство</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Вход в систему</h3>
+                <button class="modal-close" onclick="toggleLogin()">×</button>
+            </div>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span class="logo-text">GovPortal</span>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="{% url 'home' %}" class="mobile-nav-link">Главная</a>
+            <a href="{% url 'all_news' %}" class="mobile-nav-link">Новости</a>
+            <a href="{% url 'guide' 'business' %}" class="mobile-nav-link">Руководства</a>
+            <a href="{% url 'leaders' %}" class="mobile-nav-link">Лидеры</a>
+            <a href="{% url 'debt_check' %}" class="mobile-nav-link">Проверка долгов</a>
+            <a href="{% url 'dashboard' %}" class="mobile-nav-link">Личный кабинет</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="breadcrumb">
+                    <a href="{% url 'home' %}">Главная</a>
+                    <span>→</span>
+                    <span>Новости</span>
+                </div>
+                <h1 class="page-title">Все новости</h1>
+                <p class="page-description">Последние новости о государственных программах и мерах поддержки по всему Узбекистану</p>
+            </div>
+
+            <!-- Featured News Section -->
+            <section class="featured-news-section">
+                <h2 class="section-subtitle">Важные новости</h2>
+                <div class="featured-news-grid">
+                    <article class="featured-news-card">
+                        <div class="news-image">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop" alt="Новость">
+                            <div class="news-badge featured">Важная новость</div>
+                        </div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date">15 января 2024</span>
+                                <span class="news-region">Национальный</span>
+                                <span class="news-views">1,254 просмотра</span>
+                            </div>
+                            <h3 class="news-title">Новая программа поддержки малого бизнеса запущена в регионах</h3>
+                            <p class="news-excerpt">Сегодня было объявлено о запуске новой программы государственной поддержки малого и среднего бизнеса, которая охватит все регионы страны. Программа предусматривает выделение льготных кредитов, субсидий и грантов для начинающих предпринимателей.</p>
+                            <div class="news-author">
+                                <span>Автор: Анна Иванова</span>
+                            </div>
+                            <div class="news-tags">
+                                <span class="tag">бизнес</span>
+                                <span class="tag">поддержка</span>
+                                <span class="tag">экономика</span>
+                            </div>
+                            <a href="{% url 'news_detail' 1 %}" class="btn btn-primary">Читать полностью</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-group">
+                    <input type="text" placeholder="Поиск новостей..." class="search-input" id="newsSearch">
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">Все категории</option>
+                        <option value="business">Бизнес</option>
+                        <option value="agriculture">Сельское хозяйство</option>
+                        <option value="it">IT</option>
+                        <option value="social">Социальные</option>
+                        <option value="education">Образование</option>
+                    </select>
+                    <select class="filter-select" id="regionFilter">
+                        <option value="">Все регионы</option>
+                        <option value="tashkent">Ташкент</option>
+                        <option value="andijan">Андижан</option>
+                        <option value="bukhara">Бухара</option>
+                        <option value="fergana">Фергана</option>
+                        <option value="jizzakh">Джизак</option>
+                        <option value="khorezm">Хорезм</option>
+                        <option value="namangan">Наманган</option>
+                        <option value="navoi">Навои</option>
+                        <option value="kashkadarya">Кашкадарья</option>
+                        <option value="karakalpakstan">Каракалпакстан</option>
+                        <option value="samarkand">Самарканд</option>
+                        <option value="sirdarya">Сырдарья</option>
+                        <option value="surkhandarya">Сурхандарья</option>
+                    </select>
+                    <select class="filter-select" id="sortFilter">
+                        <option value="date">По дате</option>
+                        <option value="views">По просмотрам</option>
+                        <option value="readTime">По времени чтения</option>
+                    </select>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-outline" onclick="clearFilters()">Очистить фильтры</button>
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid" onclick="toggleView('grid')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </button>
+                        <button class="view-btn" data-view="list" onclick="toggleView('list')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div class="news-grid-large" id="newsGrid">
+                <article class="news-card-large" data-category="business" data-region="national">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop" alt="Новость">
+                        <div class="news-badge">Бизнес</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">15 января 2024</span>
+                            <span class="news-region">Национальный</span>
+                            <span class="news-views">1,254 просмотра</span>
+                        </div>
+                        <h3 class="news-title">Новая программа поддержки малого бизнеса запущена в регионах</h3>
+                        <p class="news-excerpt">Сегодня было объявлено о запуске новой программы государственной поддержки малого и среднего бизнеса, которая охватит все регионы страны.</p>
+                        <div class="news-author">
+                            <span>Автор: Анна Иванова</span>
+                        </div>
+                        <div class="news-tags">
+                            <span class="tag">бизнес</span>
+                            <span class="tag">поддержка</span>
+                            <span class="tag">экономика</span>
+                        </div>
+                        <a href="{% url 'news_detail' 1 %}" class="btn btn-outline">Читать полностью</a>
+                    </div>
+                </article>
+
+                <article class="news-card-large" data-category="agriculture" data-region="fergana">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop" alt="Новость">
+                        <div class="news-badge">Сельское хозяйство</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">14 января 2024</span>
+                            <span class="news-region">Фергана</span>
+                            <span class="news-views">892 просмотра</span>
+                        </div>
+                        <h3 class="news-title">Новая программа субсидий для сельского хозяйства</h3>
+                        <p class="news-excerpt">В Ферганской области объявлена новая программа субсидий для фермеров. Программа направлена на развитие хлопководства и садоводства.</p>
+                        <div class="news-author">
+                            <span>Автор: Сардор Каримов</span>
+                        </div>
+                        <div class="news-tags">
+                            <span class="tag">сельское хозяйство</span>
+                            <span class="tag">субсидия</span>
+                            <span class="tag">фермеры</span>
+                        </div>
+                        <a href="{% url 'news_detail' 1 %}" class="btn btn-outline">Читать полностью</a>
+                    </div>
+                </article>
+
+                <article class="news-card-large" data-category="it" data-region="tashkent">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=250&fit=crop" alt="Новость">
+                        <div class="news-badge">IT</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">13 января 2024</span>
+                            <span class="news-region">Ташкент</span>
+                            <span class="news-views">2,143 просмотра</span>
+                        </div>
+                        <h3 class="news-title">Расширена программа грантов для IT-стартапов</h3>
+                        <p class="news-excerpt">Размер грантов для поддержки предпринимательства в IT-сфере среди молодежи увеличен в два раза.</p>
+                        <div class="news-author">
+                            <span>Автор: Дилноза Тошматова</span>
+                        </div>
+                        <div class="news-tags">
+                            <span class="tag">IT</span>
+                            <span class="tag">стартап</span>
+                            <span class="tag">грант</span>
+                        </div>
+                        <a href="{% url 'news_detail' 1 %}" class="btn btn-outline">Читать полностью</a>
+                    </div>
+                </article>
+
+                <article class="news-card-large" data-category="social" data-region="samarkand">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=250&fit=crop" alt="Новость">
+                        <div class="news-badge">Социальные</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">12 января 2024</span>
+                            <span class="news-region">Самарканд</span>
+                            <span class="news-views">756 просмотров</span>
+                        </div>
+                        <h3 class="news-title">Программа доступного жилья переходит на новый этап</h3>
+                        <p class="news-excerpt">В Самаркандской области программа доступного жилья расширяется новыми проектами. Молодым семьям предоставляются льготные условия кредитования.</p>
+                        <div class="news-author">
+                            <span>Автор: Фаррух Абдуллаев</span>
+                        </div>
+                        <div class="news-tags">
+                            <span class="tag">жилье</span>
+                            <span class="tag">строительство</span>
+                            <span class="tag">социальные</span>
+                        </div>
+                        <a href="{% url 'news_detail' 1 %}" class="btn btn-outline">Читать полностью</a>
+                    </div>
+                </article>
+
+                <article class="news-card-large" data-category="business" data-region="andijan">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=400&h=250&fit=crop" alt="Новость">
+                        <div class="news-badge">Бизнес</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">11 января 2024</span>
+                            <span class="news-region">Андижан</span>
+                            <span class="news-views">1,089 просмотров</span>
+                        </div>
+                        <h3 class="news-title">Новые возможности для экспортеров</h3>
+                        <p class="news-excerpt">Для предприятий Андижанской области запущена программа выхода на международные рынки. Открываются новые экспортные направления.</p>
+                        <div class="news-author">
+                            <span>Автор: Нодир Саидов</span>
+                        </div>
+                        <div class="news-tags">
+                            <span class="tag">экспорт</span>
+                            <span class="tag">торговля</span>
+                            <span class="tag">международные</span>
+                        </div>
+                        <a href="{% url 'news_detail' 1 %}" class="btn btn-outline">Читать полностью</a>
+                    </div>
+                </article>
+
+                <article class="news-card-large" data-category="education" data-region="tashkent">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=250&fit=crop" alt="Новость">
+                        <div class="news-badge">Образование</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">10 января 2024</span>
+                            <span class="news-region">Ташкент</span>
+                            <span class="news-views">1,876 просмотров</span>
+                        </div>
+                        <h3 class="news-title">Гранты на образование увеличиваются</h3>
+                        <p class="news-excerpt">Программы грантового финансирования образовательных проектов расширяются. Студенты могут получить поддержку для обучения за рубежом.</p>
+                        <div class="news-author">
+                            <span>Автор: Малика Юсупова</span>
+                        </div>
+                        <div class="news-tags">
+                            <span class="tag">образование</span>
+                            <span class="tag">гранты</span>
+                            <span class="tag">студенты</span>
+                        </div>
+                        <a href="{% url 'news_detail' 1 %}" class="btn btn-outline">Читать полностью</a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn" disabled>Предыдущая</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">4</button>
+                <button class="pagination-btn">5</button>
+                <button class="pagination-btn">Следующая</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Свяжитесь с нами</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <a href="tel:+1234567890">+1 (234) 567-890</a>
+                        </div>
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <a href="mailto:info@example.gov">info@example.gov</a>
+                        </div>
+                        <address>
+                            123 Government Street<br>
+                            Capital City, ST 12345
+                        </address>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'all_news' %}">Новости</a></li>
+                        <li><a href="{% url 'guide' 'business' %}">Руководства</a></li>
+                        <li><a href="{% url 'leaders' %}">Лидеры</a></li>
+                        <li><a href="#payments">Платежи</a></li>
+                        <li><a href="{% url 'debt_check' %}">Проверка долгов</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Правовая информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#privacy">Политика конфиденциальности</a></li>
+                        <li><a href="#terms">Условия использования</a></li>
+                        <li><a href="#accessibility">Заявление о доступности</a></li>
+                        <li><a href="#cookies">Политика cookies</a></li>
+                        <li><a href="#disclaimer">Отказ от ответственности</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Подключиться</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-utilities">
+                    <button class="utility-btn" onclick="window.print()">Печать страницы</button>
+                    <button class="utility-btn" onclick="toggleHighContrast()">Высокий контраст</button>
+                    <button class="utility-btn" onclick="toggleLargeText()">Крупный текст</button>
+                </div>
+                <p class="footer-copyright">
+                    © 2024 Государственные услуги. Все права защищены. | Функция печати доступна на всех страницах статей.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        // News page specific functionality
+        function clearFilters() {
+            document.getElementById('newsSearch').value = '';
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('regionFilter').value = '';
+            document.getElementById('sortFilter').value = 'date';
+            filterNews();
+        }
+
+        function toggleView(view) {
+            const grid = document.getElementById('newsGrid');
+            const buttons = document.querySelectorAll('.view-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-view="${view}"]`).classList.add('active');
+            
+            grid.className = view === 'list' ? 'news-list' : 'news-grid-large';
+        }
+
+        function filterNews() {
+            const searchTerm = document.getElementById('newsSearch').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const region = document.getElementById('regionFilter').value;
+            const articles = document.querySelectorAll('.news-card-large');
+            
+            articles.forEach(article => {
+                const title = article.querySelector('.news-title').textContent.toLowerCase();
+                const excerpt = article.querySelector('.news-excerpt').textContent.toLowerCase();
+                const articleCategory = article.getAttribute('data-category');
+                const articleRegion = article.getAttribute('data-region');
+                
+                const matchesSearch = !searchTerm || title.includes(searchTerm) || excerpt.includes(searchTerm);
+                const matchesCategory = !category || articleCategory === category;
+                const matchesRegion = !region || articleRegion === region;
+                
+                if (matchesSearch && matchesCategory && matchesRegion) {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        }
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('newsSearch').addEventListener('input', filterNews);
+            document.getElementById('categoryFilter').addEventListener('change', filterNews);
+            document.getElementById('regionFilter').addEventListener('change', filterNews);
+            document.getElementById('sortFilter').addEventListener('change', filterNews);
+        });
+    </script>
+</body>
+</html>

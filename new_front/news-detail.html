@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новая программа поддержки малого бизнеса - GovPortal</title>
+    {% load static %}
+    {% load i18n %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/news-detail.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="{% url 'home' %}" style="text-decoration: none;">
+                        <span class="logo-text">GovPortal</span>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav">
+                    <a href="{% url 'home' %}" class="nav-link">Главная</a>
+                    <a href="{% url 'all_news' %}" class="nav-link active">Новости</a>
+                    <a href="{% url 'guide' 'business' %}" class="nav-link">Руководства</a>
+                    <a href="{% url 'leaders' %}" class="nav-link">Лидеры</a>
+                    <a href="{% url 'debt_check' %}" class="nav-link">Проверка долгов</a>
+                    <a href="{% url 'dashboard' %}" class="nav-link">Личный кабинет</a>
+                </nav>
+
+                <!-- Right Section -->
+                <div class="header-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-selector" id="language-selector">
+                        <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+                        <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
+                        <i class="arrow-down"></i>
+                        <div class="language-menu">
+                            <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                            <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                            <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <button class="search-btn" onclick="toggleSearch()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Login -->
+                    <button class="login-btn" onclick="toggleLogin()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                            <polyline points="10,17 15,12 10,7"></polyline>
+                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                        </svg>
+                        Войти
+                    </button>
+
+                    <!-- Mobile Menu -->
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="Поиск новостей и руководств..." class="search-input">
+                <button class="search-close" onclick="toggleSearch()">×</button>
+            </div>
+            <div class="search-suggestions">
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Новая программа поддержки бизнеса</span>
+                    <span class="suggestion-type">Новость</span>
+                </div>
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Как получить льготный кредит</span>
+                    <span class="suggestion-type">Руководство</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Вход в систему</h3>
+                <button class="modal-close" onclick="toggleLogin()">×</button>
+            </div>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span class="logo-text">GovPortal</span>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="{% url 'home' %}" class="mobile-nav-link">Главная</a>
+            <a href="{% url 'all_news' %}" class="mobile-nav-link">Новости</a>
+            <a href="{% url 'guide' 'business' %}" class="mobile-nav-link">Руководства</a>
+            <a href="{% url 'leaders' %}" class="mobile-nav-link">Лидеры</a>
+            <a href="{% url 'debt_check' %}" class="mobile-nav-link">Проверка долгов</a>
+            <a href="{% url 'dashboard' %}" class="mobile-nav-link">Личный кабинет</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="{% url 'home' %}">Главная</a>
+                <span>→</span>
+                <a href="{% url 'all_news' %}">Новости</a>
+                <span>→</span>
+                <span>Новая программа поддержки малого бизнеса</span>
+            </div>
+
+            <!-- Article Header -->
+            <header class="article-header">
+                <div class="article-meta">
+                    <span class="article-date">15 января 2024</span>
+                    <span class="article-region">Национальный</span>
+                    <span class="article-views">1,254 просмотра</span>
+                    <span class="article-read-time">5 мин чтения</span>
+                </div>
+                <h1 class="article-title">Новая программа поддержки малого бизнеса запущена в регионах</h1>
+                <div class="article-badges">
+                    <span class="badge featured">Важная новость</span>
+                    <span class="badge">Бизнес</span>
+                </div>
+                <div class="article-author">
+                    <div class="author-info">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Анна Иванова">
+                        </div>
+                        <div class="author-details">
+                            <span class="author-name">Анна Иванова</span>
+                            <span class="author-title">Корреспондент по экономическим вопросам</span>
+                        </div>
+                    </div>
+                    <div class="article-actions">
+                        <button class="action-btn" onclick="shareArticle()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                            </svg>
+                            Поделиться
+                        </button>
+                        <button class="action-btn" onclick="printArticle()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6,9 6,2 18,2 18,9"></polyline>
+                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                <rect x="6" y="14" width="12" height="8"></rect>
+                            </svg>
+                            Печать
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Article Content -->
+            <article class="article-content">
+                <div class="article-image">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=600&fit=crop" alt="Новая программа поддержки малого бизнеса">
+                    <div class="image-caption">Правительство объявило о запуске новой программы поддержки малого и среднего бизнеса</div>
+                </div>
+
+                <div class="article-body">
+                    <p class="lead">Сегодня было объявлено о запуске новой программы государственной поддержки малого и среднего бизнеса, которая охватит все регионы страны. Программа предусматривает выделение льготных кредитов, субсидий и грантов для начинающих предпринимателей.</p>
+
+                    <h2>Основные направления программы</h2>
+                    <p>Новая программа включает в себя несколько ключевых направлений поддержки предпринимательства:</p>
+
+                    <h3>1. Льготное кредитование</h3>
+                    <p>Предприниматели смогут получить кредиты под сниженную процентную ставку от 3% до 7% годовых в зависимости от вида деятельности и размера предприятия. Максимальная сумма кредита составляет 500 миллионов сумов.</p>
+
+                    <blockquote>
+                        <p>"Мы создаем максимально благоприятные условия для развития малого и среднего бизнеса в регионах. Это ключевой элемент нашей экономической стратегии", - отметил министр экономики.</p>
+                        <cite>Министр экономики Республики Узбекистан</cite>
+                    </blockquote>
+
+                    <h3>2. Грантовая поддержка</h3>
+                    <p>Для инновационных проектов предусмотрены гранты в размере до 100 миллионов сумов. Особое внимание уделяется проектам в сфере IT, сельского хозяйства и экологии.</p>
+
+                    <h3>3. Субсидирование</h3>
+                    <p>Государство будет компенсировать часть затрат на аренду помещений, коммунальные услуги и обучение персонала для предприятий, созданных в течение последних двух лет.</p>
+
+                    <h2>Условия участия</h2>
+                    <p>Для участия в программе предприниматели должны соответствовать следующим критериям:</p>
+                    <ul>
+                        <li>Возраст от 18 до 65 лет</li>
+                        <li>Отсутствие задолженности перед государством</li>
+                        <li>Наличие бизнес-плана</li>
+                        <li>Регистрация предприятия не ранее 2022 года</li>
+                    </ul>
+
+                    <h2>Региональное распределение</h2>
+                    <p>Программа будет реализована во всех регионах страны с учетом местных особенностей и приоритетов развития. Особое внимание уделяется отдаленным районам и моногородам.</p>
+
+                    <div class="info-box">
+                        <h4>Важная информация</h4>
+                        <p>Подача заявок на участие в программе начнется с 1 февраля 2024 года. Документы можно подать как в электронном виде через портал государственных услуг, так и в офисах региональных центров поддержки предпринимательства.</p>
+                    </div>
+
+                    <h2>Ожидаемые результаты</h2>
+                    <p>По прогнозам экспертов, новая программа позволит:</p>
+                    <ul>
+                        <li>Создать более 50,000 новых рабочих мест</li>
+                        <li>Увеличить долю малого и среднего бизнеса в ВВП на 3-5%</li>
+                        <li>Привлечь инвестиции в размере 2 триллионов сумов</li>
+                        <li>Развить предпринимательство в сельских районах</li>
+                    </ul>
+
+                    <p>Программа рассчитана на три года и будет финансироваться из государственного бюджета, а также за счет средств международных финансовых организаций.</p>
+                </div>
+
+                <div class="article-tags">
+                    <h4>Теги:</h4>
+                    <div class="tags">
+                        <span class="tag">бизнес</span>
+                        <span class="tag">поддержка</span>
+                        <span class="tag">экономика</span>
+                        <span class="tag">кредиты</span>
+                        <span class="tag">гранты</span>
+                        <span class="tag">предпринимательство</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Related Articles -->
+            <section class="related-articles">
+                <h3>Похожие новости</h3>
+                <div class="related-grid">
+                    <article class="related-card">
+                        <div class="related-image">
+                            <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=300&h=200&fit=crop" alt="Новость">
+                        </div>
+                        <div class="related-content">
+                            <h4>Новая программа субсидий для сельского хозяйства</h4>
+                            <p>В Ферганской области объявлена новая программа субсидий для фермеров.</p>
+                            <span class="related-date">14 января 2024</span>
+                        </div>
+                    </article>
+
+                    <article class="related-card">
+                        <div class="related-image">
+                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=300&h=200&fit=crop" alt="Новость">
+                        </div>
+                        <div class="related-content">
+                            <h4>Расширена программа грантов для IT-стартапов</h4>
+                            <p>Размер грантов для поддержки предпринимательства в IT-сфере увеличен в два раза.</p>
+                            <span class="related-date">13 января 2024</span>
+                        </div>
+                    </article>
+
+                    <article class="related-card">
+                        <div class="related-image">
+                            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&h=200&fit=crop" alt="Новость">
+                        </div>
+                        <div class="related-content">
+                            <h4>Программа доступного жилья переходит на новый этап</h4>
+                            <p>В Самаркандской области программа доступного жилья расширяется новыми проектами.</p>
+                            <span class="related-date">12 января 2024</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Свяжитесь с нами</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <a href="tel:+1234567890">+1 (234) 567-890</a>
+                        </div>
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <a href="mailto:info@example.gov">info@example.gov</a>
+                        </div>
+                        <address>
+                            123 Government Street<br>
+                            Capital City, ST 12345
+                        </address>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'all_news' %}">Новости</a></li>
+                        <li><a href="{% url 'guide' 'business' %}">Руководства</a></li>
+                        <li><a href="{% url 'leaders' %}">Лидеры</a></li>
+                        <li><a href="#payments">Платежи</a></li>
+                        <li><a href="{% url 'debt_check' %}">Проверка долгов</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Правовая информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#privacy">Политика конфиденциальности</a></li>
+                        <li><a href="#terms">Условия использования</a></li>
+                        <li><a href="#accessibility">Заявление о доступности</a></li>
+                        <li><a href="#cookies">Политика cookies</a></li>
+                        <li><a href="#disclaimer">Отказ от ответственности</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Подключиться</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-utilities">
+                    <button class="utility-btn" onclick="window.print()">Печать страницы</button>
+                    <button class="utility-btn" onclick="toggleHighContrast()">Высокий контраст</button>
+                    <button class="utility-btn" onclick="toggleLargeText()">Крупный текст</button>
+                </div>
+                <p class="footer-copyright">
+                    © 2024 Государственные услуги. Все права защищены. | Функция печати доступна на всех страницах статей.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        // Article page specific functionality
+        function shareArticle() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.title,
+                    text: 'Прочитайте эту интересную статью',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const url = window.location.href;
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('Ссылка скопирована в буфер обмена');
+                });
+            }
+        }
+
+        function printArticle() {
+            window.print();
+        }
+
+        // Track reading progress
+        function trackReadingProgress() {
+            const article = document.querySelector('.article-content');
+            const progressBar = document.createElement('div');
+            progressBar.className = 'reading-progress';
+            progressBar.innerHTML = '<div class="progress-bar"></div>';
+            document.body.appendChild(progressBar);
+
+            window.addEventListener('scroll', () => {
+                const articleTop = article.offsetTop;
+                const articleHeight = article.offsetHeight;
+                const windowHeight = window.innerHeight;
+                const scrollTop = window.pageYOffset;
+                
+                const progress = Math.min(100, Math.max(0, 
+                    ((scrollTop - articleTop + windowHeight) / articleHeight) * 100
+                ));
+                
+                document.querySelector('.progress-bar').style.width = progress + '%';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            trackReadingProgress();
+        });
+    </script>
+</body>
+</html>

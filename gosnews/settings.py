@@ -50,7 +50,10 @@ ROOT_URLCONF = 'gosnews.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'new_front',  # Добавляем папку new_front как источник шаблонов
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,6 +137,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
+    BASE_DIR / 'new_front',  # Добавляем папку new_front для статических файлов
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'

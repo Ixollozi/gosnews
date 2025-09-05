@@ -131,7 +131,7 @@ def news_detail(request, news_id: int):
         'news': news_tr,
         'related_news': related_news,
     }
-    return render(request, 'news_detail.html', context)
+    return render(request, 'news-detail.html', context)
 
 
 def all_news(request):
@@ -174,5 +174,16 @@ def all_news(request):
         'search_query': search_query,
         'paginator': paginator,
     }
-    return render(request, 'all_news.html', context)
+    return render(request, 'news.html', context)
+
+
+def dashboard(request):
+    """Личный кабинет"""
+    return render(request, 'dashboard.html')
+
+
+def debt_check(request):
+    """Проверка долгов"""
+    debts_data = get_debts_data()
+    return render(request, 'debt-check.html', debts_data)
 

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лидеры - GovPortal</title>
+    {% load static %}
+    {% load i18n %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/leaders.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="{% url 'home' %}" style="text-decoration: none;">
+                        <span class="logo-text">GovPortal</span>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav">
+                    <a href="{% url 'home' %}" class="nav-link">Главная</a>
+                    <a href="{% url 'all_news' %}" class="nav-link">Новости</a>
+                    <a href="{% url 'guide' 'business' %}" class="nav-link">Руководства</a>
+                    <a href="{% url 'leaders' %}" class="nav-link active">Лидеры</a>
+                    <a href="{% url 'debt_check' %}" class="nav-link">Проверка долгов</a>
+                    <a href="{% url 'dashboard' %}" class="nav-link">Личный кабинет</a>
+                </nav>
+
+                <!-- Right Section -->
+                <div class="header-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-selector" id="language-selector">
+                        <img src="{% static 'images/global-icon.svg' %}" alt="world-icon">
+                        <span id="current-language">{% get_language_info for LANGUAGE_CODE as lang %}{{ lang.code|upper|slice:":3" }}</span>
+                        <i class="arrow-down"></i>
+                        <div class="language-menu">
+                            <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                            <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                            <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <button class="search-btn" onclick="toggleSearch()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Login -->
+                    <button class="login-btn" onclick="toggleLogin()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                            <polyline points="10,17 15,12 10,7"></polyline>
+                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                        </svg>
+                        Войти
+                    </button>
+
+                    <!-- Mobile Menu -->
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="Поиск новостей и руководств..." class="search-input">
+                <button class="search-close" onclick="toggleSearch()">×</button>
+            </div>
+            <div class="search-suggestions">
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Новая программа поддержки бизнеса</span>
+                    <span class="suggestion-type">Новость</span>
+                </div>
+                <div class="suggestion-item">
+                    <span class="suggestion-title">Как получить льготный кредит</span>
+                    <span class="suggestion-type">Руководство</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Вход в систему</h3>
+                <button class="modal-close" onclick="toggleLogin()">×</button>
+            </div>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span class="logo-text">GovPortal</span>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="{% url 'home' %}" class="mobile-nav-link">Главная</a>
+            <a href="{% url 'all_news' %}" class="mobile-nav-link">Новости</a>
+            <a href="{% url 'guide' 'business' %}" class="mobile-nav-link">Руководства</a>
+            <a href="{% url 'leaders' %}" class="mobile-nav-link">Лидеры</a>
+            <a href="{% url 'debt_check' %}" class="mobile-nav-link">Проверка долгов</a>
+            <a href="{% url 'dashboard' %}" class="mobile-nav-link">Личный кабинет</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="breadcrumb">
+                    <a href="{% url 'home' %}">Главная</a>
+                    <span>→</span>
+                    <span>Лидеры</span>
+                </div>
+                <h1 class="page-title">Лидеры и руководители</h1>
+                <p class="page-description">Информация о государственных лидерах, министрах и руководителях ведомств</p>
+            </div>
+
+            <!-- Featured Leader -->
+            <section class="featured-leader">
+                <div class="featured-leader-card">
+                    <div class="leader-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" alt="Президент">
+                        <div class="leader-badge">Президент</div>
+                    </div>
+                    <div class="leader-content">
+                        <h2 class="leader-name">Хуршид Абдуллаев</h2>
+                        <p class="leader-title">Министр иностранных дел Республики Узбекистан</p>
+                        <p class="leader-bio">Министр</p>
+                        <div class="leader-stats">
+                            <div class="stat">
+                                <span class="stat-number">8</span>
+                                <span class="stat-label">лет в должности</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-label">реформ</span>
+                            </div>
+                        </div>
+                        <div class="leader-actions">
+                            <button class="btn btn-primary" onclick="viewLeaderDetail('president')">Подробнее</button>
+                            <button class="btn btn-outline" onclick="contactLeader('president')">Связаться</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leadership Categories -->
+            <section class="leadership-categories">
+                <h2 class="section-title">Руководство по категориям</h2>
+                <div class="categories-tabs">
+                    <button class="tab-btn active" data-tab="government">Правительство</button>
+                    <button class="tab-btn" data-tab="ministries">Министерства</button>
+                    <button class="tab-btn" data-tab="regions">Региональные</button>
+                    <button class="tab-btn" data-tab="agencies">Агентства</button>
+                </div>
+
+                <!-- Government Tab -->
+                <div class="tab-content active" id="government">
+                    <div class="leaders-grid">
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt="Премьер-министр">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Абдулла Арипов</h3>
+                                <p class="leader-title">Премьер-министр</p>
+                                <p class="leader-department">Правительство Республики Узбекистан</p>
+                                <div class="leader-contact">
+                                    <span>📧 pm@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-00-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('pm')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face" alt="Вице-премьер">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Джамшид Кучкаров</h3>
+                                <p class="leader-title">Вице-премьер</p>
+                                <p class="leader-department">Правительство Республики Узбекистан</p>
+                                <div class="leader-contact">
+                                    <span>📧 vp@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-00-01</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('vp')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face" alt="Вице-премьер">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Азиз Абдухакимов</h3>
+                                <p class="leader-title">Вице-премьер</p>
+                                <p class="leader-department">Правительство Республики Узбекистан</p>
+                                <div class="leader-contact">
+                                    <span>📧 vp2@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-00-02</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('vp2')">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ministries Tab -->
+                <div class="tab-content" id="ministries">
+                    <div class="leaders-grid">
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&crop=face" alt="Министр экономики">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Ботир Ходжаев</h3>
+                                <p class="leader-title">Министр экономики</p>
+                                <p class="leader-department">Министерство экономики и промышленности</p>
+                                <div class="leader-contact">
+                                    <span>📧 economy@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-10-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('economy')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" alt="Министр финансов">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Тимур Ишметов</h3>
+                                <p class="leader-title">Министр финансов</p>
+                                <p class="leader-department">Министерство финансов</p>
+                                <div class="leader-contact">
+                                    <span>📧 finance@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-20-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('finance')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt="Министр образования">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Шерзод Шерматов</h3>
+                                <p class="leader-title">Министр образования</p>
+                                <p class="leader-department">Министерство народного образования</p>
+                                <div class="leader-contact">
+                                    <span>📧 education@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-30-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('education')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face" alt="Министр здравоохранения">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Амрилло Иноятов</h3>
+                                <p class="leader-title">Министр здравоохранения</p>
+                                <p class="leader-department">Министерство здравоохранения</p>
+                                <div class="leader-contact">
+                                    <span>📧 health@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-40-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('health')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face" alt="Министр сельского хозяйства">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Жамшид Ходжаев</h3>
+                                <p class="leader-title">Министр сельского хозяйства</p>
+                                <p class="leader-department">Министерство сельского хозяйства</p>
+                                <div class="leader-contact">
+                                    <span>📧 agriculture@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-50-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('agriculture')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&crop=face" alt="Министр транспорта">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Илхом Махкамов</h3>
+                                <p class="leader-title">Министр транспорта</p>
+                                <p class="leader-department">Министерство транспорта</p>
+                                <div class="leader-contact">
+                                    <span>📧 transport@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-60-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('transport')">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regions Tab -->
+                <div class="tab-content" id="regions">
+                    <div class="leaders-grid">
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" alt="Хоким Ташкента">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Джахонгир Артикходжаев</h3>
+                                <p class="leader-title">Хоким города Ташкента</p>
+                                <p class="leader-department">Администрация города Ташкента</p>
+                                <div class="leader-contact">
+                                    <span>📧 tashkent@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-70-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('tashkent')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt="Хоким Самарканда">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Эркин Турдимов</h3>
+                                <p class="leader-title">Хоким Самаркандской области</p>
+                                <p class="leader-department">Администрация Самаркандской области</p>
+                                <div class="leader-contact">
+                                    <span>📧 samarkand@uzbekistan.uz</span>
+                                    <span>📞 +998 66 200-70-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('samarkand')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face" alt="Хоким Бухары">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Ботир Зарипов</h3>
+                                <p class="leader-title">Хоким Бухарской области</p>
+                                <p class="leader-department">Администрация Бухарской области</p>
+                                <div class="leader-contact">
+                                    <span>📧 bukhara@uzbekistan.uz</span>
+                                    <span>📞 +998 65 200-70-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('bukhara')">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agencies Tab -->
+                <div class="tab-content" id="agencies">
+                    <div class="leaders-grid">
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face" alt="Директор агентства">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Азиз Абдухакимов</h3>
+                                <p class="leader-title">Директор Агентства по развитию туризма</p>
+                                <p class="leader-department">Агентство по развитию туризма</p>
+                                <div class="leader-contact">
+                                    <span>📧 tourism@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-80-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('tourism')">Подробнее</button>
+                            </div>
+                        </div>
+
+                        <div class="leader-card">
+                            <div class="leader-image">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&crop=face" alt="Директор агентства">
+                            </div>
+                            <div class="leader-content">
+                                <h3 class="leader-name">Сардор Умурзаков</h3>
+                                <p class="leader-title">Директор Агентства по развитию IT</p>
+                                <p class="leader-department">Агентство по развитию IT</p>
+                                <div class="leader-contact">
+                                    <span>📧 it@uzbekistan.uz</span>
+                                    <span>📞 +998 71 200-90-00</span>
+                                </div>
+                                <button class="btn btn-outline" onclick="viewLeaderDetail('it')">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Information -->
+            <section class="contact-section">
+                <h2 class="section-title">Связаться с руководством</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Электронная почта</h3>
+                        <p>Напишите письмо напрямую руководителю</p>
+                        <button class="btn btn-outline" onclick="openEmailForm()">Написать письмо</button>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <h3>Телефон</h3>
+                        <p>Позвоните в приемную руководителя</p>
+                        <button class="btn btn-outline" onclick="showPhoneNumbers()">Показать номера</button>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3>Личный прием</h3>
+                        <p>Запишитесь на личный прием к руководителю</p>
+                        <button class="btn btn-outline" onclick="bookAppointment()">Записаться</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Свяжитесь с нами</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <a href="tel:+1234567890">+1 (234) 567-890</a>
+                        </div>
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <a href="mailto:info@example.gov">info@example.gov</a>
+                        </div>
+                        <address>
+                            123 Government Street<br>
+                            Capital City, ST 12345
+                        </address>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'all_news' %}">Новости</a></li>
+                        <li><a href="{% url 'guide' 'business' %}">Руководства</a></li>
+                        <li><a href="{% url 'leaders' %}">Лидеры</a></li>
+                        <li><a href="#payments">Платежи</a></li>
+                        <li><a href="{% url 'debt_check' %}">Проверка долгов</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Правовая информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#privacy">Политика конфиденциальности</a></li>
+                        <li><a href="#terms">Условия использования</a></li>
+                        <li><a href="#accessibility">Заявление о доступности</a></li>
+                        <li><a href="#cookies">Политика cookies</a></li>
+                        <li><a href="#disclaimer">Отказ от ответственности</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Подключиться</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-utilities">
+                    <button class="utility-btn" onclick="window.print()">Печать страницы</button>
+                    <button class="utility-btn" onclick="toggleHighContrast()">Высокий контраст</button>
+                    <button class="utility-btn" onclick="toggleLargeText()">Крупный текст</button>
+                </div>
+                <p class="footer-copyright">
+                    © 2024 Государственные услуги. Все права защищены. | Функция печати доступна на всех страницах статей.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        // Leaders page specific functionality
+        function initializeTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    btn.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+        }
+
+        function viewLeaderDetail(leaderId) {
+            // In a real application, this would open a modal or navigate to a detail page
+            alert(`Открывается подробная информация о лидере: ${leaderId}`);
+        }
+
+        function contactLeader(leaderId) {
+            // In a real application, this would open a contact form
+            alert(`Открывается форма связи с лидером: ${leaderId}`);
+        }
+
+        function openEmailForm() {
+            alert('Открывается форма для отправки электронного письма');
+        }
+
+        function showPhoneNumbers() {
+            alert('Показать номера телефонов приемных');
+        }
+
+        function bookAppointment() {
+            alert('Открывается форма записи на личный прием');
+        }
+
+        // Initialize page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTabs();
+        });
+    </script>
+</body>
+</html>

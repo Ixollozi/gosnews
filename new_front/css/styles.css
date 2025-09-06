@@ -271,9 +271,16 @@ a:hover {
 
 .logo-text {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 13px;
+    line-height: 1.1;
     font-weight: 700;
     color: var(--color-primary);
+    display: block;
+}
+
+.logo-text br {
+    line-height: 0.8;
+    margin: -2px 0;
 }
 
 /* Navigation */

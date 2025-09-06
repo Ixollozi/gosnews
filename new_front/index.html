@@ -191,32 +191,28 @@
                         <h2 class="section-title">Последние обновления</h2>
                     </div>
                     <div class="news-grid">
-                        <article class="news-card featured">
+                        <article class="news-card ">
                             <div class="news-image">
                                 <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop" alt="Новость">
-                                <div class="news-badge">Важная новость</div>
                             </div>
                             <div class="news-content">
                                 <div class="news-meta">
                                     <span class="news-date">15 января 2024</span>
-                                    <span class="news-region">Национальный</span>
                                 </div>
                                 <h3 class="news-title">Новая программа поддержки малого бизнеса запущена в регионах</h3>
                                 <p class="news-excerpt">Правительство выделило дополнительные средства на развитие предпринимательства</p>
                                 <div class="news-author">
-                                    <span>Автор: Анна Иванова</span>
                                 </div>
                             </div>
                         </article>
 
                         <article class="news-card">
                             <div class="news-image">
-                                <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop" alt="Новость">
+                                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=250&fit=crop" alt="Новость">
                             </div>
                             <div class="news-content">
                                 <div class="news-meta">
                                     <span class="news-date">14 января 2024</span>
-                                    <span class="news-region">Фергана</span>
                                 </div>
                                 <h3 class="news-title">Новая программа субсидий для сельского хозяйства</h3>
                                 <p class="news-excerpt">Фермеры могут получить поддержку для развития растениеводства</p>
@@ -230,7 +226,6 @@
                             <div class="news-content">
                                 <div class="news-meta">
                                     <span class="news-date">13 января 2024</span>
-                                    <span class="news-region">Ташкент</span>
                                 </div>
                                 <h3 class="news-title">Расширена программа грантов для IT-стартапов</h3>
                                 <p class="news-excerpt">Размер грантов увеличен в два раза для поддержки молодых предпринимателей</p>
@@ -294,28 +289,18 @@
                     </div>
                     <div class="regions-content">
                         <div class="regions-map">
-                            <div class="map-placeholder">
-                                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                </svg>
-                                <p>Интерактивная карта регионов</p>
-                                <button class="btn btn-primary">Открыть карту</button>
-                            </div>
+                            <iframe src="https://yandex.uz/map-widget/v1/org/123701252573/?ll=69.237650%2C41.311950&z=16"></iframe>
                         </div>
                         <div class="regions-list">
-                            <h3>Приоритетные регионы</h3>
+                            <h3>Наши региональные</h3>
                             <div class="region-item">
                                 <span class="region-name">Центральный регион</span>
-                                <button class="btn btn-sm btn-outline">Посмотреть услуги</button>
                             </div>
                             <div class="region-item">
                                 <span class="region-name">Северная территория</span>
-                                <button class="btn btn-sm btn-outline">Посмотреть услуги</button>
                             </div>
                             <div class="region-item">
                                 <span class="region-name">Южное побережье</span>
-                                <button class="btn btn-sm btn-outline">Посмотреть услуги</button>
                             </div>
                         </div>
                     </div>
@@ -340,145 +325,15 @@
                 </div>
             </div>
 
-            <!-- Newsletter -->
-            <div class="newsletter">
-                <div class="container">
-                    <div class="newsletter-content">
-                        <h3>Оставайтесь в курсе</h3>
-                        <p>Подпишитесь на уведомления о новых программах поддержки и важных обновлениях.</p>
-                        <form class="newsletter-form">
-                            <div class="form-row">
-                                <input type="email" placeholder="Email адрес" class="form-input">
-                                <input type="tel" placeholder="Номер телефона" class="form-input">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Подписаться на уведомления</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
+            
 
-        <!-- News Section -->
-        <section id="news" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h1 class="page-title">Все новости</h1>
-                    <p class="page-description">Последние новости о государственных программах и мерах поддержки по всему Узбекистану</p>
-                </div>
-
-                <!-- Filters -->
-                <div class="filters">
-                    <div class="filter-group">
-                        <input type="text" placeholder="Поиск новостей..." class="search-input">
-                        <select class="filter-select">
-                            <option>Все категории</option>
-                            <option>Бизнес</option>
-                            <option>Сельское хозяйство</option>
-                            <option>IT</option>
-                        </select>
-                        <select class="filter-select">
-                            <option>Все регионы</option>
-                            <option>Ташкент</option>
-                            <option>Андижан</option>
-                            <option>Бухара</option>
-                        </select>
-                        <select class="filter-select">
-                            <option>По дате</option>
-                            <option>По просмотрам</option>
-                            <option>По времени чтения</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- News Grid -->
-                <div class="news-grid-large">
-                    <article class="news-card-large">
-                        <div class="news-image">
-                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop" alt="Новость">
-                            <div class="news-badge">Важная новость</div>
-                        </div>
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-date">15 января 2024</span>
-                                <span class="news-region">Национальный</span>
-                                <span class="news-views">1,254 просмотра</span>
-                            </div>
-                            <h3 class="news-title">Новая программа поддержки малого бизнеса запущена в регионах</h3>
-                            <p class="news-excerpt">Сегодня было объявлено о запуске новой программы государственной поддержки малого и среднего бизнеса, которая охватит все регионы страны.</p>
-                            <div class="news-author">
-                                <span>Автор: Анна Иванова</span>
-                            </div>
-                            <div class="news-tags">
-                                <span class="tag">бизнес</span>
-                                <span class="tag">поддержка</span>
-                                <span class="tag">экономика</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="news-card-large">
-                        <div class="news-image">
-                            <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop" alt="Новость">
-                        </div>
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-date">14 января 2024</span>
-                                <span class="news-region">Фергана</span>
-                                <span class="news-views">892 просмотра</span>
-                            </div>
-                            <h3 class="news-title">Новая программа субсидий для сельского хозяйства</h3>
-                            <p class="news-excerpt">В Ферганской области объявлена новая программа субсидий для фермеров. Программа направлена на развитие хлопководства и садоводства.</p>
-                            <div class="news-author">
-                                <span>Автор: Сардор Каримов</span>
-                            </div>
-                            <div class="news-tags">
-                                <span class="tag">сельское хозяйство</span>
-                                <span class="tag">субсидия</span>
-                                <span class="tag">фермеры</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="news-card-large">
-                        <div class="news-image">
-                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=250&fit=crop" alt="Новость">
-                        </div>
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-date">13 января 2024</span>
-                                <span class="news-region">Ташкент</span>
-                                <span class="news-views">2,143 просмотра</span>
-                            </div>
-                            <h3 class="news-title">Расширена программа грантов для IT-стартапов</h3>
-                            <p class="news-excerpt">Размер грантов для поддержки предпринимательства в IT-сфере среди молодежи увеличен в два раза.</p>
-                            <div class="news-author">
-                                <span>Автор: Дилноза Тошматова</span>
-                            </div>
-                            <div class="news-tags">
-                                <span class="tag">IT</span>
-                                <span class="tag">стартап</span>
-                                <span class="tag">грант</span>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
-                <!-- Pagination -->
-                <div class="pagination">
-                    <button class="pagination-btn" disabled>Предыдущая</button>
-                    <button class="pagination-btn active">1</button>
-                    <button class="pagination-btn">2</button>
-                    <button class="pagination-btn">3</button>
-                    <button class="pagination-btn">Следующая</button>
-                </div>
-            </div>
-        </section>
+        
 
         <!-- Other sections would be added here -->
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer id="footer" class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -516,17 +371,6 @@
                 </div>
 
                 <div class="footer-section">
-                    <h3>Правовая информация</h3>
-                    <ul class="footer-links">
-                        <li><a href="#privacy">Политика конфиденциальности</a></li>
-                        <li><a href="#terms">Условия использования</a></li>
-                        <li><a href="#accessibility">Заявление о доступности</a></li>
-                        <li><a href="#cookies">Политика cookies</a></li>
-                        <li><a href="#disclaimer">Отказ от ответственности</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
                     <h3>Подключиться</h3>
                     <div class="social-links">
                         <a href="#" class="social-link">
@@ -547,13 +391,10 @@
 
             <div class="footer-bottom">
                 <div class="footer-utilities">
-                    <button class="utility-btn" onclick="window.print()">Печать страницы</button>
                     <button class="utility-btn" onclick="toggleHighContrast()">Высокий контраст</button>
                     <button class="utility-btn" onclick="toggleLargeText()">Крупный текст</button>
                 </div>
-                <p class="footer-copyright">
-                    © 2024 Государственные услуги. Все права защищены. | Функция печати доступна на всех страницах статей.
-                </p>
+                
             </div>
         </div>
     </footer>

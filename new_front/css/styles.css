@@ -266,7 +266,30 @@ a:hover {
 
 .logo {
     flex-shrink: 0;
-    margin-left: 100px;
+    margin-left: 70px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.logo-image {
+    flex-shrink: 0;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .logo-text {
@@ -274,7 +297,7 @@ a:hover {
     font-size: 13px;
     line-height: 1.1;
     font-weight: 700;
-    color: var(--color-primary);
+    color: #333333;
     display: block;
 }
 
@@ -488,7 +511,6 @@ a:hover {
 .language-selector img {
     width: 20px;
     height: 20px;
-    filter: brightness(0) invert(1);
 }
 
 .language-selector span {
@@ -1515,6 +1537,24 @@ a:hover {
         gap: var(--spacing-md);
     }
     
+    .logo {
+        margin-left: 20px;
+    }
+    
+    .logo-container {
+        gap: 8px;
+    }
+    
+    .logo-image {
+        width: 40px;
+        height: 40px;
+        padding: 6px;
+    }
+    
+    .logo-text {
+        font-size: 11px;
+    }
+    
     .language-selector {
         min-width: 80px;
         padding: 10px 8px;
@@ -1586,6 +1626,24 @@ a:hover {
 @media (max-width: 480px) {
     .container {
         padding: 0 var(--spacing-sm);
+    }
+    
+    .logo {
+        margin-left: 10px;
+    }
+    
+    .logo-container {
+        gap: 6px;
+    }
+    
+    .logo-image {
+        width: 35px;
+        height: 35px;
+        padding: 4px;
+    }
+    
+    .logo-text {
+        font-size: 10px;
     }
     
     .btn {

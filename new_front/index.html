@@ -18,7 +18,14 @@
                 <!-- Logo -->
                 <div class="logo">
                     <a href="{% url 'home' %}" style="text-decoration: none;">
-                        <span class="logo-text">Kambag'allikni qisqartirish<br>Davlat maqsadli jamg'armasi</span>
+                        <div class="logo-container">
+                            <div class="logo-image">
+                                <img src="{% static 'images/logogerb.svg' %}" alt="Logo" class="logo-img">
+                            </div>
+                            <div class="logo-text">
+                                <span>Kambag'allikni qisqartirish<br>Davlat maqsadli jamg'armasi</span>
+                            </div>
+                        </div>
                     </a>
                 </div>
                 
@@ -154,7 +161,6 @@
         <section id="home" class="section active">
             <!-- Hero Section -->
             <div class="hero">
-                <div class="container">
                     <div class="hero-content">
                         <h1 class="hero-title">Поддержка Вашего Успеха</h1>
                         <p class="hero-description">
@@ -176,7 +182,6 @@
                             </button>
                         </div>
                     </div>
-                </div>
             </div>
 
             <!-- Featured News -->

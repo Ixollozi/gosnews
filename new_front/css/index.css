@@ -7,15 +7,18 @@
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--color-primary) 0%, #005a8b 100%);
+    background: linear-gradient(180deg,  #007CB9 90%, #ffffff 100%);
     color: white;
     padding: var(--spacing-2xl) 0;
     text-align: center;
+    height: 800px;
+    
 }
 
 .hero-content {
     max-width: 800px;
-    margin: 0 auto;
+    max-height: 1200px;
+    margin: 200px auto;
 }
 
 .hero-title {

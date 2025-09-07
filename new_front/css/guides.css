@@ -370,3 +370,263 @@
         flex-wrap: wrap;
     }
 }
+
+/* ===== RESPONSIVE DESIGN FOR GUIDES PAGE ===== */
+
+/* Large Desktop (1200px and up) */
+@media (min-width: 1200px) {
+    .guides-container {
+        max-width: 1200px;
+    }
+    
+    .guides-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--spacing-xl);
+    }
+    
+    .guide-card {
+        padding: var(--spacing-xl);
+    }
+    
+    .guide-card .guide-title {
+        font-size: 1.4rem;
+    }
+    
+    .guide-card .guide-description {
+        font-size: 1rem;
+    }
+}
+
+/* Desktop (992px to 1199px) */
+@media (max-width: 1199px) {
+    .guides-container {
+        max-width: 960px;
+    }
+    
+    .guides-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-lg);
+    }
+}
+
+/* Tablet (768px to 991px) */
+@media (max-width: 991px) {
+    .guides-container {
+        max-width: 720px;
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .guides-header {
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .guides-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .guides-header p {
+        font-size: 1.1rem;
+    }
+    
+    .guides-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+    
+    .guide-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .guide-card .guide-title {
+        font-size: 1.3rem;
+    }
+    
+    .guide-card .guide-description {
+        font-size: 0.95rem;
+    }
+    
+    .guide-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    .guide-category {
+        font-size: 0.8rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .guide-difficulty {
+        font-size: 0.8rem;
+    }
+    
+    .pagination {
+        gap: var(--spacing-sm);
+    }
+    
+    .pagination a,
+    .pagination span {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile Large (576px to 767px) */
+@media (max-width: 767px) {
+    .guides-container {
+        max-width: 540px;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .guides-header {
+        padding: var(--spacing-lg) 0;
+        text-align: center;
+    }
+    
+    .guides-header h1 {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .guides-header p {
+        font-size: 1rem;
+    }
+    
+    .guides-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .guide-card {
+        padding: var(--spacing-md);
+    }
+    
+    .guide-card .guide-title {
+        font-size: 1.2rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .guide-card .guide-description {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+    
+    .guide-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .guide-category {
+        font-size: 0.75rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .guide-difficulty {
+        font-size: 0.75rem;
+    }
+    
+    .guide-card .btn {
+        width: 100%;
+        text-align: center;
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
+    }
+    
+    .pagination {
+        justify-content: center;
+        gap: var(--spacing-xs);
+    }
+    
+    .pagination a,
+    .pagination span {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.85rem;
+        min-width: 35px;
+    }
+}
+
+/* Mobile Small (up to 575px) */
+@media (max-width: 575px) {
+    .guides-container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .guides-header {
+        padding: var(--spacing-md) 0;
+    }
+    
+    .guides-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .guides-header p {
+        font-size: 0.9rem;
+    }
+    
+    .guides-grid {
+        gap: var(--spacing-sm);
+    }
+    
+    .guide-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .guide-card .guide-title {
+        font-size: 1.1rem;
+    }
+    
+    .guide-card .guide-description {
+        font-size: 0.85rem;
+    }
+    
+    .guide-meta {
+        gap: var(--spacing-xs);
+    }
+    
+    .guide-category {
+        font-size: 0.7rem;
+        padding: 2px var(--spacing-xs);
+    }
+    
+    .guide-difficulty {
+        font-size: 0.7rem;
+    }
+    
+    .guide-card .btn {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.85rem;
+    }
+    
+    .pagination {
+        gap: 2px;
+    }
+    
+    .pagination a,
+    .pagination span {
+        padding: var(--spacing-xs);
+        font-size: 0.8rem;
+        min-width: 30px;
+    }
+}
+
+/* Landscape Mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+    .guides-header {
+        padding: var(--spacing-md) 0;
+    }
+    
+    .guides-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .guides-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+    
+    .guide-card {
+        padding: var(--spacing-sm);
+    }
+}

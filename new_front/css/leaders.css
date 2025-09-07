@@ -342,3 +342,219 @@
         padding: var(--spacing-lg);
     }
 }
+
+/* ===== RESPONSIVE DESIGN FOR LEADERS PAGE ===== */
+
+/* Large Desktop (1200px and up) */
+@media (min-width: 1200px) {
+    .leaders-container {
+        max-width: 1200px;
+    }
+    
+    .leaders-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--spacing-xl);
+    }
+    
+    .leader-card {
+        padding: var(--spacing-xl);
+    }
+    
+    .leader-card h3 {
+        font-size: 1.4rem;
+    }
+    
+    .leader-card .position {
+        font-size: 1rem;
+    }
+}
+
+/* Desktop (992px to 1199px) */
+@media (max-width: 1199px) {
+    .leaders-container {
+        max-width: 960px;
+    }
+    
+    .leaders-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-lg);
+    }
+}
+
+/* Tablet (768px to 991px) */
+@media (max-width: 991px) {
+    .leaders-container {
+        max-width: 720px;
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .leaders-header {
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .leaders-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .leaders-header p {
+        font-size: 1.1rem;
+    }
+    
+    .leaders-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+    
+    .leader-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .leader-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .leader-card .position {
+        font-size: 0.95rem;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+}
+
+/* Mobile Large (576px to 767px) */
+@media (max-width: 767px) {
+    .leaders-container {
+        max-width: 540px;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .leaders-header {
+        padding: var(--spacing-lg) 0;
+        text-align: center;
+    }
+    
+    .leaders-header h1 {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .leaders-header p {
+        font-size: 1rem;
+    }
+    
+    .leaders-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .leader-card {
+        padding: var(--spacing-md);
+        text-align: center;
+    }
+    
+    .leader-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .leader-card .position {
+        font-size: 0.9rem;
+    }
+    
+    .leader-card .bio {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .contact-card {
+        padding: var(--spacing-md);
+    }
+    
+    .contact-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .contact-item {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xs);
+    }
+}
+
+/* Mobile Small (up to 575px) */
+@media (max-width: 575px) {
+    .leaders-container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .leaders-header {
+        padding: var(--spacing-md) 0;
+    }
+    
+    .leaders-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .leaders-header p {
+        font-size: 0.9rem;
+    }
+    
+    .leaders-grid {
+        gap: var(--spacing-sm);
+    }
+    
+    .leader-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .leader-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .leader-card .position {
+        font-size: 0.85rem;
+    }
+    
+    .leader-card .bio {
+        font-size: 0.85rem;
+    }
+    
+    .contact-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .contact-card h3 {
+        font-size: 1rem;
+    }
+    
+    .contact-item {
+        gap: var(--spacing-xs);
+    }
+}
+
+/* Landscape Mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+    .leaders-header {
+        padding: var(--spacing-md) 0;
+    }
+    
+    .leaders-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .leaders-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+    
+    .leader-card {
+        padding: var(--spacing-sm);
+    }
+}

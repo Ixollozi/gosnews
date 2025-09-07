@@ -7,7 +7,7 @@
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(180deg,  #007CB9 87%, #ffffff 100%);
+    background: #007CB9 ;
     color: white;
     padding: var(--spacing-2xl) 0;
     text-align: center;

@@ -187,3 +187,7 @@ def debt_check(request):
     debts_data = get_debts_data()
     return render(request, 'debt-check.html', debts_data)
 
+
+def guides(request):
+    """Руководства"""
+    return render(request, 'guides.html')

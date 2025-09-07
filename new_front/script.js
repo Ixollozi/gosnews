@@ -400,12 +400,11 @@ function changeLanguage(lang) {
     
     showLanguageNotification(`Язык изменен на ${langNames[lang]}`);
     
-    // Here you would typically make an API call to change the language
-    // For now, we'll just store it in localStorage
+    // Store language preference
     localStorage.setItem('selectedLanguage', lang);
     
-    // You can also redirect to change the language
-    // window.location.href = `/?lang=${lang}`;
+    // Redirect to change the language
+    window.location.href = `/?lang=${lang}`;
 }
 
 
@@ -586,7 +585,7 @@ function throttle(func, limit) {
 function loadPreferences() {
     const highContrast = localStorage.getItem('highContrast') === 'true';
     const largeText = localStorage.getItem('largeText') === 'true';
-    const selectedLanguage = localStorage.getItem('selectedLanguage') || 'ru';
+    const selectedLanguage = localStorage.getItem('selectedLanguage') || 'uz';
     
     if (highContrast) {
         document.documentElement.classList.add('high-contrast');
@@ -596,10 +595,26 @@ function loadPreferences() {
         document.documentElement.classList.add('large-text');
     }
     
-    // Load saved language
-    if (selectedLanguage !== 'ru') {
-        changeLanguage(selectedLanguage);
+    // Set current language display
+    const currentLanguageSpan = document.getElementById('current-language');
+    const langCodes = {
+        'ru': 'RUS',
+        'uz': 'UZB',
+        'kaa': 'KAA'
+    };
+    
+    if (currentLanguageSpan && langCodes[selectedLanguage]) {
+        currentLanguageSpan.textContent = langCodes[selectedLanguage];
     }
+    
+    // Set active language option
+    const languageOptions = document.querySelectorAll('.language-menu a');
+    languageOptions.forEach(option => {
+        option.classList.remove('active');
+        if (option.getAttribute('data-lang') === selectedLanguage) {
+            option.classList.add('active');
+        }
+    });
 }
 
 // Initialize preferences on load

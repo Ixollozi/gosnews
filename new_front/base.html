@@ -214,6 +214,30 @@
             <a href="{% url 'all_news' %}" data-page="yangiliklar" class="mobile-nav-link">{% trans "Yangiliklar" %}</a>
             <a href="{% url 'home' %}#hududlar" data-page="hududlar" class="mobile-nav-link">{% trans "Hududlar" %}</a>
             <a href="{% url 'home' %}#mahalla" data-page="mahalla" class="mobile-nav-link">{% trans "online.mahalla" %}</a>
+            <!-- Added buttons to mobile menu -->
+            <div class="mobile-language-selector" id="mobile-language-selector">
+                <span>{% trans "Tilni o'zgartirish" %}</span>
+                <div class="mobile-language-menu">
+                    <a href="#" data-lang="uz" onclick="changeLanguage('uz'); return false;">{% trans "O'zbek" %}</a>
+                    <a href="#" data-lang="ru" onclick="changeLanguage('ru'); return false;">{% trans "Русский" %}</a>
+                    <a href="#" data-lang="kaa" onclick="changeLanguage('kaa'); return false;">{% trans "Karakalpak" %}</a>
+                </div>
+            </div>
+            <button class="mobile-search-btn" onclick="toggleSearch()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="м21 21-4.35-4.35"></path>
+                </svg>
+                {% trans "Qidiruv" %}
+            </button>
+            <button class="mobile-login-btn" onclick="toggleLogin()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10,17 15,12 10,7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+                {% trans "Kirish" %}
+            </button>
         </nav>
     </div>
 

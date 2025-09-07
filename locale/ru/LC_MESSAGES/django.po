@@ -19,7 +19,7 @@ msgstr "Сокращение бедности"
 
 #: .\templates\index.html:21 .\templates\index.html:67
 msgid "Bosh sahifa"
-msgstr "Главная страница"
+msgstr "Главная"
 
 #: .\templates\index.html:23 .\templates\index.html:70
 msgid "Jang'arma"

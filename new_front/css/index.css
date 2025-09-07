@@ -283,9 +283,11 @@
 
 .map-placeholder {
     text-align: center;
-    background-color: var(--color-muted);
-    border-radius: var(--radius-lg);
+    padding: 0;
+    margin: 0;
 }
+
+
 
 
 .map-placeholder svg {
@@ -298,8 +300,28 @@
     margin-bottom: var(--spacing-lg);
 }
 
+.regions-list {
+    max-height: calc(4 * 60px + 3 * var(--spacing-md));
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.regions-list::-webkit-scrollbar {
+    display: none;
+}
+
+.regions-list {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .regions-list h3 {
     margin-bottom: var(--spacing-lg);
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 1;
+    padding-bottom: var(--spacing-md);
 }
 
 .region-item {
@@ -328,15 +350,30 @@
 }
 
 .partners-grid {
-    
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: nowrap;
     gap: var(--spacing-xl);
     align-items: center;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
+    max-width: calc(5 * 200px + 4 * var(--spacing-xl));
+    margin: 0 auto;
+}
+
+.partners-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.partners-grid {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .partner-item {
     min-height: 200px;
+    min-width: 200px;
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;

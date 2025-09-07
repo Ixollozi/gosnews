@@ -66,7 +66,7 @@ function initializeNavigation() {
         btn.addEventListener('click', function() {
             langBtns.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            showNotification(`Язык изменен на ${this.textContent}`);
+            showLanguageNotification(`Язык изменен на ${this.textContent}`);
         });
     });
 }
@@ -398,7 +398,7 @@ function changeLanguage(lang) {
         'kaa': 'Karakalpak'
     };
     
-    showNotification(`Язык изменен на ${langNames[lang]}`, 'success');
+    showLanguageNotification(`Язык изменен на ${langNames[lang]}`);
     
     // Here you would typically make an API call to change the language
     // For now, we'll just store it in localStorage
@@ -434,12 +434,63 @@ function showNotification(message, type = 'info') {
     
     // Set background color based on type
     const colors = {
-        success: '#10b981',
+        success: '#007CB9',
         error: '#ef4444',
         warning: '#f59e0b',
         info: '#3b82f6'
     };
-    notification.style.backgroundColor = colors[type] || colors.info;
+    
+    // Force set background color
+    if (type === 'success') {
+        notification.style.backgroundColor = '#007CB9';
+        notification.style.setProperty('background-color', '#007CB9', 'important');
+    } else {
+        notification.style.backgroundColor = colors[type] || colors.info;
+    }
+    
+    // Add to DOM
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Remove after delay
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Special function for language change notifications
+function showLanguageNotification(message) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'notification language-notification';
+    notification.textContent = message;
+    
+    // Style the notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+        background-color: #007CB9 !important;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    `;
     
     // Add to DOM
     document.body.appendChild(notification);
@@ -587,6 +638,10 @@ style.textContent = `
     
     .notification {
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .notification-success {
+        background-color: #007CB9 !important;
     }
 `;
 document.head.appendChild(style);

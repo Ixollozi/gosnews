@@ -469,7 +469,51 @@
     color: var(--color-primary);
 }
 
-/* Responsive Design */
+/* ===== RESPONSIVE DESIGN (Based on provided example) ===== */
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-description {
+        font-size: 1.25rem;
+    }
+    
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .programs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop (1024px and up) */
+@media (min-width: 1024px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-description {
+        font-size: 1.5rem;
+    }
+    
+    .news-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .programs-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .regions-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Mobile (768px and down) */
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.5rem;

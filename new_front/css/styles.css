@@ -1497,6 +1497,62 @@ a:hover {
     color: var(--color-primary);
 }
 
+/* ===== RESPONSIVE MEDIA QUERIES (Based on provided example) ===== */
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+    .logo-title {
+        font-size: 18px;
+    }
+
+    .logo-subtitle {
+        font-size: 15px;
+    }
+
+    .logo-text {
+        max-width: none;
+    }
+}
+
+/* Desktop (1024px and up) */
+@media (min-width: 1024px) {
+    .nav-desktop {
+        display: block;
+    }
+
+    .header-actions {
+        display: flex;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .header-content {
+        padding: 16px 0;
+    }
+}
+
+/* Small Mobile (480px and down) */
+@media (max-width: 480px) {
+    .logo-title {
+        font-size: 14px;
+    }
+
+    .logo-subtitle {
+        font-size: 12px;
+    }
+
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .container {

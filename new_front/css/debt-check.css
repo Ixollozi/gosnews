@@ -408,7 +408,48 @@
     color: #991b1b;
 }
 
-/* Responsive Design */
+/* ===== RESPONSIVE DESIGN (Based on provided example) ===== */
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+    .debt-check-card {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .debt-types-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .payment-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop (1024px and up) */
+@media (min-width: 1024px) {
+    .debt-check-card {
+        max-width: 1000px;
+    }
+    
+    .debt-types-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .payment-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .card-header h2 {
+        font-size: 2.5rem;
+    }
+}
+
+/* Mobile (768px and down) */
 @media (max-width: 768px) {
     .debt-check-card {
         margin: 0 var(--spacing-md);

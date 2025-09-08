@@ -10,6 +10,7 @@ const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 const searchOverlay = document.getElementById('searchOverlay');
 const loginModal = document.getElementById('loginModal');
 const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 const searchInput = document.querySelector('.search-input');
 const tabBtns = document.querySelectorAll('.tab-btn');
 const programCards = document.querySelectorAll('.program-card');
@@ -246,11 +247,17 @@ function initializeMobileMenu() {
 function toggleMobileMenu() {
     isMobileMenuOpen = !isMobileMenuOpen;
     mobileMenu.classList.toggle('active', isMobileMenuOpen);
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.classList.toggle('active', isMobileMenuOpen);
+    }
 }
 
 function closeMobileMenu() {
     isMobileMenuOpen = false;
     mobileMenu.classList.remove('active');
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.classList.remove('active');
+    }
 }
 
 // Tabs functionality

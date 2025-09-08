@@ -84,22 +84,36 @@
 .featured-news {
     padding: var(--spacing-2xl) 0;
     background-color: var(--color-card);
+    width: 100%;
+    overflow: hidden;
+}
+
+.featured-news .container {
+    max-width: 100%;
+    padding: 0 var(--spacing-md);
+    box-sizing: border-box;
 }
 
 .news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .news-card {
-    min-width: 330px;
-    max-width: 350px;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
     background-color: var(--color-card);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
 }
 
 .news-card:hover {
@@ -526,6 +540,14 @@
     
     .news-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .news-card {
+        min-width: 0;
+        max-width: 100%;
+        margin: 0 auto;
     }
     
     .news-card.featured {
@@ -676,10 +698,13 @@
     /* News Section */
     .news-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-lg);
+        gap: var(--spacing-md);
+        padding: 0 var(--spacing-sm);
     }
     
     .news-card {
+        min-width: 0;
+        max-width: 100%;
         padding: var(--spacing-lg);
     }
     
@@ -768,10 +793,14 @@
     .news-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
+        padding: 0 var(--spacing-sm);
     }
     
     .news-card {
+        min-width: 0;
+        max-width: 100%;
         padding: var(--spacing-md);
+        margin: 0 auto;
     }
     
     .news-card h3 {
@@ -870,10 +899,14 @@
     /* News Section */
     .news-grid {
         gap: var(--spacing-sm);
+        padding: 0 var(--spacing-xs);
     }
     
     .news-card {
+        min-width: 0;
+        max-width: 100%;
         padding: var(--spacing-sm);
+        margin: 0 auto;
     }
     
     .news-card h3 {

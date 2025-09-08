@@ -164,7 +164,101 @@
             <div class="partners">
                 <div class="container">
                     <h2 class="section-title text-center">Наши партнеры</h2>
-                    <div class="partners-grid">
+                    
+                    <style>
+                        /* Hide scroll buttons on mobile devices */
+                        @media (max-width: 768px) {
+                            .partners-scroll-btn {
+                                display: none !important;
+                            }
+                            .partners-container {
+                                gap: 0 !important;
+                            }
+                        }
+                    </style>
+                    
+                    <script>
+                        function updatePartnersButtons() {
+                            const partnersGrid = document.getElementById('partnersGrid');
+                            const scrollLeftBtn = document.getElementById('partnersScrollLeft');
+                            const scrollRightBtn = document.getElementById('partnersScrollRight');
+                            
+                            if (partnersGrid && scrollLeftBtn && scrollRightBtn) {
+                                const containerWidth = partnersGrid.parentElement.clientWidth;
+                                const contentWidth = partnersGrid.scrollWidth;
+                                const maxScroll = Math.max(0, contentWidth - containerWidth);
+                                const currentScrollPosition = partnersGrid.scrollLeft;
+                                
+                                const isAtStart = currentScrollPosition <= 5;
+                                const isAtEnd = currentScrollPosition >= (maxScroll - 5);
+                                
+                                scrollLeftBtn.disabled = isAtStart;
+                                scrollRightBtn.disabled = isAtEnd;
+                                scrollLeftBtn.style.opacity = isAtStart ? '0.5' : '1';
+                                scrollRightBtn.style.opacity = isAtEnd ? '0.5' : '1';
+                            }
+                        }
+                        
+                        function scrollPartnersLeft() {
+                            const partnersGrid = document.getElementById('partnersGrid');
+                            if (partnersGrid) {
+                                const currentScroll = partnersGrid.scrollLeft;
+                                const scrollAmount = 200;
+                                const newPosition = Math.max(0, currentScroll - scrollAmount);
+                                partnersGrid.scrollLeft = newPosition;
+                                updatePartnersButtons();
+                            }
+                        }
+                        
+                        function scrollPartnersRight() {
+                            const partnersGrid = document.getElementById('partnersGrid');
+                            if (partnersGrid) {
+                                const currentScroll = partnersGrid.scrollLeft;
+                                const containerWidth = partnersGrid.parentElement.clientWidth;
+                                const contentWidth = partnersGrid.scrollWidth;
+                                const maxScroll = Math.max(0, contentWidth - containerWidth);
+                                const scrollAmount = 200;
+                                
+                                let newPosition = Math.min(maxScroll, currentScroll + scrollAmount);
+                                if (newPosition >= maxScroll - 10) {
+                                    newPosition = maxScroll;
+                                }
+                                
+                                partnersGrid.scrollLeft = newPosition;
+                                updatePartnersButtons();
+                            }
+                        }
+                        
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const partnersGrid = document.getElementById('partnersGrid');
+                            if (partnersGrid) {
+                                partnersGrid.addEventListener('scroll', updatePartnersButtons);
+                                
+                                setTimeout(function() {
+                                    updatePartnersButtons();
+                                }, 100);
+                                
+                                window.addEventListener('resize', function() {
+                                    const containerWidth = partnersGrid.parentElement.clientWidth;
+                                    const contentWidth = partnersGrid.scrollWidth;
+                                    const maxScroll = Math.max(0, contentWidth - containerWidth);
+                                    
+                                    if (partnersGrid.scrollLeft > maxScroll) {
+                                        partnersGrid.scrollLeft = maxScroll;
+                                    }
+                                    setTimeout(updatePartnersButtons, 100);
+                                });
+                            }
+                        });
+                    </script>
+                    <div class="partners-container">
+                        <button class="partners-scroll-btn partners-scroll-left" id="partnersScrollLeft" onclick="scrollPartnersLeft()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15,18 9,12 15,6"></polyline>
+                            </svg>
+                        </button>
+                        <div class="partners-scroll-wrapper">
+                            <div class="partners-grid" id="partnersGrid">
                         <div class="partner-item">
                             <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 1">
                         </div>
@@ -175,18 +269,27 @@
                             <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 3">
                         </div>
                         <div class="partner-item">
-                            <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 3">
+                                    <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 4">
+                                </div>
+                                <div class="partner-item">
+                                    <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 5">
+                                </div>
+                                <div class="partner-item">
+                                    <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 6">
                         </div>
                         <div class="partner-item">
-                            <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 3">
+                                    <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 7">
                         </div>
                         <div class="partner-item">
-                            <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 3">
+                                    <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 8">
+                                </div>
                         </div>
-                        <div class="partner-item">
-                            <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&h=40&fit=crop&crop=center" alt="Партнер 3">
                         </div>
-                        
+                        <button class="partners-scroll-btn partners-scroll-right" id="partnersScrollRight" onclick="scrollPartnersRight()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>

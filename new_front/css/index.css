@@ -608,7 +608,7 @@
     }
     
     .partners-grid {
-        max-width: calc(6 * 200px + 5 * var(--spacing-xl));
+        max-width: 100%;
     }
 }
 

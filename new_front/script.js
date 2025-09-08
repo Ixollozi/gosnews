@@ -25,8 +25,83 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAnimations();
     initializeLanguageSelector();
     initializeMainDropdown();
+    initializePartnersScroll();
     setActiveNavLink();
+    
+    // Initialize partners buttons after a short delay
+    setTimeout(() => {
+        debugLog('Initializing partners scroll...');
+        updatePartnersButtons();
+        setupPartnersClickHandlers();
+        debugLog('Partners scroll initialized');
+    }, 100);
 });
+
+// Global scroll functions for inline onclick handlers
+// Note: partners scroll functions are now defined inline in index.html
+
+function setupPartnersClickHandlers() {
+    const scrollLeftBtn = document.getElementById('partnersScrollLeft');
+    const scrollRightBtn = document.getElementById('partnersScrollRight');
+    
+    if (scrollLeftBtn && scrollRightBtn) {
+        console.log('Setting up click handlers for partners buttons');
+        
+        // Remove existing listeners to avoid duplicates
+        scrollLeftBtn.removeEventListener('click', handleLeftClick);
+        scrollRightBtn.removeEventListener('click', handleRightClick);
+        
+        // Add new listeners
+        scrollLeftBtn.addEventListener('click', handleLeftClick);
+        scrollRightBtn.addEventListener('click', handleRightClick);
+        
+        console.log('Click handlers added successfully');
+    } else {
+        console.error('Partners buttons not found for click handlers');
+    }
+}
+
+function handleLeftClick(e) {
+    debugLog('Left button clicked via addEventListener');
+    e.preventDefault();
+    e.stopPropagation();
+    scrollPartnersLeft();
+}
+
+function handleRightClick(e) {
+    debugLog('Right button clicked via addEventListener');
+    e.preventDefault();
+    e.stopPropagation();
+    scrollPartnersRight();
+}
+
+// Simple test function for partners scroll
+function testPartnersScroll() {
+    console.log('Testing partners scroll...');
+    const partnersGrid = document.getElementById('partnersGrid');
+    const scrollLeftBtn = document.getElementById('partnersScrollLeft');
+    const scrollRightBtn = document.getElementById('partnersScrollRight');
+    
+    if (partnersGrid && scrollLeftBtn && scrollRightBtn) {
+        console.log('Elements found, adding test listeners...');
+        
+        scrollLeftBtn.addEventListener('click', function() {
+            console.log('Left button clicked!');
+            // Note: transform removed, using scrollLeft instead
+        });
+        
+        scrollRightBtn.addEventListener('click', function() {
+            console.log('Right button clicked!');
+            // Note: transform removed, using scrollLeft instead
+        });
+    } else {
+        console.error('Elements not found:', {
+            partnersGrid: !!partnersGrid,
+            scrollLeftBtn: !!scrollLeftBtn,
+            scrollRightBtn: !!scrollRightBtn
+        });
+    }
+}
 
 // Set active navigation link based on current page
 function setActiveNavLink() {
@@ -626,6 +701,14 @@ window.addEventListener('resize', debounce(() => {
     if (window.innerWidth > 768 && isMobileMenuOpen) {
         closeMobileMenu();
     }
+    
+    // Reset partners scroll position
+    // Note: partners scroll is now handled inline in index.html
+    const partnersGrid = document.getElementById('partnersGrid');
+    if (partnersGrid) {
+        // Note: transform removed, using scrollLeft instead
+        updatePartnersButtons();
+    }
 }, 250));
 
 // Handle scroll events
@@ -637,6 +720,136 @@ window.addEventListener('scroll', throttle(() => {
         header.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
     }
 }, 100));
+
+// Partners scroll functionality
+function initializePartnersScroll() {
+    const partnersGrid = document.getElementById('partnersGrid');
+    const scrollLeftBtn = document.getElementById('partnersScrollLeft');
+    const scrollRightBtn = document.getElementById('partnersScrollRight');
+    
+    if (!partnersGrid || !scrollLeftBtn || !scrollRightBtn) {
+        console.warn('Partners scroll elements not found');
+        return;
+    }
+    
+    let currentScroll = 0;
+    const scrollAmount = 200;
+    
+    function calculateMaxScroll() {
+        const containerWidth = partnersGrid.parentElement.clientWidth;
+        const contentWidth = partnersGrid.scrollWidth;
+        return Math.max(0, contentWidth - containerWidth);
+    }
+    
+    let maxScroll = calculateMaxScroll();
+    
+    function updateButtonStates() {
+        scrollLeftBtn.disabled = currentScroll <= 0;
+        scrollRightBtn.disabled = currentScroll >= maxScroll;
+    }
+    
+    // Scroll left
+    scrollLeftBtn.addEventListener('click', function() {
+        if (currentScroll > 0) {
+            currentScroll = Math.max(0, currentScroll - scrollAmount);
+            // Note: transform removed, using scrollLeft instead
+            updateButtonStates();
+        }
+    });
+    
+    // Scroll right
+    scrollRightBtn.addEventListener('click', function() {
+        if (currentScroll < maxScroll) {
+            currentScroll = Math.min(maxScroll, currentScroll + scrollAmount);
+            // Note: transform removed, using scrollLeft instead
+            updateButtonStates();
+        }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', debounce(() => {
+        currentScroll = 0;
+        // Note: transform removed, using scrollLeft instead
+        maxScroll = calculateMaxScroll();
+        updateButtonStates();
+    }, 250));
+    
+    // Initialize after layout is complete
+    setTimeout(() => {
+        maxScroll = calculateMaxScroll();
+        updateButtonStates();
+    }, 100);
+    
+    // Handle touch/swipe events for mobile
+    let startX = 0;
+    let isDragging = false;
+    
+    partnersGrid.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    });
+    
+    partnersGrid.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        
+        const currentX = e.touches[0].clientX;
+        const diffX = startX - currentX;
+        
+        // Prevent default scrolling behavior
+        e.preventDefault();
+        
+        // Update scroll position
+        currentScroll = Math.max(0, Math.min(maxScroll, currentScroll + diffX));
+        partnersGrid.style.transform = `translateX(-${currentScroll}px)`;
+        
+        startX = currentX;
+        updateButtonStates();
+    });
+    
+    partnersGrid.addEventListener('touchend', function() {
+        isDragging = false;
+    });
+    
+    // Handle mouse drag for desktop
+    let isMouseDown = false;
+    let mouseStartX = 0;
+    
+    partnersGrid.addEventListener('mousedown', function(e) {
+        isMouseDown = true;
+        mouseStartX = e.clientX;
+        partnersGrid.style.cursor = 'grabbing';
+        e.preventDefault();
+    });
+    
+    partnersGrid.addEventListener('mousemove', function(e) {
+        if (!isMouseDown) return;
+        
+        const mouseCurrentX = e.clientX;
+        const mouseDiffX = mouseStartX - mouseCurrentX;
+        
+        currentScroll = Math.max(0, Math.min(maxScroll, currentScroll + mouseDiffX));
+        partnersGrid.style.transform = `translateX(-${currentScroll}px)`;
+        
+        mouseStartX = mouseCurrentX;
+        updateButtonStates();
+    });
+    
+    partnersGrid.addEventListener('mouseup', function() {
+        isMouseDown = false;
+        partnersGrid.style.cursor = 'grab';
+    });
+    
+    partnersGrid.addEventListener('mouseleave', function() {
+        isMouseDown = false;
+        partnersGrid.style.cursor = 'grab';
+    });
+    
+    // Set initial cursor style
+    partnersGrid.style.cursor = 'grab';
+    
+    // Initialize button states
+    updateButtonStates();
+}
 
 // Add CSS for animations
 const style = document.createElement('style');

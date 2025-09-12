@@ -96,17 +96,18 @@
 
 .news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-lg);
     width: 100%;
     max-width: 100%;
     overflow: hidden;
     box-sizing: border-box;
+    justify-items: center;
 }
 
 .news-card {
     min-width: 0;
-    max-width: 100%;
+    max-width: 350px;
     width: 100%;
     background-color: var(--color-card);
     border-radius: var(--radius-lg);
@@ -334,7 +335,7 @@
     margin-bottom: var(--spacing-lg);
     position: sticky;
     top: 0;
-    background-color: #ffffff;
+    background-color: var(--color-card);
     z-index: 1;
     padding-bottom: var(--spacing-md);
 }
@@ -497,6 +498,7 @@
     
     .news-grid {
         grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
     }
     
     .programs-grid {
@@ -516,6 +518,7 @@
     
     .news-grid {
         grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
     }
     
     .programs-grid {
@@ -542,6 +545,7 @@
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
         padding: 0 var(--spacing-sm);
+        justify-items: center;
     }
     
     .news-card {
@@ -622,7 +626,8 @@
     }
     
     .news-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
     }
     
     .programs-grid {
@@ -654,6 +659,7 @@
     
     .news-grid {
         grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
     }
     
     .programs-grid {
@@ -700,6 +706,7 @@
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-md);
         padding: 0 var(--spacing-sm);
+        justify-items: center;
     }
     
     .news-card {
@@ -794,6 +801,7 @@
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
         padding: 0 var(--spacing-sm);
+        justify-items: center;
     }
     
     .news-card {
@@ -900,6 +908,7 @@
     .news-grid {
         gap: var(--spacing-sm);
         padding: 0 var(--spacing-xs);
+        justify-items: center;
     }
     
     .news-card {
@@ -996,6 +1005,10 @@
     .news-grid,
     .programs-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .news-grid {
+        justify-items: center;
     }
     
     .partners-grid {

@@ -1283,7 +1283,7 @@ a:hover {
 
 /* Partners */
 .partners {
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-2xl) 60px;
     margin-bottom: var(--spacing-3xl);
     position: relative;
     z-index: 1;
@@ -1295,7 +1295,7 @@ a:hover {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
-    overflow: hidden;
+    overflow: visible;
 }
 
 .partners-scroll-wrapper {
@@ -1402,13 +1402,13 @@ a:hover {
     transform: translateY(-50%);
 }
 
-.partners-scroll-left {
-    left: -50px;
-}
-
-.partners-scroll-right {
-    right: -50px;
-}
+    .partners-scroll-left {
+        left: -60px;
+    }
+    
+    .partners-scroll-right {
+        right: -60px;
+    }
 
 /* Newsletter */
 .newsletter {
@@ -1887,6 +1887,10 @@ a:hover {
     .container {
         padding: 0 16px;
     }
+    
+    .partners {
+        padding: var(--spacing-2xl) 40px;
+    }
 }
 
 /* Tablet Landscape (1024px to 1200px) */
@@ -1901,11 +1905,11 @@ a:hover {
     }
     
     .partners-scroll-left {
-        left: -50px;
+        left: -55px;
     }
     
     .partners-scroll-right {
-        right: -50px;
+        right: -55px;
     }
     
     .partner-item {
@@ -1931,11 +1935,11 @@ a:hover {
     }
     
     .partners-scroll-left {
-        left: -45px;
+        left: -50px;
     }
     
     .partners-scroll-right {
-        right: -45px;
+        right: -50px;
     }
     
     .partner-item {
@@ -2121,7 +2125,12 @@ a:hover {
     }
     
     .partners-scroll-btn {
-        display: none !important;
+        width: 35px;
+        height: 35px;
+    }
+    
+    .partners {
+        padding: var(--spacing-2xl) 50px;
     }
     
     .partners-scroll-wrapper {
@@ -2270,7 +2279,8 @@ a:hover {
     }
     
     .partners-scroll-btn {
-        display: none !important;
+        width: 35px;
+        height: 35px;
     }
     
     .footer-content {
@@ -2324,11 +2334,13 @@ a:hover {
 /* Mobile Medium (481px to 576px) */
 @media (max-width: 576px) and (min-width: 481px) {
     .partners-container {
-        gap: 0 !important;
+        gap: var(--spacing-sm) !important;
+        overflow: visible;
     }
     
     .partners-scroll-btn {
-        display: none !important;
+        width: 35px;
+        height: 35px;
     }
     
     .partners-scroll-wrapper {
@@ -2462,11 +2474,13 @@ a:hover {
     }
     
     .partners-container {
-        gap: 0 !important;
+        gap: var(--spacing-sm) !important;
+        overflow: visible;
     }
     
     .partners-scroll-btn {
-        display: none !important;
+        width: 35px;
+        height: 35px;
     }
     
     .partners-scroll-wrapper {
@@ -2525,11 +2539,13 @@ a:hover {
     }
     
     .partners-container {
-        gap: 0 !important;
+        gap: var(--spacing-sm) !important;
+        overflow: visible;
     }
     
     .partners-scroll-btn {
-        display: none !important;
+        width: 35px;
+        height: 35px;
     }
     
     .partners-scroll-wrapper {

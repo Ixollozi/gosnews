@@ -2562,11 +2562,15 @@ a:hover {
     
     .partners {
         padding: var(--spacing-lg) 0;
+        margin: 0;
+        overflow: visible;
     }
     
     .partners-container {
-        gap: var(--spacing-sm) !important;
+        gap: 0 !important;
         overflow: visible;
+        padding: 0;
+        margin: 0;
     }
     
     .partners-scroll-btn {
@@ -2575,6 +2579,9 @@ a:hover {
     
     .partners-scroll-wrapper {
         width: 100%;
+        overflow: visible;
+        padding: 0;
+        margin: 0;
     }
     
     .partners-grid {
@@ -2584,10 +2591,12 @@ a:hover {
         scrollbar-width: none;
         -ms-overflow-style: none;
         gap: var(--spacing-xs);
-        padding: var(--spacing-xs) 0;
-        padding-right: 15px;
+        padding: var(--spacing-xs) var(--spacing-xs);
+        margin: 0;
         overscroll-behavior-x: contain;
         scroll-snap-type: x mandatory;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .partners-grid::-webkit-scrollbar {
@@ -2595,17 +2604,96 @@ a:hover {
     }
     
     .partner-item {
-        min-width: 80px;
-        height: 50px;
+        min-width: 75px;
+        height: 47px;
         padding: var(--spacing-xs);
-        margin: 0 var(--spacing-xs);
+        margin: 0;
         scroll-snap-align: start;
         flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
     }
     
     .partner-item img {
-        height: 25px;
-        max-width: 70px;
+        height: 22px;
+        max-width: 65px;
+        object-fit: contain;
+    }
+}
+
+/* Extra Small Mobile (up to 400px) - Fix partners clipping */
+@media (max-width: 400px) {
+    .container {
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .partners {
+        padding: var(--spacing-md) 0;
+        margin: 0;
+        overflow: visible;
+    }
+    
+    .partners-container {
+        gap: 0 !important;
+        overflow: visible;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .partners-scroll-btn {
+        display: none !important;
+    }
+    
+    .partners-scroll-wrapper {
+        width: 100%;
+        overflow: visible;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .partners-grid {
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-xs) var(--spacing-xs);
+        margin: 0;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .partners-grid::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .partner-item {
+        min-width: 70px;
+        height: 45px;
+        padding: var(--spacing-xs);
+        margin: 0;
+        scroll-snap-align: start;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+    
+    .partner-item img {
+        height: 20px;
+        max-width: 60px;
+        object-fit: contain;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-md);
     }
 }
 

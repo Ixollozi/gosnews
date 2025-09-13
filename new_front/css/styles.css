@@ -1315,6 +1315,8 @@ a:hover {
     scrollbar-width: none;
     -ms-overflow-style: none;
     align-items: center;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
 }
 
 .partners-grid::-webkit-scrollbar {
@@ -1335,6 +1337,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     margin: 0 var(--spacing-xs);
+    scroll-snap-align: start;
 }
 
 /* Removed margin for last child - using padding-right on grid instead */
@@ -2152,6 +2155,8 @@ a:hover {
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
     }
     
     .partners-grid::-webkit-scrollbar {
@@ -2163,6 +2168,8 @@ a:hover {
         height: 70px;
         padding: var(--spacing-sm);
         margin: 0 var(--spacing-xs);
+        scroll-snap-align: start;
+        flex-shrink: 0;
     }
     
     .partner-item img {
@@ -2368,6 +2375,8 @@ a:hover {
         gap: var(--spacing-sm);
         padding: var(--spacing-xs) 0;
         padding-right: 25px;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
     }
     
     .partners-grid::-webkit-scrollbar {
@@ -2379,6 +2388,8 @@ a:hover {
         height: 60px;
         padding: var(--spacing-xs);
         margin: 0 var(--spacing-xs);
+        scroll-snap-align: start;
+        flex-shrink: 0;
     }
     
     .partner-item img {
@@ -2506,6 +2517,8 @@ a:hover {
         -ms-overflow-style: none;
         padding: var(--spacing-sm) 0;
         padding-right: 20px;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
     }
     
     .partners-grid::-webkit-scrollbar {
@@ -2517,6 +2530,8 @@ a:hover {
         height: 60px;
         padding: var(--spacing-sm);
         margin: 0 var(--spacing-xs);
+        scroll-snap-align: start;
+        flex-shrink: 0;
     }
     
     .partner-item img {
@@ -2571,6 +2586,8 @@ a:hover {
         gap: var(--spacing-xs);
         padding: var(--spacing-xs) 0;
         padding-right: 15px;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
     }
     
     .partners-grid::-webkit-scrollbar {
@@ -2582,6 +2599,8 @@ a:hover {
         height: 50px;
         padding: var(--spacing-xs);
         margin: 0 var(--spacing-xs);
+        scroll-snap-align: start;
+        flex-shrink: 0;
     }
     
     .partner-item img {
